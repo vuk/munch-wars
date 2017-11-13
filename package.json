@@ -1,0 +1,14 @@
+{
+  "name": "munch-wars",
+  "version": "1.0.0",
+  "description": "Munchmallow Wars",
+  "main": "index.js",
+  "repository": "git@bitbucket.org:vukstankovic/munch-wars.git",
+  "author": "Vuk Stankovic <vuks89@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "express": "^4.16.2",
+    "phaser": "^2.6.2"
+  }
+}
