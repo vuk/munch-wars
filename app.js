@@ -6,6 +6,12 @@ const bodyParser = require('body-parser');
 
 const index = require('./routes/index');
 const users = require('./routes/users');
+const play = require('./routes/play');
+const contact = require('./routes/contact');
+const awards = require('./routes/awards');
+const ranking = require('./routes/ranking');
+const rules = require('./routes/rules');
+const winners = require('./routes/winners');
 
 const app = express();
 
@@ -34,7 +40,13 @@ app.use('/bootstrap', express.static('node_modules/bootstrap/dist/'));
 
 // Routes
 app.use('/', index);
+app.use('/play', play);
+app.use('/awards', awards);
+app.use('/contact', contact);
 app.use('/users', users);
+app.use('/ranking', ranking);
+app.use('/rules', rules);
+app.use('/winners', winners);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
