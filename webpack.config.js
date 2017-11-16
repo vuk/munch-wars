@@ -1,7 +1,7 @@
 const path = require('path');
 
 const DIST_DIR = path.join(__dirname, 'dist'),
-  CLIENT_DIR = path.join(__dirname, 'app')
+  CLIENT_DIR = path.join(__dirname, 'app');
 
 module.exports = {
   context: CLIENT_DIR,
@@ -16,4 +16,4 @@ module.exports = {
   resolve: {
     extensions: ['', '.js']
   }
-}
+};
