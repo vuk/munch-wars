@@ -1,6 +1,7 @@
 body {
   font-family: "orbitron", Helvetica, Arial, sans-serif;
   background-color: #000000;
+  overflow: hidden;
 }
 
 a {
