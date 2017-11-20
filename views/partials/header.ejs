@@ -14,7 +14,19 @@
                 <li><a href="/awards" <% if(active === 'awards') { %> <%= "class=active" %> <% } %>>Nagrade</a></li>
                 <li><a href="/rules" <% if(active === 'rules') { %> <%= "class=active" %> <% } %>>Pravila</a></li>
                 <li><a href="/contact" <% if(active === 'contact') { %> <%= "class=active" %> <% } %>>Kontakt</a></li>
-                <li><a href="javascript:void(0);">Zvuk</a></li>
+                <li>
+                    <a id="toggle-sound" href="javascript:void(0);">Zvuk
+                        <div class="sound-wrap">
+                            <div class="sound-on-wrapper">
+                                <div id="sound-on"></div>
+                            </div>
+                            <div id="sound-separator"> / </div>
+                            <div class="sound-off-wrapper">
+                                <div id="sound-off"></div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
             </ul>
         </div>
 

@@ -5,6 +5,14 @@ function HomeState () {
 
 HomeState.prototype = {
 
+  started: false, // has the game started
+  ptv: 10, // points to win the game
+  points: {
+    p1: 0,
+    p2: 0
+  },
+  gameHash: null, // socket io room ID
+
   init: function () {
 
   },

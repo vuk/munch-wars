@@ -12,6 +12,8 @@ const awards = require('./routes/awards');
 const ranking = require('./routes/ranking');
 const rules = require('./routes/rules');
 const winners = require('./routes/winners');
+// Load socket server here
+const socket = require('./controllers/socket');
 
 const app = express();
 
@@ -65,5 +67,7 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+socket.run();
 
 module.exports = app;

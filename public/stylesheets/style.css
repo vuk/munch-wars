@@ -22,3 +22,38 @@ a {
 .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a.active {
   color: #FFDF00;
 }
+
+.sound-wrap {
+  display: flex;
+  flex-direction:row;
+  vertical-align: middle;
+  float: right;
+  margin-left: 1rem;
+}
+
+#sound-on:after {
+  content: ' ';
+  background-color: #00ff00;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  width: 1rem;
+  height: 1rem;
+  display: block;
+}
+
+#sound-off:after {
+  content: ' ';
+  background-color: #ff0000;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  width: 1rem;
+  height: 1rem;
+  display: block;
+}
+
+#sound-separator {
+  flex-grow:1;
+  text-align: center;
+}
