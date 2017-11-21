@@ -11,13 +11,13 @@ var toggleSound = function () {
 };
 
 var gameProperties = {
-  screenWidth: 640,
-  screenHeight: 480,
+  screenWidth: 1280,
+  screenHeight: 720,
 
   dashSize: 5,
 
   paddleLeft_x: 50,
-  paddleRight_x: 590,
+  paddleRight_x: 1230,
   paddleVelocity: 600,
   paddleSegmentsMax: 4,
   paddleSegmentHeight: 4,
@@ -106,6 +106,10 @@ mainState.prototype = {
     game.load.image(graphicAssets.ballName, graphicAssets.ballURL);
     game.load.image(graphicAssets.paddleName, graphicAssets.paddleURL);
     initializeSound();
+
+    this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    this.scale.pageAlignHorizontally = true;
+    this.scale.pageAlignVertically = true;
 
     game.load.audio(soundAssets.ballBounceName, [soundAssets.ballBounceURL + soundAssets.mp4URL, soundAssets.ballBounceURL + soundAssets.oggURL]);
     game.load.audio(soundAssets.ballHitName, [soundAssets.ballHitURL + soundAssets.mp4URL, soundAssets.ballHitURL + soundAssets.oggURL]);
@@ -366,6 +370,6 @@ mainState.prototype = {
   },
 };
 
-var game = new Phaser.Game(gameProperties.screenWidth, gameProperties.screenHeight, Phaser.AUTO, 'gameDiv');
+var game = new Phaser.Game(gameProperties.screenWidth, gameProperties.screenHeight, Phaser.AUTO, 'munch-pong');
 game.state.add('main', mainState);
 game.state.start('main');
