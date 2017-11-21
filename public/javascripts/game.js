@@ -35,11 +35,14 @@ var gameProperties = {
 };
 
 var graphicAssets = {
-  ballURL: 'assets/ball.png',
+  ballURL: 'assets/ball-10.png',
   ballName: 'ball',
 
-  paddleURL: 'assets/paddle.png',
-  paddleName: 'paddle',
+  paddleURL: 'assets/left-50.png',
+  paddleName: 'paddle_left',
+
+  paddleRightURL: 'assets/right-50.png',
+  paddleRightName: 'paddle_right',
 };
 
 var soundAssets = {
@@ -105,6 +108,7 @@ mainState.prototype = {
   preload: function () {
     game.load.image(graphicAssets.ballName, graphicAssets.ballURL);
     game.load.image(graphicAssets.paddleName, graphicAssets.paddleURL);
+    game.load.image(graphicAssets.paddleRightName, graphicAssets.paddleRightURL);
     initializeSound();
 
     this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -149,7 +153,7 @@ mainState.prototype = {
     this.paddleLeftSprite = game.add.sprite(gameProperties.paddleLeft_x, game.world.centerY, graphicAssets.paddleName);
     this.paddleLeftSprite.anchor.set(0.5, 0.5);
 
-    this.paddleRightSprite = game.add.sprite(gameProperties.paddleRight_x, game.world.centerY, graphicAssets.paddleName);
+    this.paddleRightSprite = game.add.sprite(gameProperties.paddleRight_x, game.world.centerY, graphicAssets.paddleRightName);
     this.paddleRightSprite.anchor.set(0.5, 0.5);
 
     this.tf_scoreLeft = game.add.text(fontAssets.scoreLeft_x, fontAssets.scoreTop_y, '0', fontAssets.scoreFontStyle);
