@@ -57,9 +57,25 @@ a {
   flex-grow:1;
   text-align: center;
 }
-/*
-.game-container {
-  padding-top: 56.25%;
-  position: relative;
-  width:100%;
-}*/
+
+.title-row {
+  margin-bottom: 2rem;
+}
+
+.title-row > .logo {
+  text-align: center;
+}
+
+.score {
+  font-size: 48px;
+  color: #fff;
+  font-weight: 700;
+}
+
+#left-score {
+  float: left;
+}
+
+#right-score {
+  float: right;
+}

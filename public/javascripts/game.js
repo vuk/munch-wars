@@ -31,7 +31,7 @@ var gameProperties = {
   ballVelocityIncrement: 25,
   ballReturnCount: 4,
 
-  scoreToWin: 11,
+  scoreToWin: 6,
 };
 
 var graphicAssets = {
@@ -43,6 +43,11 @@ var graphicAssets = {
 
   paddleRightURL: 'assets/right-50.png',
   paddleRightName: 'paddle_right',
+
+  yellowBorder: 'assets/yellow-border.png',
+  yellowBorderName: 'yellowBorder',
+  redBorder: 'assets/red-border.png',
+  redBorderName: 'redBorder'
 };
 
 var soundAssets = {
@@ -64,8 +69,8 @@ var fontAssets = {
   scoreRight_x: gameProperties.screenWidth * 0.75,
   scoreTop_y: 10,
 
-  scoreFontStyle: { font: '80px Arial', fill: '#FFFFFF', align: 'center' },
-  instructionsFontStyle: { font: '24px Arial', fill: '#FFFFFF', align: 'center' },
+  scoreFontStyle: { font: '80px orbitron', fill: '#FFFFFF', align: 'center' },
+  instructionsFontStyle: { font: '24px orbitron', fill: '#FFFFFF', align: 'center' },
 };
 
 var labels = {
@@ -109,6 +114,8 @@ mainState.prototype = {
     game.load.image(graphicAssets.ballName, graphicAssets.ballURL);
     game.load.image(graphicAssets.paddleName, graphicAssets.paddleURL);
     game.load.image(graphicAssets.paddleRightName, graphicAssets.paddleRightURL);
+    game.load.image(graphicAssets.yellowBorderName, graphicAssets.yellowBorder);
+    game.load.image(graphicAssets.redBorderName, graphicAssets.redBorder);
     initializeSound();
 
     this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -126,6 +133,7 @@ mainState.prototype = {
     this.initKeyboard();
     this.initSounds();
     this.startDemo();
+    this.drawBorders();
   },
 
   update: function () {
@@ -136,6 +144,47 @@ mainState.prototype = {
     if (this.ballSprite.body.blocked.up || this.ballSprite.body.blocked.down || this.ballSprite.body.blocked.left || this.ballSprite.body.blocked.right) {
       this.sndBallBounce.play();
     }
+  },
+
+  drawBorders: function () {
+    this.borderGroup = game.add.group();
+    this.borderGroup.enableBody = true;
+    this.borderGroup.physicsBodyType = Phaser.Physics.ARCADE;
+
+    this.leftTopBorder = game.add.sprite(0, 0, graphicAssets.yellowBorderName);
+    this.leftTopBorder.anchor.set(0, 0);
+
+    this.rightTopBorder = game.add.sprite(game.world.width, 0, graphicAssets.yellowBorderName);
+    this.rightTopBorder.anchor.set(0, 0);
+
+    this.leftBottomBorder = game.add.sprite(0, 720, graphicAssets.yellowBorderName);
+    this.leftBottomBorder.anchor.set(0, 1);
+
+    this.rightBottomBorder = game.add.sprite(game.world.width, 720, graphicAssets.yellowBorderName);
+    this.rightBottomBorder.anchor.set(0, 1);
+
+    this.centerBottomBorder = game.add.sprite(game.world.centerX, 720, graphicAssets.redBorderName);
+    this.centerBottomBorder.anchor.set(0.5, 1);
+
+    this.centerTopBorder = game.add.sprite(game.world.centerX, 0, graphicAssets.redBorderName);
+    this.centerTopBorder.anchor.set(0.5, 0);
+
+    this.borderGroup.add(this.leftTopBorder);
+    this.borderGroup.add(this.leftBottomBorder);
+    this.borderGroup.add(this.rightTopBorder);
+    this.borderGroup.add(this.rightBottomBorder);
+    this.borderGroup.add(this.centerBottomBorder);
+    this.borderGroup.add(this.centerTopBorder);
+
+    this.borderGroup.setAll('checkWorldBounds', true);
+    this.borderGroup.setAll('body.collideWorldBounds', true);
+    this.borderGroup.setAll('body.immovable', true);
+    var bottomLeft = new Phaser.Rectangle(0, 715, 427, 5);
+    var topLeft = new Phaser.Rectangle(0, 0, 427, 5);
+    var topCenter = new Phaser.Rectangle(0, 0, 427, 5);
+    var bottomCenter = new Phaser.Rectangle(0, 0, 427, 5);
+    var topRight = new Phaser.Rectangle(0, 0, 427, 5);
+    var bottomRight = new Phaser.Rectangle(0, 0, 427, 5);
   },
 
   initGraphics: function () {
@@ -364,7 +413,9 @@ mainState.prototype = {
 
   updateScoreTextFields: function () {
     this.tf_scoreLeft.text = this.scoreLeft;
+    jQuery('#left-score').html(this.scoreLeft);
     this.tf_scoreRight.text = this.scoreRight;
+    jQuery('#right-score').html(this.scoreRight);
   },
 
   hideTextFields: function () {
