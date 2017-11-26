@@ -71,12 +71,12 @@ var fontAssets = {
   scoreTop_y: 10,
 
   scoreFontStyle: { font: '80px orbitron', fill: '#FFFFFF', align: 'center' },
-  instructionsFontStyle: { font: '24px orbitron', fill: '#FFFFFF', align: 'center' },
+  instructionsFontStyle: { font: '20px orbitron', fill: '#FFDF00', align: 'center', fontWeight: 600 },
+  countdownFontStyle: { font: '30px orbitron', fill: '#FFDF00', align: 'center', fontWeight: 600 },
 };
 
 var labels = {
-  clickToStart: 'Left paddle: A to move up, Z to move down.\n\nRight paddle: UP and DOWN arrow keys.\n\n- click to start -',
-  winner: 'Winner!',
+  clickToStart: 'STRELICAMA GORE/DOLE POMERAŠ MUNCH, \nBROJEVIMA 1/2/3 ISPALJUJEŠ MAGIJE \n\n OSTVARI 6 BODOVA ZA POBEDU',
 };
 
 var mainState = function (game) {
@@ -96,6 +96,9 @@ var mainState = function (game) {
   this.scoreLeft;
   this.scoreRight;
 
+  this.timer;
+  this.timerEvent;
+
   //this.tf_scoreLeft;
   //this.tf_scoreRight;
 
@@ -104,8 +107,8 @@ var mainState = function (game) {
   this.sndBallMissed;
 
   this.instructions;
-  this.winnerLeft;
-  this.winnerRight;
+  //this.winnerLeft;
+  //this.winnerRight;
 
   this.ballVelocity;
 };
@@ -135,6 +138,7 @@ mainState.prototype = {
     this.initSounds();
     this.startDemo();
     this.drawBorders();
+    //this.startCountdown();
   },
 
   update: function () {
@@ -212,16 +216,46 @@ mainState.prototype = {
     //this.tf_scoreRight = game.add.text(fontAssets.scoreRight_x, fontAssets.scoreTop_y, '0', fontAssets.scoreFontStyle);
     //this.tf_scoreRight.anchor.set(0.5, 0);
 
-    this.instructions = game.add.text(game.world.centerX, game.world.centerY, labels.clickToStart, fontAssets.instructionsFontStyle);
-    this.instructions.anchor.set(0.5, 0.5);
+    this.instructions = game.add.text(game.world.centerX, game.world.height - 30, labels.clickToStart, fontAssets.instructionsFontStyle);
+    this.instructions.anchor.set(0.5, 1);
 
-    this.winnerLeft = game.add.text(gameProperties.screenWidth * 0.25, gameProperties.screenHeight * 0.25, labels.winner, fontAssets.instructionsFontStyle);
-    this.winnerLeft.anchor.set(0.5, 0.5);
+    //this.winnerLeft = game.add.text(gameProperties.screenWidth * 0.25, gameProperties.screenHeight * 0.25, labels.winner, fontAssets.instructionsFontStyle);
+    //this.winnerLeft.anchor.set(0.5, 0.5);
 
-    this.winnerRight = game.add.text(gameProperties.screenWidth * 0.75, gameProperties.screenHeight * 0.25, labels.winner, fontAssets.instructionsFontStyle);
-    this.winnerRight.anchor.set(0.5, 0.5);
+    //this.winnerRight = game.add.text(gameProperties.screenWidth * 0.75, gameProperties.screenHeight * 0.25, labels.winner, fontAssets.instructionsFontStyle);
+    //this.winnerRight.anchor.set(0.5, 0.5);
 
     this.hideTextFields();
+  },
+
+  startCountdown: function () {
+    this.timer = game.time.create();
+    this.countdownText = game.add.text(game.world.centerX, game.world.centerY, '3', fontAssets.countdownFontStyle);
+    this.countdownText.anchor.set(0.5, 0.5);
+
+    this.timerEvent = this.timer.add(Phaser.Timer.SECOND * 3, this.endTimer, this);
+
+    // Start the timer
+    this.timer.start();
+  },
+
+  endTimer: function() {
+    // Stop the timer when the delayed event triggers
+    this.timer.stop();
+    this.countdownText.destroy();
+  },
+
+  render: function () {
+    if (this.timer && this.timer.running) {
+      this.countdownText.setText(this.formatTime(Math.round((this.timerEvent.delay - this.timer.ms) / 1000)), 2, 14, "#ff0");
+    }
+  },
+
+  formatTime: function(s) {
+    // Convert seconds (s) to a nicely formatted and padded time string
+    var minutes = "0" + Math.floor(s / 60);
+    var seconds = (s - minutes * 60);
+    return seconds.toString().substr(-2);
   },
 
   initPhysics: function () {
@@ -404,10 +438,10 @@ mainState.prototype = {
     this.updateScoreTextFields();
 
     if (this.scoreLeft >= gameProperties.scoreToWin) {
-      this.winnerLeft.visible = true;
+      //this.winnerLeft.visible = true;
       this.startDemo();
     } else if (this.scoreRight >= gameProperties.scoreToWin) {
-      this.winnerRight.visible = true;
+      //this.winnerRight.visible = true;
       this.startDemo();
     } else {
       this.resetBall();
@@ -429,8 +463,8 @@ mainState.prototype = {
 
   hideTextFields: function () {
     this.instructions.visible = false;
-    this.winnerLeft.visible = false;
-    this.winnerRight.visible = false;
+    //this.winnerLeft.visible = false;
+    //this.winnerRight.visible = false;
   },
 };
 
