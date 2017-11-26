@@ -11,18 +11,19 @@ var toggleSound = function () {
 };
 
 var gameProperties = {
-  screenWidth: 1280,
-  screenHeight: 720,
+  screenWidth: 800,
+  //screenHeight: 720,
+  screenHeight: 400,
 
   dashSize: 5,
 
-  paddleLeft_x: 50,
-  paddleRight_x: 1230,
+  paddleLeft_x: 30,
+  paddleRight_x: 770,
   paddleVelocity: 600,
-  paddleSegmentsMax: 4,
-  paddleSegmentHeight: 4,
-  paddleSegmentAngle: 15,
-  paddleTopGap: 22,
+  paddleSegmentsMax: 8,
+  paddleSegmentHeight: 2,
+  paddleSegmentAngle: 8,
+  paddleTopGap: 10,
 
   ballVelocity: 500,
   ballRandomStartingAngleLeft: [-120, 120],
@@ -38,10 +39,10 @@ var graphicAssets = {
   ballURL: 'assets/ball-10.png',
   ballName: 'ball',
 
-  paddleURL: 'assets/left-50.png',
+  paddleURL: 'assets/left-45.png',
   paddleName: 'paddle_left',
 
-  paddleRightURL: 'assets/right-50.png',
+  paddleRightURL: 'assets/right-45.png',
   paddleRightName: 'paddle_right',
 
   yellowBorder: 'assets/yellow-border.png',
@@ -95,8 +96,8 @@ var mainState = function (game) {
   this.scoreLeft;
   this.scoreRight;
 
-  this.tf_scoreLeft;
-  this.tf_scoreRight;
+  //this.tf_scoreLeft;
+  //this.tf_scoreRight;
 
   this.sndBallHit;
   this.sndBallBounce;
@@ -205,11 +206,11 @@ mainState.prototype = {
     this.paddleRightSprite = game.add.sprite(gameProperties.paddleRight_x, game.world.centerY, graphicAssets.paddleRightName);
     this.paddleRightSprite.anchor.set(0.5, 0.5);
 
-    this.tf_scoreLeft = game.add.text(fontAssets.scoreLeft_x, fontAssets.scoreTop_y, '0', fontAssets.scoreFontStyle);
-    this.tf_scoreLeft.anchor.set(0.5, 0);
+    //this.tf_scoreLeft = game.add.text(fontAssets.scoreLeft_x, fontAssets.scoreTop_y, '0', fontAssets.scoreFontStyle);
+    //this.tf_scoreLeft.anchor.set(0.5, 0);
 
-    this.tf_scoreRight = game.add.text(fontAssets.scoreRight_x, fontAssets.scoreTop_y, '0', fontAssets.scoreFontStyle);
-    this.tf_scoreRight.anchor.set(0.5, 0);
+    //this.tf_scoreRight = game.add.text(fontAssets.scoreRight_x, fontAssets.scoreTop_y, '0', fontAssets.scoreFontStyle);
+    //this.tf_scoreRight.anchor.set(0.5, 0);
 
     this.instructions = game.add.text(game.world.centerX, game.world.centerY, labels.clickToStart, fontAssets.instructionsFontStyle);
     this.instructions.anchor.set(0.5, 0.5);
@@ -239,6 +240,14 @@ mainState.prototype = {
 
     this.paddleGroup.add(this.paddleLeftSprite);
     this.paddleGroup.add(this.paddleRightSprite);
+
+    this.paddleLeftSprite.body.checkCollision.up = false;
+    this.paddleLeftSprite.body.checkCollision.down = false;
+    this.paddleLeftSprite.body.checkCollision.left = false;
+
+    this.paddleRightSprite.body.checkCollision.up = false;
+    this.paddleRightSprite.body.checkCollision.down = false;
+    this.paddleRightSprite.body.checkCollision.right = false;
 
     this.paddleGroup.setAll('checkWorldBounds', true);
     this.paddleGroup.setAll('body.collideWorldBounds', true);
@@ -412,9 +421,9 @@ mainState.prototype = {
   },
 
   updateScoreTextFields: function () {
-    this.tf_scoreLeft.text = this.scoreLeft;
+    //this.tf_scoreLeft.text = this.scoreLeft;
     jQuery('#left-score').html(this.scoreLeft);
-    this.tf_scoreRight.text = this.scoreRight;
+    //this.tf_scoreRight.text = this.scoreRight;
     jQuery('#right-score').html(this.scoreRight);
   },
 
@@ -425,6 +434,6 @@ mainState.prototype = {
   },
 };
 
-var game = new Phaser.Game(gameProperties.screenWidth, gameProperties.screenHeight, Phaser.AUTO, 'munch-pong');
+var game = new Phaser.Game(gameProperties.screenWidth, gameProperties.screenHeight, Phaser.AUTO, 'munch-pong', false, true);
 game.state.add('main', mainState);
 game.state.start('main');
