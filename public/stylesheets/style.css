@@ -1,7 +1,18 @@
 body {
   font-family: "orbitron", Helvetica, Arial, sans-serif;
-  background-color: #000000;
-  overflow: hidden;
+  background-color: #06000c;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1d1351+0,1d1351+50,06000c+51,06000c+100 */
+  /*background: #1d1351; !* Old browsers *!
+  background: -moz-radial-gradient(center, ellipse cover, #1d1351 0%, #1d1351 50%, #06000c 51%, #06000c 100%); !* FF3.6-15 *!
+  background: -webkit-radial-gradient(center, ellipse cover, #1d1351 0%,#1d1351 50%,#06000c 51%,#06000c 100%); !* Chrome10-25,Safari5.1-6 *!
+  background: radial-gradient(ellipse at center, #1d1351 0%,#1d1351 50%,#06000c 51%,#06000c 100%); !* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ *!
+  -webkit-background-size: 100% 100%;
+  background-size: 100% 100%;
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1d1351', endColorstr='#06000c',GradientType=1 ); !* IE6-9 fallback on horizontal gradient *!*/
+  /*overflow: hidden;*/
+  max-width: 100%;
+  overflow-x: hidden;
+  position: relative;
 }
 
 a {
@@ -27,6 +38,9 @@ a {
   display: flex;
   flex-direction:row;
   vertical-align: middle;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
   float: right;
   margin-left: 1rem;
 }
@@ -91,4 +105,102 @@ a {
 
 .points-label {
   color: #fff;
+}
+
+img {
+  max-width: 100%;
+}
+
+.munc-wars-holder {
+  padding: 0 24%;
+}
+
+@media screen and (min-width: 992px){
+  .munch-row-one, .munch-row-two {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .munch-row-two .col-md-4 {
+    align-self:flex-end;
+  }
+
+  .munch-logo-row {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+  }
+}
+
+.total-score {
+  color: #FFDF00;
+  font-weight: 600;
+  margin-top: 2rem;
+}
+
+.total-score .number {
+  font-size: 24px;
+  text-align: center;
+}
+
+.total-score .victories {
+  font-size: 16px;
+  text-align: center;
+}
+
+.intro-text {
+  color: #fff;
+  font-weight: 600;
+}
+
+.intro-text .title {
+  font-size: 24px;
+  text-align: center;
+}
+
+.intro-text .subtitle {
+  font-size: 16px;
+  text-align: center;
+}
+
+.award-holder {
+  padding: 0 10%;
+  text-align: center;
+}
+
+.award-desc {
+  color: #fff;
+  margin-top: 2rem;
+}
+
+.award-desc .number {
+  color: #FFDF00;
+  font-weight: 600;
+  font-size:20px;
+}
+.btn-holder {
+  padding: 5% 10% 0 10%;
+}
+
+.star-field {
+  overflow: hidden;
+  min-height: 100vh;
+  height: 100%;
+  position: absolute;
+  width: 100vw;
+  left: 0;
+  top: 0;
+}
+
+.spanner {
+  height: 2px;
+  background-color: #FFDF00;
+  width: 100%;
 }

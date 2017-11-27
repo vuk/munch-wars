@@ -12,6 +12,7 @@ const awards = require('./routes/awards');
 const ranking = require('./routes/ranking');
 const rules = require('./routes/rules');
 const winners = require('./routes/winners');
+const auth = require('./routes/auth');
 // Load socket server here
 const socket = require('./controllers/socket');
 
@@ -49,6 +50,7 @@ app.use('/users', users);
 app.use('/ranking', ranking);
 app.use('/rules', rules);
 app.use('/winners', winners);
+app.use('/auth', auth);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -6,7 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "body-parser": "~1.18.2",
+    "body-parser": "^1.18.2",
     "bootstrap": "^3.3.7",
     "chalk": "^2.3.0",
     "cookie-parser": "~1.4.3",
@@ -21,6 +21,7 @@
     "phaser-ce": "^2.9.2",
     "playfab-sdk": "^1.16.171106",
     "pug": "2.0.0-beta11",
+    "request": "^2.83.0",
     "serve-favicon": "~2.4.5",
     "socket.io": "^2.0.4"
   },

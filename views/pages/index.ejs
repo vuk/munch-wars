@@ -4,16 +4,104 @@
     <% include ../partials/head %>
 </head>
 <body>
-<div id='stars'></div>
-<div id='stars2'></div>
-<div id='stars3'></div>
+<div class="star-field">
+    <div id='stars'></div>
+    <div id='stars2'></div>
+    <div id='stars3'></div>
+</div>
 <div class="container">
     <header>
         <% include ../partials/header %>
     </header>
 
     <main>
-        PLAY
+        <div class="row munch-row-one">
+            <div class="col-md-3">
+                <div class="munc-box-holder">
+                    <img src="/assets/home/munch-box.png" alt="Munchmallow Box"/>
+                    <div class="total-score">
+                        <div class="number">000678</div>
+                        <div class="victories">pobeda</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="munc-wars-holder">
+                    <img src="/assets/home/munch-wars.png" alt="Munch Wars"/>
+                </div>
+                <div class="intro-text">
+                    <div class="title">Da li si za crni ili beli Munch?</div>
+                    <div class="subtitle">Od 11. do 31. decembra igraj za svoj omiljeni ukus i osvoji nagrade!</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="munc-box-holder">
+                    <img src="/assets/home/munch-box-white.png" alt="White Munchmallow Box"/>
+                    <div class="total-score">
+                        <div class="number">000678</div>
+                        <div class="victories">pobeda</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row munch-row-btn">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="btn-holder">
+                    <a href="/play"><img src="/assets/home/igraj-munch-pong.png" alt="Igraj Munch Pong"></a>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        <div class="row munch-row-two">
+            <div class="col-md-4">
+                <div class="award-holder">
+                    <div class="award-img">
+                        <img src="/assets/home/nintendo-switch.png" alt="Nintendo Switch"/>
+                    </div>
+                    <div class="award-desc">
+                        <div class="award-span">Svake nedelje</div>
+                        <div class="number">1x</div>
+                        <div class="award-title">Nintendo Switch <br/>konzola</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="award-holder">
+                    <div class="award-img">
+                        <img src="/assets/home/cineplexx.png" alt="Cineplexx"/>
+                    </div>
+                    <div class="award-desc">
+                        <div class="award-span">Svakog dana</div>
+                        <div class="number">5x</div>
+                        <div class="award-title">Gift kartica za bioskop <br/>od 1000 dinara</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="award-holder">
+                    <div class="award-img">
+                        <img src="/assets/home/munchwars-box.png" alt="Munchwars-box"/>
+                    </div>
+                    <div class="award-desc">
+                        <div class="award-span">Svakog dana</div>
+                        <div class="number">10x</div>
+                        <div class="award-title">Velika Special Edition <br/>MunchWars kutija</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row munch-logo-row">
+            <div class="col-md-4">
+                <div class="spanner"></div>
+            </div>
+            <div class="col-md-3">
+                <img src="/assets/home/munchmallow-logo.png" alt="Igraj Munch Pong"></a>
+            </div>
+            <div class="col-md-4">
+                <div class="spanner"></div>
+            </div>
+        </div>
     </main>
 
     <footer>
