@@ -80,6 +80,10 @@ a {
   text-align: center;
 }
 
+.logo {
+  text-align: center;
+}
+
 .score {
   font-size: 48px;
   color: #fff;
@@ -203,4 +207,60 @@ img {
   height: 2px;
   background-color: #FFDF00;
   width: 100%;
+}
+
+.login-head {
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 3px solid #FFDF00;
+}
+.munch-btn .over {
+  display: none;
+}
+
+.munch-btn:hover .over {
+  display: block;
+}
+
+.munch-btn:hover .regular {
+  display: none;
+}
+.login-body {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+.btn-fb, .btn-newacc {
+  max-width: 300px;
+  margin: 2rem auto;
+}
+.login-body .form {
+  padding: 2rem 10%;
+}
+.login-body .form input {
+  background: transparent;
+  border: 2px solid #FFDF00;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  color: #fff;
+}
+.btn-signin {
+  text-align: right;
+}
+.forgot-pass-link {
+  color: #FFDF00;
+  text-align: left;
+}
+.forgot-pass-link:hover {
+  color: #FFDF00;
+}
+.login-body .form label {
+  text-align: left;
+}
+.login-body .form button {
+  background: transparent;
+  border: none;
+  max-width: 150px;
 }

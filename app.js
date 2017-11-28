@@ -3,6 +3,7 @@ const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const session = require('express-session');
 
 const index = require('./routes/index');
 const users = require('./routes/users');
@@ -31,9 +32,17 @@ app.use(function(req, res, next) {
 // TODO uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ type: 'application/*+json' }));
+app.use(cookieParser('23!@#$GFDS54sdgdfs!@$*^%'));
+app.use(cookieSession());
+app.set('trust proxy', 1); // trust first proxy
+app.use(session({
+  secret: '23!@#$GFDS54sdgdfs!@$*^%',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true, maxAge: 864000 }
+}));
 
 // Static resources
 app.use(express.static(path.join(__dirname, 'public')));
