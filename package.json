@@ -20,6 +20,7 @@
     "jquery": "^3.2.1",
     "morgan": "~1.9.0",
     "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
     "phaser-ce": "^2.9.2",
     "playfab-sdk": "^1.16.171106",
     "pug": "2.0.0-beta11",

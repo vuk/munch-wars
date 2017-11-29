@@ -5,6 +5,10 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 
+const passport = require('passport');
+const credentials = require('./oauth.js');
+const FacebookStrategy = require('passport-facebook').Strategy;
+
 const index = require('./routes/index');
 const users = require('./routes/users');
 const play = require('./routes/play');
@@ -14,10 +18,43 @@ const ranking = require('./routes/ranking');
 const rules = require('./routes/rules');
 const winners = require('./routes/winners');
 const auth = require('./routes/auth');
+const playfab = require('playfab-sdk/Scripts/PlayFab/PlayFabClient');
 // Load socket server here
 const socket = require('./controllers/socket');
 
 const app = express();
+
+passport.serializeUser(function (user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function (user, done) {
+  done(null, user);
+});
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new FacebookStrategy({
+    clientID: credentials.facebook.clientID,
+    clientSecret: credentials.facebook.clientSecret,
+    callbackURL: credentials.facebook.callbackURL,
+    profileFields: ['id', 'displayName', 'emails']
+  }, function (accessToken, refreshToken, profile, done) {
+    playfab.LoginWithFacebook({
+      AccessToken: accessToken,
+      CreateAccount: true,
+      TitleId: playfab.settings.titleId
+    }, function (err, result) {
+      done(null, {
+        result: result,
+        profile: profile
+      });
+    });
+  }
+));
+
+app.set('trust proxy', 1);
 
 app.use(session({
   secret: '23!@#$GFDS54sdgdfs!@$*^%',
@@ -30,9 +67,9 @@ app.use(session({
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
 
