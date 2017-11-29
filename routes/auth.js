@@ -14,8 +14,8 @@ router.post('/login', function(req, res, next) {
     if (err) {
       res.redirect('/login');
     } else {
-      req.session.userId = result.data.PlayfabId;
-      req.session.sessionTicket = result.data.sessionTicket;
+      req.session.userId = result.data.PlayFabId;
+      req.session.sessionTicket = result.data.SessionTicket;
       res.redirect('/play');
     }
   })

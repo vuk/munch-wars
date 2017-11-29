@@ -4,6 +4,7 @@ const session = require('express-session');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  console.log(req.session.userId);
   if(req.session.userId) {
     res.render('pages/play', {
       title: 'Igraj Munch Pong',

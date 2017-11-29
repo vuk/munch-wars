@@ -19,6 +19,13 @@ const socket = require('./controllers/socket');
 
 const app = express();
 
+app.use(session({
+  secret: '23!@#$GFDS54sdgdfs!@$*^%',
+  resave: true,
+  saveUninitialized: true,
+  cookie: { secure: false, maxAge: 864000 }
+}));
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -35,14 +42,7 @@ app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ type: 'application/*+json' }));
 app.use(cookieParser('23!@#$GFDS54sdgdfs!@$*^%'));
-app.use(cookieSession());
 app.set('trust proxy', 1); // trust first proxy
-app.use(session({
-  secret: '23!@#$GFDS54sdgdfs!@$*^%',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true, maxAge: 864000 }
-}));
 
 // Static resources
 app.use(express.static(path.join(__dirname, 'public')));
