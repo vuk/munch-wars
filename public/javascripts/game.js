@@ -184,12 +184,6 @@ mainState.prototype = {
     this.borderGroup.setAll('checkWorldBounds', true);
     this.borderGroup.setAll('body.collideWorldBounds', true);
     this.borderGroup.setAll('body.immovable', true);
-    var bottomLeft = new Phaser.Rectangle(0, 715, 427, 5);
-    var topLeft = new Phaser.Rectangle(0, 0, 427, 5);
-    var topCenter = new Phaser.Rectangle(0, 0, 427, 5);
-    var bottomCenter = new Phaser.Rectangle(0, 0, 427, 5);
-    var topRight = new Phaser.Rectangle(0, 0, 427, 5);
-    var bottomRight = new Phaser.Rectangle(0, 0, 427, 5);
   },
 
   initGraphics: function () {
@@ -243,6 +237,7 @@ mainState.prototype = {
     // Stop the timer when the delayed event triggers
     this.timer.stop();
     this.countdownText.destroy();
+    this.startGame();
   },
 
   render: function () {
@@ -275,14 +270,6 @@ mainState.prototype = {
     this.paddleGroup.add(this.paddleLeftSprite);
     this.paddleGroup.add(this.paddleRightSprite);
 
-    this.paddleLeftSprite.body.checkCollision.up = false;
-    this.paddleLeftSprite.body.checkCollision.down = false;
-    this.paddleLeftSprite.body.checkCollision.left = false;
-
-    this.paddleRightSprite.body.checkCollision.up = false;
-    this.paddleRightSprite.body.checkCollision.down = false;
-    this.paddleRightSprite.body.checkCollision.right = false;
-
     this.paddleGroup.setAll('checkWorldBounds', true);
     this.paddleGroup.setAll('body.collideWorldBounds', true);
     this.paddleGroup.setAll('body.immovable', true);
@@ -307,13 +294,13 @@ mainState.prototype = {
     this.resetBall();
     this.enablePaddles(false);
     this.enableBoundaries(true);
-    game.input.onDown.add(this.startGame, this);
+    game.input.onDown.add(this.startCountdown, this);
 
     this.instructions.visible = true;
   },
 
   startGame: function () {
-    game.input.onDown.remove(this.startGame, this);
+    game.input.onDown.remove(this.startCountdown, this);
 
     this.enablePaddles(true);
     this.enableBoundaries(false);
