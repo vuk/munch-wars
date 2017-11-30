@@ -36,7 +36,6 @@ router.get('/register', function (req, res, next) {
 router.get('/facebook', passport.authenticate('facebook', { scope: 'email' }));
 router.get('/social-login', passport.authenticate('facebook'),
   function (req, res, next) {
-    console.log(req.error, req.user, req.info);
     if (req.error) {
       res.redirect('/login');
     } else {
@@ -45,20 +44,6 @@ router.get('/social-login', passport.authenticate('facebook'),
       res.redirect('/play');
     }
   });
-
-/*passport.authenticate('facebook',
-  function (error, user, info) {
-    console.log('error', error, 'user', user, 'info', info);
-  })*/
-/*router.get('/social-login', function (req, res, next) {
-  if (req.session.userId) {
-    res.redirect('/play');
-  } else {
-    playfab.LoginWithFacebook({}, function (err, result) {
-
-    });
-  }
-});*/
 
 router.post('/register', function (req, res, next) {
   console.log(req.body);
@@ -69,14 +54,12 @@ router.post('/register', function (req, res, next) {
     Password: req.body.password,
     TitleId: playfab.settings.titleId
   }, function (err, result) {
-    if (err) {
-      console.log(err);
-      res.status(400);
-      res.json(err);
+    if (req.error) {
+      res.redirect('/login');
     } else {
-      res.status(200);
-      res.json(result);
-      console.log(result);
+      req.session.userId = result.data.PlayFabId;
+      req.session.sessionTicket = result.data.SessionTicket;
+      res.redirect('/play');
     }
   });
 });

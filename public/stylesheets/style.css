@@ -264,3 +264,7 @@ img {
   border: none;
   max-width: 150px;
 }
+
+.login-body .form button.register-btn {
+  max-width: 250px;
+}
