@@ -92,7 +92,7 @@ app.use('/', index);
 app.use('/play', play);
 app.use('/awards', awards);
 app.use('/contact', contact);
-app.use('/users', users);
+app.use('/profile', users);
 app.use('/ranking', ranking);
 app.use('/rules', rules);
 app.use('/winners', winners);

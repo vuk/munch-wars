@@ -268,3 +268,92 @@ img {
 .login-body .form button.register-btn {
   max-width: 250px;
 }
+.pts-score {
+  color: #FFDF00;
+}
+.logout .username {
+  color: #FFDF00;
+}
+.pts-container, .pick-side {
+  border-left: 2px solid #fff;
+  border-right: 2px solid #fff;
+}
+.pick-side:after {
+  content: ' ';
+  display: block;
+  clear: both;
+}
+.rank-row {
+  margin: 2rem 0;
+}
+.logout-link, .logout-link:hover{
+  color: #FFF;
+}
+.pick-side {
+  margin: 2rem 0 3rem 0;
+}
+.pick-side span {
+  color: #FFDF00;
+}
+.vs-player, .vs-computer {
+  margin: 3rem 0;
+}
+.profile-body .welcome, .profile-body .username {
+  color: #FFDF00;
+}
+/* Custom, iPhone Retina */
+@media only screen and (min-width : 320px) {
+
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : 480px) {
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+  .pts-container:first-child {
+    border-right: none;
+  }
+  .pts-container:last-child {
+    border-left: none;
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+
+}
+
+/*==========  Non-Mobile First Method  ==========*/
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width : 480px) {
+
+}
+
+/* Custom, iPhone Retina */
+@media only screen and (max-width : 320px) {
+
+}

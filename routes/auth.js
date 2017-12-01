@@ -1,7 +1,6 @@
 const express = require('express');
 const playfab = require('playfab-sdk/Scripts/PlayFab/PlayFabClient');
 const router = express.Router();
-const session = require('express-session');
 const passport = require('passport');
 
 playfab.settings.titleId = 'F06D';
@@ -13,18 +12,18 @@ router.post('/login', function (req, res, next) {
     TitleId: playfab.settings.titleId
   }, function (err, result) {
     if (err) {
-      res.redirect('/login');
+      res.redirect('/play');
     } else {
       req.session.userId = result.data.PlayFabId;
       req.session.sessionTicket = result.data.SessionTicket;
-      res.redirect('/play');
+      res.redirect('/profile');
     }
   });
 });
 
 router.get('/register', function (req, res, next) {
   if (req.session.userId) {
-    res.redirect('/play');
+    res.redirect('/profile');
   } else {
     res.render('pages/register', {
       title: 'Registrujte se',
@@ -37,16 +36,15 @@ router.get('/facebook', passport.authenticate('facebook', { scope: 'email' }));
 router.get('/social-login', passport.authenticate('facebook'),
   function (req, res, next) {
     if (req.error) {
-      res.redirect('/login');
+      res.redirect('/play');
     } else {
       req.session.userId = req.user.result.data.PlayFabId;
       req.session.sessionTicket = req.user.result.data.SessionTicket;
-      res.redirect('/play');
+      res.redirect('/profile');
     }
   });
 
 router.post('/register', function (req, res, next) {
-  console.log(req.body);
   playfab.RegisterPlayFabUser({
     DisplayName: req.body.username,
     Username: req.body.username,
@@ -55,11 +53,11 @@ router.post('/register', function (req, res, next) {
     TitleId: playfab.settings.titleId
   }, function (err, result) {
     if (req.error) {
-      res.redirect('/login');
+      res.redirect('/auth/register');
     } else {
       req.session.userId = result.data.PlayFabId;
       req.session.sessionTicket = result.data.SessionTicket;
-      res.redirect('/play');
+      res.redirect('/profile');
     }
   });
 });

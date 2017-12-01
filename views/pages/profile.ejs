@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+</head>
+<body>
+<div class="star-field">
+    <div id='stars'></div>
+    <div id='stars2'></div>
+    <div id='stars3'></div>
+</div>
+<div class="container">
+    <header>
+        <% include ../partials/header %>
+    </header>
+
+    <main>
+        <div class="row">
+            <div class="col-lg-offset-1 col-md-offset-0 col-lg-10 col-md-12">
+                <div class="login-head row">
+                    <div class="col-md-offset-1 col-sm-offset-0 col-md-10 col-sm-12 col-lg-offset-3 col-lg-6 logo">
+                        <img src="/assets/logo.png" alt="">
+                    </div>
+                </div>
+                <div class="row login-body profile-body">
+                    <div class="col-md-6">
+                        <h1 class="welcome">DOBRODOŠAO!</h1>
+                        <div class="rank-badge">xx</div>
+                        <h3 class="username">ivanzagar</h3>
+                        <div class="row rank-row">
+                            <div class="col-sm-4 pts-container">
+                                <span class="pts-label">dnevnih<br/>poena</span><br/>
+                                <span class="pts-score">00123</span>
+                            </div>
+                            <div class="col-sm-4 pts-container">
+                                <span class="pts-label">nedeljnih<br/>poena</span><br/>
+                                <span class="pts-score">00123</span>
+                            </div>
+                            <div class="col-sm-4 pts-container">
+                                <span class="pts-label">ukupno<br/>poena</span><br/>
+                                <span class="pts-score">00123</span>
+                            </div>
+                        </div>
+                        <div class="row rank-row">
+                            <div class="col-sm-4 pts-container">
+                                <span class="pts-label">dnevni<br/>rang</span><br/>
+                                <span class="pts-score">00123</span>
+                            </div>
+                            <div class="col-sm-4 pts-container">
+                                <span class="pts-label">nedeljni<br/>rang</span><br/>
+                                <span class="pts-score">00123</span>
+                            </div>
+                            <div class="col-sm-4 pts-container">
+                                <span class="pts-label">ukupni<br/>rang</span><br/>
+                                <span class="pts-score">00123</span>
+                            </div>
+                        </div>
+                        <span class="logout">
+                            Ako nisi <span class="username">ivanzagar</span>
+                            <a class="logout-link" href="#">prijavi se kao drugi korisnik</a>
+                        </span>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="pick-side">
+                            <div class="col-md-4">
+                                <span>Izaberi stranu:</span>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <img src="/assets/buttons/munch-black.png" alt="">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <img src="/assets/buttons/munch-white.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="vs-player">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a href="/play"><img src="/assets/buttons/igraj-protiv-igraca.png" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="vs-computer">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a href="/play?computer=true"><img src="/assets/buttons/igraj-protiv-racunara.png" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="poziv">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>pošalji poziv za igru prijatelju:</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row munch-logo-row">
+                    <div class="col-md-4">
+                        <div class="spanner"></div>
+                    </div>
+                    <div class="col-md-4">
+                        <img src="/assets/home/munchmallow-logo.png" alt="Igraj Munch Pong">
+                    </div>
+                    <div class="col-md-4">
+                        <div class="spanner"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <% include ../partials/footer %>
+    </footer>
+</div>
+
+</body>
+</html>
