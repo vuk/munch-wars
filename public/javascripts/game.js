@@ -1,4 +1,5 @@
 'use strict';
+
 var initializeSound = function () {
   if (localStorage.getItem('muted') === 'true') {
     game.sound.mute = !game.sound.mute;
