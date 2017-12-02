@@ -27,7 +27,8 @@ router.get('/register', function (req, res, next) {
   } else {
     res.render('pages/register', {
       title: 'Registrujte se',
-      active: 'play'
+      active: 'play',
+      playfabId: req.session.userId || null
     });
   }
 });

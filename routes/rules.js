@@ -5,7 +5,8 @@ const router = express.Router();
 router.get('/', function(req, res, next) {
   res.render('pages/rules', {
     title: 'Pravila',
-    active: 'rules'
+    active: 'rules',
+    playfabId: req.session.userId || null
   });
 });
 

@@ -5,7 +5,8 @@ const router = express.Router();
 router.get('/', function(req, res, next) {
   res.render('pages/contact', {
     title: 'Kontakt',
-    active: 'contact'
+    active: 'contact',
+    playfabId: req.session.userId || null
   });
 });
 

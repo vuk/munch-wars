@@ -1,24 +1,31 @@
 'use strict';
 module.exports = {
-  sockets: [],
+  sockets: {},
+  io: null,
   run: function (app, server) {
-    var _this = this;
-    const io = require('socket.io')(server);
+    this.io = require('socket.io')(server);
     console.log('Socket server running');
 
-    app.get('/socket', function (req, res) {
-      res.send({
-        msg: 'socket server is running here'
+    this.io.on('connection', (socket) => {
+      this.sockets[socket.id] = {
+        id: socket.id
+      };
+      socket.emit('connected', { status: true });
+      socket.on('identify', (data) => {
+        if (data.id) {
+          console.log(data);
+          socket.playfabId = data.id;
+          this.sockets[socket.id] = {
+            id: socket.id,
+            userId: data.id
+          };
+        }
+      });
+      socket.on('disconnect', () => {
+        delete this.sockets[socket.id];
       });
     });
 
-    io.on('connection', function (socket) {
-      console.log(socket);
-      _this.sockets.push(socket);
-      socket.emit('news', { hello: 'world' });
-      socket.on('my other event', function (data) {
-        console.log(data);
-      });
-    });
+    return this;
   }
 };

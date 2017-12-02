@@ -19,8 +19,6 @@ const rules = require('./routes/rules');
 const winners = require('./routes/winners');
 const auth = require('./routes/auth');
 const playfab = require('playfab-sdk/Scripts/PlayFab/PlayFabClient');
-// Load socket server here
-const socket = require('./controllers/socket');
 
 const app = express();
 

@@ -5,7 +5,8 @@ const router = express.Router();
 router.get('/', function(req, res, next) {
   res.render('pages/ranking', {
     title: 'Rang lista',
-    active: 'ranking'
+    active: 'ranking',
+    playfabId: req.session.userId || null
   });
 });
 

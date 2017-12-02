@@ -5,7 +5,8 @@ const router = express.Router();
 router.get('/', function(req, res, next) {
   res.render('pages/awards', {
     title: 'Nagrade',
-    active: 'awards'
+    active: 'awards',
+    playfabId: req.session.userId || null
   });
 });
 

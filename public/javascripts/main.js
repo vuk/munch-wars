@@ -5,13 +5,20 @@ var socket;
   var soundToggle = document.getElementById('toggle-sound');
   soundToggle.addEventListener('click', function (evt) {
     console.log('toggle sound');
-    toggleSound();
+    try {
+      toggleSound();
+    } catch (err) {
+      console.debug(err);
+    }
   });
 
 })();
 
 socket = io.connect('http://localhost:3000');
-socket.on('news', function (data) {
+socket.on('connected', function (data) {
   console.log(data);
-  socket.emit('my other event', { my: 'data' });
+  if (data.status) {
+    console.log(data);
+    socket.emit('identify', { id: userId });
+  }
 });

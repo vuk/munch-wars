@@ -5,7 +5,8 @@ const router = express.Router();
 router.get('/', function(req, res, next) {
   res.render('pages/index', {
     title: 'Home | Munch Pong',
-    active: 'index'
+    active: 'index',
+    playfabId: req.session.userId || null
   });
 });
 
