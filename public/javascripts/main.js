@@ -47,7 +47,7 @@ $('#accept_invite').click(function () {
     id: localStorage.getItem('opponentId')
   });
   if(window.location.href.indexOf("play?") === -1) {
-    window.location.href = '/play?game=' + localStorage.getItem('opponentId') + '&noevent=true';
+    window.location.href = '/play?game=' + userId + '&noevent=true';
   }
 });
 

@@ -12,6 +12,7 @@ module.exports = {
       socket.emit('connected', { status: true });
       socket.on('identify', (data) => {
         if (data.id && this.activeUsers[data.id]) {
+          socket.join(data.id);
           this.activeUsers[data.id].time = Date.now();
           this.sockets[data.id] = socket;
         }
@@ -31,8 +32,8 @@ module.exports = {
       });
       socket.on('accept', (data) => {
         console.log('accept', data);
-        this.sockets[data.id].join(data.myId);
-        this.sockets[data.myId].join(data.myId);
+/*        this.sockets[data.id].join(data.myId);
+        this.sockets[data.myId].join(data.myId);*/
         console.log(this.io.sockets.adapter.rooms[data.myId].sockets);
         if (Object.keys(this.io.sockets.adapter.rooms[data.myId].sockets).length === 2) {
           setTimeout(() => {
