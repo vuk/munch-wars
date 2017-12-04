@@ -367,6 +367,10 @@ mainState.prototype = {
     if (this.paddleLeftSprite.body.y < gameProperties.paddleTopGap) {
       this.paddleLeftSprite.body.y = gameProperties.paddleTopGap;
     }
+    socket.emit('move_paddle', {
+      id: userId,
+      y: this.paddleLeftSprite.body.y
+    })
   },
 
   moveRightPaddle: function () {
@@ -459,7 +463,8 @@ mainState.prototype = {
     //this.winnerRight.visible = false;
   },
 };
-
-var game = new Phaser.Game(gameProperties.screenWidth, gameProperties.screenHeight, Phaser.AUTO, 'munch-pong', false, true);
-game.state.add('main', mainState);
-game.state.start('main');
+if ($('#munch-pong').length > 0) {
+  var game = new Phaser.Game(gameProperties.screenWidth, gameProperties.screenHeight, Phaser.AUTO, 'munch-pong', false, true);
+  game.state.add('main', mainState);
+  game.state.start('main');
+}
