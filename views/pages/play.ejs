@@ -44,6 +44,11 @@
     </main>
 
     <footer>
+        <div id="games"></div>
+        <script>
+          var opponent = <%- JSON.stringify(opponentId) %>;
+          var profile = <%- JSON.stringify(profile) %>;
+        </script>
         <% include ../partials/footer.ejs %>
         <script src='/javascripts/game.js'></script>
     </footer>

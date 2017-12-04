@@ -58,7 +58,7 @@ app.use(session({
   secret: '23!@#$GFDS54sdgdfs!@$*^%',
   resave: true,
   saveUninitialized: true,
-  cookie: { secure: false, maxAge: 864000 }
+  cookie: { secure: false, maxAge: 86400000 * 60 }
 }));
 
 // view engine setup

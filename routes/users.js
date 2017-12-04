@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var socket = require('../controllers/socket');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -16,11 +15,14 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/actives', function (req, res, next) {
-  console.log(req.app.get('socketio').sockets);
-  res.json(req.app.get('socketio').sockets);
-  /*res.writeHead(200, {'Content-Type': 'application/json'});
-  res.end(JSON.stringify(req.app.get('socketio').sockets));*/
-  //res.json({ a: 1 });
+  let validUsers = {};
+  Object.keys(req.app.get('socketio').activeUsers).map((key) => {
+    console.log(req.session.userId);
+    if(Date.now() - req.app.get('socketio').activeUsers[key].time < 10*60*1000 && req.app.get('socketio').activeUsers[key].profile.PlayerId !== req.session.userId){
+      validUsers[key] = req.app.get('socketio').activeUsers[key];
+    }
+  });
+  res.json(validUsers);
 });
 
 module.exports = router;

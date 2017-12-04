@@ -16,7 +16,27 @@ router.post('/login', function (req, res, next) {
     } else {
       req.session.userId = result.data.PlayFabId;
       req.session.sessionTicket = result.data.SessionTicket;
-      res.redirect('/profile');
+      playfab.GetPlayerProfile({
+        PlayFabId: result.data.PlayFabId,
+        ProfileConstraints: {
+          ShowDisplayName: true,
+          ShowLinkedAccounts: true
+        }
+      }, (error, response) => {
+        if (error) { console.log(error); }
+        else {
+          delete response.data.PlayerProfile.TitleId;
+          if (response.data.PlayerProfile.LinkedAccounts && response.data.PlayerProfile.LinkedAccounts[0].Username) {
+            response.data.PlayerProfile.DisplayName = response.data.PlayerProfile.LinkedAccounts[0].Username;
+          }
+          req.session.profile = response.data.PlayerProfile;
+          req.app.get('socketio').activeUsers[result.data.PlayFabId] = {
+            profile: response.data.PlayerProfile,
+            time: Date.now()
+          };
+        }
+        res.redirect('/profile');
+      });
     }
   });
 });
@@ -35,13 +55,33 @@ router.get('/register', function (req, res, next) {
 
 router.get('/facebook', passport.authenticate('facebook', { scope: 'email' }));
 router.get('/social-login', passport.authenticate('facebook'),
-  function (req, res, next) {
+  (req, res, next) => {
     if (req.error) {
       res.redirect('/play');
     } else {
       req.session.userId = req.user.result.data.PlayFabId;
       req.session.sessionTicket = req.user.result.data.SessionTicket;
-      res.redirect('/profile');
+      playfab.GetPlayerProfile({
+        PlayFabId: req.user.result.data.PlayFabId,
+        ProfileConstraints: {
+          ShowDisplayName: true,
+          ShowLinkedAccounts: true
+        }
+      }, (error, response) => {
+        if (error) { console.log(error); }
+        else {
+          delete response.data.PlayerProfile.TitleId;
+          if (response.data.PlayerProfile.LinkedAccounts && response.data.PlayerProfile.LinkedAccounts[0].Username) {
+            response.data.PlayerProfile.DisplayName = response.data.PlayerProfile.LinkedAccounts[0].Username;
+          }
+          req.session.profile = response.data.PlayerProfile;
+          req.app.get('socketio').activeUsers[req.session.userId] = {
+            profile: response.data.PlayerProfile,
+            time: Date.now()
+          };
+        }
+        res.redirect('/profile');
+      });
     }
   });
 
