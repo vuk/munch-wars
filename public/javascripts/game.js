@@ -140,6 +140,10 @@ mainState.prototype = {
     this.startDemo();
     this.drawBorders();
     //this.startCountdown();
+    var self = this;
+    socket.on('start_game', function (data) {
+      self.startGame();
+    });
   },
 
   update: function () {

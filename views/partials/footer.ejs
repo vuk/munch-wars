@@ -1,6 +1,27 @@
 <script>
   var userId = <%- JSON.stringify(playfabId) %>;
 </script>
+
+<div class="modal fade" id="accept_modal" tabindex="-1" role="dialog" aria-labelledby="accept_modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+            </div>
+            <div class="modal-body">
+                <div class="content">
+                    <div>Dobio si poziv na duel od:</div>
+                    <div id="opponent-name"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="accept_invite" type="button" class="btn btn-primary">prihvati poziv</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">odbij poziv</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script src='/jquery/jquery.min.js'></script>
 <script src='/phaser/phaser.min.js'></script>
 <script src='/bootstrap/js/bootstrap.min.js'></script>

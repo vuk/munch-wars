@@ -10,7 +10,8 @@ router.get('/', function(req, res, next) {
       active: 'play',
       playfabId: req.session.userId || null,
       opponentId: req.query.game || null,
-      profile: req.session.profile || null
+      profile: req.session.profile || null,
+      noevent: req.query.noevent || false
     });
   } else {
     res.render('pages/login', {
