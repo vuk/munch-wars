@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "startmon": "nodemon ./bin/www"
+    "startmon": "forever ./bin/www"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
