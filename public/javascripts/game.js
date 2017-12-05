@@ -90,6 +90,8 @@ var labels = {
   clickToStart: 'STRELICAMA GORE/DOLE POMERAŠ MUNCH, \nBROJEVIMA 1/2/3 ISPALJUJEŠ MAGIJE \n\n OSTVARI 6 BODOVA ZA POBEDU',
 };
 
+var isHome = false;
+
 var mainState = function (game) {
   this.backgroundGraphics;
   this.ballSprite;
@@ -126,6 +128,9 @@ var mainState = function (game) {
 
 mainState.prototype = {
   preload: function () {
+    if (userId === getParameterByName('game')) {
+      isHome = true;
+    }
     game.load.image(graphicAssets.ballName, graphicAssets.ballURL);
     game.load.image(graphicAssets.paddleName, graphicAssets.paddleURL);
     game.load.image(graphicAssets.paddleRightName, graphicAssets.paddleRightURL);
@@ -156,11 +161,12 @@ mainState.prototype = {
     });
 
     socket.on('move', function (data) {
-      if(data.side === 'right') {
+      if(data.side === 'right' && !isHome) {
         self.paddleRightSprite.body.y = data.y;
         self.paddleRightSprite.body.velocity.y = data.velocity;
         console.log(self.paddleRightSprite.body.y);
-      } else {
+      }
+      if(data.side === 'left' && isHome) {
         self.paddleLeftSprite.body.y = data.y;
         console.log(self.paddleLeftSprite.body.y);
         self.paddleLeftSprite.body.velocity.y = data.velocity;
