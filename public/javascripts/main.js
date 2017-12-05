@@ -14,7 +14,7 @@ var socket;
 
 })();
 
-socket = io.connect('http://localhost:3000/');
+socket = io.connect('http://sentora.vukstankovic.com:3000/');
 socket.on('connected', function (data) {
   if (data.status) {
     socket.emit('identify', { id: userId });
