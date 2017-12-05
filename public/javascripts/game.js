@@ -162,11 +162,11 @@ mainState.prototype = {
 
     socket.on('move', function (data) {
       if(data.side === 'right' && !isHome) {
-        game.physics.arcade.moveToXY(self.paddleRightSprite, self.paddleRightSprite.x, data.y, 300, 10);
+        game.physics.arcade.moveToXY(self.paddleRightSprite, self.paddleRightSprite.x, data.y);
         //self.paddleRightSprite.body.velocity.y = data.velocity;
       }
       if(data.side === 'left' && isHome) {
-        game.physics.arcade.moveToXY(self.paddleLeftSprite, self.paddleLeftSprite.x, data.y, 300, 10);
+        game.physics.arcade.moveToXY(self.paddleLeftSprite, self.paddleLeftSprite.x, data.y);
         //self.paddleLeftSprite.body.velocity.y = data.velocity;
       }
     });
@@ -189,7 +189,7 @@ mainState.prototype = {
       })
     } else {
       socket.on('ball', function (data) {
-        game.physics.arcade.moveToXY(self.ballSprite, data.x, data.y, 300, 10);
+        game.physics.arcade.moveToXY(self.ballSprite, data.x, data.y);
       });
     }
   },
