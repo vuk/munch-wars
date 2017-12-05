@@ -6,6 +6,16 @@ var initializeSound = function () {
   }
 };
 
+function getParameterByName(name, url) {
+  if (!url) url = window.location.href;
+  name = name.replace(/[\[\]]/g, "\\$&");
+  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+    results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
 var toggleSound = function () {
   game.sound.mute = !game.sound.mute;
   localStorage.setItem('muted', game.sound.mute.toString());
@@ -143,6 +153,14 @@ mainState.prototype = {
     var self = this;
     socket.on('start_game', function (data) {
       self.startGame();
+    });
+
+    socket.on('move', function (data) {
+      if(data.side === 'right') {
+        self.paddleRightSprite.body.y = data.y;
+      } else {
+        self.paddleLeftSprite.body.y = data.y;
+      }
     });
   },
 
@@ -368,9 +386,10 @@ mainState.prototype = {
       this.paddleLeftSprite.body.y = gameProperties.paddleTopGap;
     }
     socket.emit('move_paddle', {
-      id: userId,
+      id: getParameterByName('game'),
+      side: 'left',
       y: this.paddleLeftSprite.body.y
-    })
+    });
   },
 
   moveRightPaddle: function () {
@@ -386,6 +405,12 @@ mainState.prototype = {
     if (this.paddleRightSprite.body.y < gameProperties.paddleTopGap) {
       this.paddleRightSprite.body.y = gameProperties.paddleTopGap;
     }
+
+    socket.emit('move_paddle', {
+      id: getParameterByName('game'),
+      side: 'right',
+      y: this.paddleRightSprite.body.y
+    });
   },
 
   collideWithPaddle: function (ball, paddle) {

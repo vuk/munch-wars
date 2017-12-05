@@ -30,11 +30,15 @@ module.exports = {
           });
         }, 2000);
       });
+      let player1;
+      let player2;
       socket.on('accept', (data) => {
         console.log('accept', data);
 /*        this.sockets[data.id].join(data.myId);
         this.sockets[data.myId].join(data.myId);*/
         console.log(this.io.sockets.adapter.rooms[data.myId].sockets);
+        player1 = data.myId;
+        player2 = data.id;
         if (Object.keys(this.io.sockets.adapter.rooms[data.myId].sockets).length === 2) {
           setTimeout(() => {
             console.log('start_game');
@@ -44,6 +48,10 @@ module.exports = {
             });
           }, 5000);
         }
+      });
+      socket.on('move_paddle', (data) => {
+        console.log('moving paddle', data);
+        this.io.to(data.id).emit('move', data);
       });
       socket.on('disconnect', () => {
         console.log('disconnected', socket.id);

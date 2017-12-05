@@ -14,16 +14,11 @@ var socket;
 
 })();
 
-socket = io.connect('http://sentora.vukstankovic.com:3000/');
+socket = io.connect('http://localhost:3000/');
 socket.on('connected', function (data) {
   if (data.status) {
-    console.log(data);
     socket.emit('identify', { id: userId });
   }
-});
-
-socket.on('request_game', function (data) {
-  console.log(data);
 });
 
 socket.on('accept_invite', function (data) {
@@ -34,10 +29,6 @@ socket.on('accept_invite', function (data) {
   if (data.player2.profile.PlayerId !== userId) {
     localStorage.setItem('opponentId', data.player2.profile.PlayerId);
   }
-});
-
-socket.on('start_game', function (data) {
-  console.log(data);
 });
 
 $('#accept_invite').click(function () {
@@ -52,7 +43,11 @@ $('#accept_invite').click(function () {
 });
 
 if (jQuery('#games').length > 0 && !noevent) {
-  socket.emit('invite', { id: opponent, myId: userId });
+  if (window.location.href.indexOf('?game=') === -1) {
+    window.location.href = '/profile';
+  } else {
+    socket.emit('invite', { id: opponent, myId: userId });
+  }
 }
 
 // Load opponents
