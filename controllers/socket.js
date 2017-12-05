@@ -53,6 +53,10 @@ module.exports = {
         console.log('moving paddle', data);
         this.io.to(data.id).emit('move', data);
       });
+      socket.on('ball_position', (data) => {
+        console.log('ball', data);
+        this.io.to(data.id).emit('ball', data);
+      });
       socket.on('disconnect', () => {
         console.log('disconnected', socket.id);
       });

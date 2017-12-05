@@ -182,6 +182,21 @@ mainState.prototype = {
     if (this.ballSprite.body.blocked.up || this.ballSprite.body.blocked.down || this.ballSprite.body.blocked.left || this.ballSprite.body.blocked.right) {
       this.sndBallBounce.play();
     }
+    var self = this;
+    if (isHome) {
+      socket.emit('ball_position', {
+        id: getParameterByName('game'),
+        x: this.ballSprite.body.x,
+        y: this.ballSprite.body.y,
+        velocity: this.ballSprite.body.velocity
+      })
+    } else {
+      socket.on('ball', function (data) {
+        self.ballSprite.body.x = data.x;
+        self.ballSprite.body.y = data.y;
+        self.ballSprite.body.velocity = velocity;
+      });
+    }
   },
 
   drawBorders: function () {
