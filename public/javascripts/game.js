@@ -186,9 +186,11 @@ mainState.prototype = {
         id: getParameterByName('game'),
         x: this.ballSprite.body.x,
         y: this.ballSprite.body.y,
+        visible: this.ballSprite.visible
       })
     } else {
       socket.on('ball', function (data) {
+        self.ballSprite.visible = data.visible;
         game.physics.arcade.moveToXY(self.ballSprite, data.x, data.y, 0, 16);
       });
     }
