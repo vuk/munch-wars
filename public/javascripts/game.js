@@ -357,21 +357,25 @@ mainState.prototype = {
     this.ballReturnCount = 0;
     this.ballSprite.visible = true;
 
-    var randomAngle = game.rnd.pick(gameProperties.ballRandomStartingAngleRight.concat(gameProperties.ballRandomStartingAngleLeft));
+    if (!isHome) {
+      var randomAngle = game.rnd.pick(gameProperties.ballRandomStartingAngleRight.concat(gameProperties.ballRandomStartingAngleLeft));
 
-    if (this.missedSide == 'right') {
-      randomAngle = game.rnd.pick(gameProperties.ballRandomStartingAngleRight);
-    } else if (this.missedSide == 'left') {
-      randomAngle = game.rnd.pick(gameProperties.ballRandomStartingAngleLeft);
+      if (this.missedSide == 'right') {
+        randomAngle = game.rnd.pick(gameProperties.ballRandomStartingAngleRight);
+      } else if (this.missedSide == 'left') {
+        randomAngle = game.rnd.pick(gameProperties.ballRandomStartingAngleLeft);
+      }
+
+      game.physics.arcade.velocityFromAngle(randomAngle, gameProperties.ballVelocity, this.ballSprite.body.velocity);
     }
-
-    game.physics.arcade.velocityFromAngle(randomAngle, gameProperties.ballVelocity, this.ballSprite.body.velocity);
   },
 
   resetBall: function () {
-    this.ballSprite.reset(game.world.centerX, game.rnd.between(0, gameProperties.screenHeight));
-    this.ballSprite.visible = false;
-    game.time.events.add(Phaser.Timer.SECOND * gameProperties.ballStartDelay, this.startBall, this);
+    if (!isHome) {
+      this.ballSprite.reset(game.world.centerX, game.rnd.between(0, gameProperties.screenHeight));
+      this.ballSprite.visible = false;
+      game.time.events.add(Phaser.Timer.SECOND * gameProperties.ballStartDelay, this.startBall, this);
+    }
   },
 
   enablePaddles: function (enabled) {
