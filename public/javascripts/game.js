@@ -163,11 +163,11 @@ mainState.prototype = {
     socket.on('move', function (data) {
       if(data.side === 'right' && !isHome) {
         self.paddleRightSprite.body.y = data.y;
-        self.paddleRightSprite.body.velocity.y = data.velocity;
+        //self.paddleRightSprite.body.velocity.y = data.velocity;
       }
       if(data.side === 'left' && isHome) {
         self.paddleLeftSprite.body.y = data.y;
-        self.paddleLeftSprite.body.velocity.y = data.velocity;
+        //self.paddleLeftSprite.body.velocity.y = data.velocity;
       }
     });
   },
