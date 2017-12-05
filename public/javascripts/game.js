@@ -157,7 +157,7 @@ mainState.prototype = {
     //this.startCountdown();
     var self = this;
     socket.on('start_game', function (data) {
-      self.startGame();
+      self.startCountdown();
     });
 
     socket.on('move', function (data) {
@@ -339,7 +339,7 @@ mainState.prototype = {
     this.resetBall();
     this.enablePaddles(false);
     this.enableBoundaries(true);
-    game.input.onDown.add(this.startCountdown, this);
+    //game.input.onDown.add(this.startCountdown, this);
 
     this.instructions.visible = true;
   },
