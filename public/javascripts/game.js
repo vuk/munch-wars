@@ -158,10 +158,12 @@ mainState.prototype = {
     socket.on('move', function (data) {
       if(data.side === 'right') {
         self.paddleRightSprite.body.y = data.y;
+        self.paddleRightSprite.body.velocity.y = data.velocity;
         console.log(self.paddleRightSprite.body.y);
       } else {
         self.paddleLeftSprite.body.y = data.y;
         console.log(self.paddleLeftSprite.body.y);
+        self.paddleLeftSprite.body.velocity.y = data.velocity;
       }
     });
   },
