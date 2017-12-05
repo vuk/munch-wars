@@ -164,11 +164,9 @@ mainState.prototype = {
       if(data.side === 'right' && !isHome) {
         self.paddleRightSprite.body.y = data.y;
         self.paddleRightSprite.body.velocity.y = data.velocity;
-        console.log(self.paddleRightSprite.body.y);
       }
       if(data.side === 'left' && isHome) {
         self.paddleLeftSprite.body.y = data.y;
-        console.log(self.paddleLeftSprite.body.y);
         self.paddleLeftSprite.body.velocity.y = data.velocity;
       }
     });
@@ -191,7 +189,6 @@ mainState.prototype = {
       })
     } else {
       socket.on('ball', function (data) {
-        console.log('ball position is', data);
         self.ballSprite.body.x = data.x;
         self.ballSprite.body.y = data.y;
       });
