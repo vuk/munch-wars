@@ -158,8 +158,10 @@ mainState.prototype = {
     socket.on('move', function (data) {
       if(data.side === 'right') {
         self.paddleRightSprite.body.y = data.y;
+        console.log(self.paddleRightSprite.body.y);
       } else {
         self.paddleLeftSprite.body.y = data.y;
+        console.log(self.paddleLeftSprite.body.y);
       }
     });
   },
@@ -388,6 +390,7 @@ mainState.prototype = {
     socket.emit('move_paddle', {
       id: getParameterByName('game'),
       side: 'left',
+      velocity: this.paddleLeftSprite.body.velocity.y,
       y: this.paddleLeftSprite.body.y
     });
   },
@@ -409,6 +412,7 @@ mainState.prototype = {
     socket.emit('move_paddle', {
       id: getParameterByName('game'),
       side: 'right',
+      velocity: this.paddleRightSprite.body.velocity.y,
       y: this.paddleRightSprite.body.y
     });
   },
