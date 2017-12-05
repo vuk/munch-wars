@@ -162,11 +162,11 @@ mainState.prototype = {
 
     socket.on('move', function (data) {
       if(data.side === 'right' && !isHome) {
-        game.physics.arcade.moveToXY(self.paddleRightSprite, self.paddleRightSprite.x, data.y);
+        game.physics.arcade.moveToXY(self.paddleRightSprite, self.paddleRightSprite.body.x, data.y);
         //self.paddleRightSprite.body.velocity.y = data.velocity;
       }
       if(data.side === 'left' && isHome) {
-        game.physics.arcade.moveToXY(self.paddleLeftSprite, self.paddleLeftSprite.x, data.y);
+        game.physics.arcade.moveToXY(self.paddleLeftSprite, self.paddleLeftSprite.body.x, data.y);
         //self.paddleLeftSprite.body.velocity.y = data.velocity;
       }
     });
