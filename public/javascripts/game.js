@@ -162,11 +162,11 @@ mainState.prototype = {
 
     socket.on('move', function (data) {
       if(data.side === 'right' && !isHome) {
-        game.physics.arcade.moveToXY(self.paddleRightSprite, gameProperties.paddleRight_x, data.y, 0, 16);
+        game.physics.arcade.moveToXY(self.paddleRightSprite, gameProperties.paddleRight_x, data.y, 0, 17);
         //self.paddleRightSprite.body.velocity.y = data.velocity;
       }
       if(data.side === 'left' && isHome) {
-        game.physics.arcade.moveToXY(self.paddleLeftSprite, gameProperties.paddleLeft_x, data.y, 0, 16);
+        game.physics.arcade.moveToXY(self.paddleLeftSprite, gameProperties.paddleLeft_x, data.y, 0, 17);
         //self.paddleLeftSprite.body.velocity.y = data.velocity;
       }
     });
@@ -191,7 +191,7 @@ mainState.prototype = {
     } else {
       socket.on('ball', function (data) {
         self.ballSprite.visible = data.visible;
-        game.physics.arcade.moveToXY(self.ballSprite, data.x, data.y, 0, 16);
+        game.physics.arcade.moveToXY(self.ballSprite, data.x, data.y, 0, 17);
       });
     }
   },
@@ -478,13 +478,25 @@ mainState.prototype = {
 
   ballOutOfBounds: function () {
     this.sndBallMissed.play();
-
-    if (this.ballSprite.x < 0) {
-      this.missedSide = 'left';
-      this.scoreRight++;
-    } else if (this.ballSprite.x > gameProperties.screenWidth) {
-      this.missedSide = 'right';
-      this.scoreLeft++;
+    if (isHome) {
+      if (this.ballSprite.x < 0) {
+        this.missedSide = 'left';
+        this.scoreRight++;
+      } else if (this.ballSprite.x > gameProperties.screenWidth) {
+        this.missedSide = 'right';
+        this.scoreLeft++;
+      }
+      socket.emit('relevant_score', {
+        id: getParameterByName('game'),
+        scoreLeft: this.scoreLeft,
+        scoreRight: this.scoreRight
+      })
+    } else {
+      var self = this;
+      socket.on('score', function (data) {
+        self.scoreLeft = data.scoreLeft;
+        self.scoreRight = data.scoreRight;
+      });
     }
 
     this.updateScoreTextFields();

@@ -51,6 +51,9 @@ module.exports = {
       socket.on('ball_position', (data) => {
         this.io.to(data.id).emit('ball', data);
       });
+      socket.on('relevant_score', (data) => {
+        this.io.to(data.id).emit('score', data);
+      });
       socket.on('disconnect', () => {
         console.log('disconnected', socket.id);
       });
