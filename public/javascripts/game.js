@@ -357,7 +357,7 @@ mainState.prototype = {
     this.ballReturnCount = 0;
     this.ballSprite.visible = true;
 
-    if (!isHome) {
+    if (isHome) {
       var randomAngle = game.rnd.pick(gameProperties.ballRandomStartingAngleRight.concat(gameProperties.ballRandomStartingAngleLeft));
 
       if (this.missedSide == 'right') {
@@ -371,7 +371,7 @@ mainState.prototype = {
   },
 
   resetBall: function () {
-    if (!isHome) {
+    if (isHome) {
       this.ballSprite.reset(game.world.centerX, game.rnd.between(0, gameProperties.screenHeight));
       this.ballSprite.visible = false;
       game.time.events.add(Phaser.Timer.SECOND * gameProperties.ballStartDelay, this.startBall, this);
