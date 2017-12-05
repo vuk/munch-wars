@@ -189,7 +189,7 @@ mainState.prototype = {
       })
     } else {
       socket.on('ball', function (data) {
-        game.physics.arcade.moveToXY(self.ballSprite, data.x, data.y);
+        game.physics.arcade.moveToXY(self.ballSprite, data.x, data.y, 0, 16);
       });
     }
   },
