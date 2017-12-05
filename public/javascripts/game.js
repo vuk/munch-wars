@@ -394,46 +394,49 @@ mainState.prototype = {
   },
 
   moveLeftPaddle: function () {
-    if (this.paddleLeft_up.isDown) {
-      this.paddleLeftSprite.body.velocity.y = -gameProperties.paddleVelocity;
-    }
-    else if (this.paddleLeft_down.isDown) {
-      this.paddleLeftSprite.body.velocity.y = gameProperties.paddleVelocity;
-    } else {
-      this.paddleLeftSprite.body.velocity.y = 0;
-    }
+    if (!isHome) {
+      if (this.paddleRight_up.isDown) {
+        this.paddleLeftSprite.body.velocity.y = -gameProperties.paddleVelocity;
+      }
+      else if (this.paddleRight_down.isDown) {
+        this.paddleLeftSprite.body.velocity.y = gameProperties.paddleVelocity;
+      } else {
+        this.paddleLeftSprite.body.velocity.y = 0;
+      }
 
-    if (this.paddleLeftSprite.body.y < gameProperties.paddleTopGap) {
-      this.paddleLeftSprite.body.y = gameProperties.paddleTopGap;
+      if (this.paddleLeftSprite.body.y < gameProperties.paddleTopGap) {
+        this.paddleLeftSprite.body.y = gameProperties.paddleTopGap;
+      }
+      socket.emit('move_paddle', {
+        id: getParameterByName('game'),
+        side: 'left',
+        velocity: this.paddleLeftSprite.body.velocity.y,
+        y: this.paddleLeftSprite.body.y
+      });
     }
-    socket.emit('move_paddle', {
-      id: getParameterByName('game'),
-      side: 'left',
-      velocity: this.paddleLeftSprite.body.velocity.y,
-      y: this.paddleLeftSprite.body.y
-    });
   },
 
   moveRightPaddle: function () {
-    if (this.paddleRight_up.isDown) {
-      this.paddleRightSprite.body.velocity.y = -gameProperties.paddleVelocity;
-    }
-    else if (this.paddleRight_down.isDown) {
-      this.paddleRightSprite.body.velocity.y = gameProperties.paddleVelocity;
-    } else {
-      this.paddleRightSprite.body.velocity.y = 0;
-    }
+    if (isHome) {
+      if (this.paddleRight_up.isDown) {
+        this.paddleRightSprite.body.velocity.y = -gameProperties.paddleVelocity;
+      }
+      else if (this.paddleRight_down.isDown) {
+        this.paddleRightSprite.body.velocity.y = gameProperties.paddleVelocity;
+      } else {
+        this.paddleRightSprite.body.velocity.y = 0;
+      }
 
-    if (this.paddleRightSprite.body.y < gameProperties.paddleTopGap) {
-      this.paddleRightSprite.body.y = gameProperties.paddleTopGap;
+      if (this.paddleRightSprite.body.y < gameProperties.paddleTopGap) {
+        this.paddleRightSprite.body.y = gameProperties.paddleTopGap;
+      }
+      socket.emit('move_paddle', {
+        id: getParameterByName('game'),
+        side: 'right',
+        velocity: this.paddleRightSprite.body.velocity.y,
+        y: this.paddleRightSprite.body.y
+      });
     }
-
-    socket.emit('move_paddle', {
-      id: getParameterByName('game'),
-      side: 'right',
-      velocity: this.paddleRightSprite.body.velocity.y,
-      y: this.paddleRightSprite.body.y
-    });
   },
 
   collideWithPaddle: function (ball, paddle) {
