@@ -93,9 +93,16 @@ router.post('/register', function (req, res, next) {
     Password: req.body.password,
     TitleId: playfab.settings.titleId
   }, function (err, result) {
-    if (req.error) {
-      res.redirect('/auth/register');
+    console.log(err);
+    if (err) {
+      res.render('pages/register', {
+        title: 'Registrujte se',
+        active: 'play',
+        playfabId: req.session.userId || null,
+        error: err.errorMessage
+      });
     } else {
+      console.log(result);
       req.session.userId = result.data.PlayFabId;
       req.session.sessionTicket = result.data.SessionTicket;
       res.redirect('/profile');

@@ -33,10 +33,6 @@ module.exports = {
       let player1;
       let player2;
       socket.on('accept', (data) => {
-        console.log('accept', data);
-/*        this.sockets[data.id].join(data.myId);
-        this.sockets[data.myId].join(data.myId);*/
-        console.log(this.io.sockets.adapter.rooms[data.myId].sockets);
         player1 = data.myId;
         player2 = data.id;
         if (Object.keys(this.io.sockets.adapter.rooms[data.myId].sockets).length === 2) {
@@ -50,11 +46,9 @@ module.exports = {
         }
       });
       socket.on('move_paddle', (data) => {
-        console.log('moving paddle', data);
         this.io.to(data.id).emit('move', data);
       });
       socket.on('ball_position', (data) => {
-        console.log('ball', data);
         this.io.to(data.id).emit('ball', data);
       });
       socket.on('disconnect', () => {
