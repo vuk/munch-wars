@@ -184,20 +184,16 @@ mainState.prototype = {
     }
     var self = this;
     if (isHome) {
-      console.log('emit ball position');
-      console.log(this.ballSprite.body.velocity);
       socket.emit('ball_position', {
         id: getParameterByName('game'),
         x: this.ballSprite.body.x,
         y: this.ballSprite.body.y,
-        velocity: this.ballSprite.body.velocity
       })
     } else {
       socket.on('ball', function (data) {
         console.log('ball position is', data);
         self.ballSprite.body.x = data.x;
         self.ballSprite.body.y = data.y;
-        self.ballSprite.body.velocity = velocity;
       });
     }
   },
