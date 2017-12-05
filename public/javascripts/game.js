@@ -43,7 +43,7 @@ var gameProperties = {
   ballVelocityIncrement: 25,
   ballReturnCount: 4,
 
-  scoreToWin: 6,
+  scoreToWin: 60,
 };
 
 var graphicAssets = {
