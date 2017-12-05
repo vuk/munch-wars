@@ -185,6 +185,7 @@ mainState.prototype = {
     var self = this;
     if (isHome) {
       console.log('emit ball position');
+      console.log(this.ballSprite.body.velocity);
       socket.emit('ball_position', {
         id: getParameterByName('game'),
         x: this.ballSprite.body.x,
