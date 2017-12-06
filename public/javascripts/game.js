@@ -216,7 +216,11 @@ mainState.prototype = {
       } else if(diff > 0 && diff > 4) { // max speed right
         diff = 5;
       }
-      game.physics.arcade.moveToXY(this.paddleRightSprite, gameProperties.paddleRight_x, this.paddleRightSprite.body.y + diff, 0, 17);
+      if (diff > 0) {
+        this.moveRightPaddle('down');
+      } else if (diff < 0) {
+        this.moveRightPaddle('up');
+      }
       /*if(this.paddle.x < 0) {
         this.paddle.x = 0;
       } else if (this.paddle.x + this.paddle.width > 400) {
@@ -427,8 +431,8 @@ mainState.prototype = {
     game.physics.arcade.checkCollision.right = enabled;
   },
 
-  moveLeftPaddle: function () {
-    if (!isHome) {
+  moveLeftPaddle: function (direction) {
+    if (!isHome || computer) {
       if (this.paddleRight_up.isDown) {
         this.paddleLeftSprite.body.velocity.y = -gameProperties.paddleVelocity;
       }
@@ -450,7 +454,8 @@ mainState.prototype = {
     }
   },
 
-  moveRightPaddle: function () {
+  moveRightPaddle: function (direction) {
+    var direction = direction || null;
     if (isHome) {
       if (this.paddleRight_up.isDown) {
         this.paddleRightSprite.body.velocity.y = -gameProperties.paddleVelocity;
@@ -470,6 +475,20 @@ mainState.prototype = {
         velocity: this.paddleRightSprite.body.velocity.y,
         y: this.paddleRightSprite.body.y + this.paddleRightSprite.body.height / 2
       });
+    }
+    if (computer) {
+      if (direction === 'up') {
+        this.paddleRightSprite.body.velocity.y = -gameProperties.paddleVelocity;
+      }
+      else if (direction === 'down') {
+        this.paddleRightSprite.body.velocity.y = gameProperties.paddleVelocity;
+      } else {
+        this.paddleRightSprite.body.velocity.y = 0;
+      }
+
+      if (this.paddleRightSprite.body.y < gameProperties.paddleTopGap) {
+        this.paddleRightSprite.body.y = gameProperties.paddleTopGap;
+      }
     }
   },
 
@@ -507,7 +526,7 @@ mainState.prototype = {
 
   ballOutOfBounds: function () {
     this.sndBallMissed.play();
-    if (isHome) {
+    if (isHome || computer) {
       if (this.ballSprite.x < 0) {
         this.missedSide = 'left';
         this.scoreRight++;
