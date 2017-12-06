@@ -7,7 +7,8 @@ router.get('/', function(req, res, next) {
     res.render('pages/profile', {
       title: 'Profil',
       active: 'play',
-      playfabId: req.session.userId || null
+      playfabId: req.session.userId || null,
+      profile: req.session.profile || null
     });
   } else {
     res.redirect('/play');
