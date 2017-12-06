@@ -158,7 +158,8 @@ mainState.prototype = {
     //this.startCountdown();
     var self = this;
     if (computer) {
-      game.input.onDown.add(this.startCountdown, this);
+      //game.input.onDown.add(this.startCountdown, this);
+      this.startCountdown();
     } else {
       socket.on('start_game', function (data) {
         self.startCountdown();
@@ -372,14 +373,14 @@ mainState.prototype = {
     this.resetBall();
     this.enablePaddles(false);
     this.enableBoundaries(true);
-    if (computer) {
+    /*if (computer) {
       game.input.onDown.add(this.startCountdown, this);
-    }
+    }*/
     this.instructions.visible = true;
   },
 
   startGame: function () {
-    //game.input.onDown.remove(this.startCountdown, this);
+    game.input.onDown.remove(this.startCountdown, this);
 
     this.enablePaddles(true);
     this.enableBoundaries(false);
