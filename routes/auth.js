@@ -23,23 +23,26 @@ router.post('/login', function (req, res, next) {
           ShowLinkedAccounts: true
         }
       }, (error, response) => {
-        if (error) { console.log(error); }
+        if (error) {
+          console.log(error);
+          res.redirect('/play');
+        }
         else {
           playfab.GetPlayerStatistics({}, (err, stats) => {
             console.log(stats);
+            delete response.data.PlayerProfile.TitleId;
+            if (response.data.PlayerProfile.LinkedAccounts && response.data.PlayerProfile.LinkedAccounts[0].Username) {
+              response.data.PlayerProfile.DisplayName = response.data.PlayerProfile.LinkedAccounts[0].Username;
+            }
+            req.session.profile = response.data.PlayerProfile;
+            req.app.get('socketio').activeUsers[result.data.PlayFabId] = {
+              profile: response.data.PlayerProfile,
+              time: Date.now()
+            };
             req.session.stats = stats;
+            res.redirect('/profile');
           });
-          delete response.data.PlayerProfile.TitleId;
-          if (response.data.PlayerProfile.LinkedAccounts && response.data.PlayerProfile.LinkedAccounts[0].Username) {
-            response.data.PlayerProfile.DisplayName = response.data.PlayerProfile.LinkedAccounts[0].Username;
-          }
-          req.session.profile = response.data.PlayerProfile;
-          req.app.get('socketio').activeUsers[result.data.PlayFabId] = {
-            profile: response.data.PlayerProfile,
-            time: Date.now()
-          };
         }
-        res.redirect('/profile');
       });
     }
   });
@@ -72,23 +75,26 @@ router.get('/social-login', passport.authenticate('facebook'),
           ShowLinkedAccounts: true
         }
       }, (error, response) => {
-        if (error) { console.log(error); }
+        if (error) {
+          console.log(error);
+          res.redirect('/play');
+        }
         else {
           playfab.GetPlayerStatistics({}, (err, stats) => {
             console.log(stats);
             req.session.stats = stats;
+            delete response.data.PlayerProfile.TitleId;
+            if (response.data.PlayerProfile.LinkedAccounts && response.data.PlayerProfile.LinkedAccounts[0].Username) {
+              response.data.PlayerProfile.DisplayName = response.data.PlayerProfile.LinkedAccounts[0].Username;
+            }
+            req.session.profile = response.data.PlayerProfile;
+            req.app.get('socketio').activeUsers[req.session.userId] = {
+              profile: response.data.PlayerProfile,
+              time: Date.now()
+            };
+            res.redirect('/profile');
           });
-          delete response.data.PlayerProfile.TitleId;
-          if (response.data.PlayerProfile.LinkedAccounts && response.data.PlayerProfile.LinkedAccounts[0].Username) {
-            response.data.PlayerProfile.DisplayName = response.data.PlayerProfile.LinkedAccounts[0].Username;
-          }
-          req.session.profile = response.data.PlayerProfile;
-          req.app.get('socketio').activeUsers[req.session.userId] = {
-            profile: response.data.PlayerProfile,
-            time: Date.now()
-          };
         }
-        res.redirect('/profile');
       });
     }
   });
