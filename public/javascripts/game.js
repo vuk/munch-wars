@@ -170,6 +170,15 @@ mainState.prototype = {
         //self.paddleLeftSprite.body.velocity.y = data.velocity;
       }
     });
+    var self = this;
+    socket.on('score', function (data) {
+      self.scoreLeft = data.scoreLeft;
+      self.scoreRight = data.scoreRight;
+    });
+    socket.on('ball', function (data) {
+      self.ballSprite.visible = data.visible;
+      game.physics.arcade.moveToXY(self.ballSprite, data.x, data.y, 0, 17);
+    });
   },
 
   update: function () {
@@ -188,11 +197,6 @@ mainState.prototype = {
         y: this.ballSprite.body.y,
         visible: this.ballSprite.visible
       })
-    } else {
-      socket.on('ball', function (data) {
-        self.ballSprite.visible = data.visible;
-        game.physics.arcade.moveToXY(self.ballSprite, data.x, data.y, 0, 17);
-      });
     }
   },
 
@@ -416,7 +420,7 @@ mainState.prototype = {
         id: getParameterByName('game'),
         side: 'left',
         velocity: this.paddleLeftSprite.body.velocity.y,
-        y: this.paddleLeftSprite.body.y
+        y: this.paddleLeftSprite.body.y + this.paddleLeftSprite.body.height / 2
       });
     }
   },
@@ -439,7 +443,7 @@ mainState.prototype = {
         id: getParameterByName('game'),
         side: 'right',
         velocity: this.paddleRightSprite.body.velocity.y,
-        y: this.paddleRightSprite.body.y
+        y: this.paddleRightSprite.body.y + this.paddleRightSprite.body.height / 2
       });
     }
   },
@@ -491,12 +495,6 @@ mainState.prototype = {
         scoreLeft: this.scoreLeft,
         scoreRight: this.scoreRight
       })
-    } else {
-      var self = this;
-      socket.on('score', function (data) {
-        self.scoreLeft = data.scoreLeft;
-        self.scoreRight = data.scoreRight;
-      });
     }
 
     this.updateScoreTextFields();
