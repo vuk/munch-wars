@@ -544,14 +544,22 @@ mainState.prototype = {
     }
 
     if (this.scoreLeft >= gameProperties.scoreToWin) {
-      if ((getParameterByName('game') && getParameterByName('game') === userId) || computer) {
-        console.log('Home wins');
+      if ((getParameterByName('game') && getParameterByName('game') === userId && isHome) || computer) {
+        socket.emit('winner', {
+          id: userId,
+          points: this.scoreLeft,
+          pointsLoser: this.scoreRight
+        });
       }
       //this.winnerLeft.visible = true;
       this.startDemo();
     } else if (this.scoreRight >= gameProperties.scoreToWin) {
-      if ((getParameterByName('game') && getParameterByName('game') !== userId) || computer) {
-        console.log('Guest wins');
+      if (getParameterByName('game') && getParameterByName('game') !== userId && isHome) {
+        socket.emit('winner', {
+          id: opponent,
+          points: this.scoreRight,
+          pointsLoser: this.scoreLeft
+        });
       }
       //this.winnerRight.visible = true;
       this.startDemo();

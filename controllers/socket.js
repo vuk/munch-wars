@@ -4,6 +4,20 @@ module.exports = {
   sockets: {},
   activeUsers: {},
   io: null,
+  submitScore: (data) => {
+    playfab.UpdatePlayerStatistics({
+      "Montly Points": data.points,
+      "Weekly Points": data.points,
+      "Total Points": data.points,
+      "Points": data.points,
+      "Wins": 1,
+      "Weekly Wins": 1,
+      "Monthly Wins": 1,
+      "Total Wins": 1
+    }, (err, res) => {
+      console.log('Submit score', err, res);
+    });
+  },
   run: function (app, server) {
     this.io = require('socket.io')(server);
     console.log('Socket server running');
@@ -53,6 +67,9 @@ module.exports = {
       });
       socket.on('relevant_score', (data) => {
         this.io.to(data.id).emit('score', data);
+      });
+      socket.on('winner', (data) => {
+        this.submitScore(data);
       });
       socket.on('disconnect', () => {
         console.log('disconnected', socket.id);
