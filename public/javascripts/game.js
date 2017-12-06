@@ -218,7 +218,7 @@ mainState.prototype = {
       }
       if (diff > 0.5) {
         this.moveRightPaddle('down');
-      } else if (diff < 0.5) {
+      } else if (diff < -0.5) {
         this.moveRightPaddle('up');
       }
       /*if(this.paddle.x < 0) {
