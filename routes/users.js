@@ -8,7 +8,8 @@ router.get('/', function(req, res, next) {
       title: 'Profil',
       active: 'play',
       playfabId: req.session.userId || null,
-      profile: req.session.profile || null
+      profile: req.session.profile || null,
+      stats: req.session.stats || null
     });
   } else {
     res.redirect('/play');
