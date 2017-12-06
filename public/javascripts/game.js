@@ -372,13 +372,14 @@ mainState.prototype = {
     this.resetBall();
     this.enablePaddles(false);
     this.enableBoundaries(true);
-    //game.input.onDown.add(this.startCountdown, this);
-
+    if (computer) {
+      game.input.onDown.add(this.startCountdown, this);
+    }
     this.instructions.visible = true;
   },
 
   startGame: function () {
-    game.input.onDown.remove(this.startCountdown, this);
+    //game.input.onDown.remove(this.startCountdown, this);
 
     this.enablePaddles(true);
     this.enableBoundaries(false);
