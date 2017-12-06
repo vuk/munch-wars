@@ -1,14 +1,16 @@
 'use strict';
 const playfab = require('playfab-sdk/Scripts/PlayFab/PlayFabClient');
+const playfabServer = require('playfab-sdk/Scripts/PlayFab/PlayFabServer');
 module.exports = {
   sockets: {},
   activeUsers: {},
   io: null,
   submitScore: (data) => {
-    playfab.UpdatePlayerStatistics({
+    playfabServer.UpdatePlayerStatistics({
+      "PlayFabId": data.id,
       "Statistics": [
         {
-          "StatisticName": "Montly Points",
+          "StatisticName": "Monthly Points",
           "Value": data.points
         },
         {
@@ -95,6 +97,7 @@ module.exports = {
         this.io.to(data.id).emit('score', data);
       });
       socket.on('winner', (data) => {
+        console.log(data, 'winner');
         this.submitScore(data);
       });
       socket.on('disconnect', () => {
