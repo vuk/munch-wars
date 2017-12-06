@@ -6,14 +6,40 @@ module.exports = {
   io: null,
   submitScore: (data) => {
     playfab.UpdatePlayerStatistics({
-      "Montly Points": data.points,
-      "Weekly Points": data.points,
-      "Total Points": data.points,
-      "Points": data.points,
-      "Wins": 1,
-      "Weekly Wins": 1,
-      "Monthly Wins": 1,
-      "Total Wins": 1
+      "Statistics": [
+        {
+          "StatisticName": "Montly Points",
+          "Value": data.points
+        },
+        {
+          "StatisticName": "Weekly Points",
+          "Value": data.points
+        },
+        {
+          "StatisticName": "Points",
+          "Value": data.points
+        },
+        {
+          "StatisticName": "Total Points",
+          "Value": data.points
+        },
+        {
+          "StatisticName": "Wins",
+          "Value": 1
+        },
+        {
+          "StatisticName": "Weekly Wins",
+          "Value": 1
+        },
+        {
+          "StatisticName": "Monthly Wins",
+          "Value": 1
+        },
+        {
+          "StatisticName": "Total Wins",
+          "Value": 1
+        }
+      ]
     }, (err, res) => {
       console.log('Submit score', err, res);
     });
