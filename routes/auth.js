@@ -113,7 +113,7 @@ router.post('/register', function (req, res, next) {
 router.get('/logout', (req, res, next) => {
   req.session.destroy(function(err) {
     // cannot access session here
-    res.redirect('/auth/login');
+    res.redirect('/');
   })
 });
 
