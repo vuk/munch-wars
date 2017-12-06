@@ -388,7 +388,7 @@ mainState.prototype = {
     this.ballReturnCount = 0;
     this.ballSprite.visible = true;
 
-    if (isHome) {
+    if (isHome || computer) {
       var randomAngle = game.rnd.pick(gameProperties.ballRandomStartingAngleRight.concat(gameProperties.ballRandomStartingAngleLeft));
 
       if (this.missedSide == 'right') {
