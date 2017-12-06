@@ -174,10 +174,7 @@ mainState.prototype = {
     socket.on('score', function (data) {
       self.scoreLeft = data.scoreLeft;
       self.scoreRight = data.scoreRight;
-    });
-    socket.on('ball', function (data) {
-      self.ballSprite.visible = data.visible;
-      game.physics.arcade.moveToXY(self.ballSprite, data.x, data.y, 0, 17);
+      self.updateScoreTextFields();
     });
   },
 
@@ -197,6 +194,11 @@ mainState.prototype = {
         y: this.ballSprite.body.y,
         visible: this.ballSprite.visible
       })
+    } else {
+      socket.on('ball', function (data) {
+        self.ballSprite.visible = data.visible;
+        game.physics.arcade.moveToXY(self.ballSprite, data.x, data.y, 0, 17);
+      });
     }
   },
 
@@ -490,14 +492,14 @@ mainState.prototype = {
         this.missedSide = 'right';
         this.scoreLeft++;
       }
+
+      this.updateScoreTextFields();
       socket.emit('relevant_score', {
         id: getParameterByName('game'),
         scoreLeft: this.scoreLeft,
         scoreRight: this.scoreRight
       })
     }
-
-    this.updateScoreTextFields();
 
     if (this.scoreLeft >= gameProperties.scoreToWin) {
       //this.winnerLeft.visible = true;
