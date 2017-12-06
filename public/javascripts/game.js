@@ -43,7 +43,7 @@ var gameProperties = {
   ballVelocityIncrement: 25,
   ballReturnCount: 4,
 
-  scoreToWin: 60,
+  scoreToWin: 6,
 };
 
 var graphicAssets = {
@@ -544,9 +544,15 @@ mainState.prototype = {
     }
 
     if (this.scoreLeft >= gameProperties.scoreToWin) {
+      if (getParameterByName('game') && getParameterByName('game') === userId) {
+        console.log('Home wins');
+      }
       //this.winnerLeft.visible = true;
       this.startDemo();
     } else if (this.scoreRight >= gameProperties.scoreToWin) {
+      if (getParameterByName('game') && getParameterByName('game') !== userId) {
+        console.log('Guest wins');
+      }
       //this.winnerRight.visible = true;
       this.startDemo();
     } else {
