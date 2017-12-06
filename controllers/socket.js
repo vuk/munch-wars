@@ -6,6 +6,7 @@ module.exports = {
   activeUsers: {},
   io: null,
   submitScore: (data) => {
+    playfabServer.settings.developerSecretKey = 'X6GUF8OHOC8OIXU1W9P3F77SIJW9X5EZESCNTG8J53G97ANDEE';
     playfabServer.UpdatePlayerStatistics({
       "PlayFabId": data.id,
       "Statistics": [
