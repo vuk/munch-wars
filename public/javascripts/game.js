@@ -91,6 +91,7 @@ var labels = {
 };
 
 var isHome = false;
+var isBallListenerSet = false;
 
 var mainState = function (game) {
   this.backgroundGraphics;
@@ -195,10 +196,13 @@ mainState.prototype = {
         visible: this.ballSprite.visible
       })
     } else {
-      socket.on('ball', function (data) {
-        self.ballSprite.visible = data.visible;
-        game.physics.arcade.moveToXY(self.ballSprite, data.x, data.y, 0, 17);
-      });
+      if (!isBallListenerSet) {
+        socket.on('ball', function (data) {
+          self.ballSprite.visible = data.visible;
+          game.physics.arcade.moveToXY(self.ballSprite, data.x, data.y, 0, 17);
+        });
+        isBallListenerSet = true;
+      }
     }
   },
 
