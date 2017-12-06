@@ -11,6 +11,7 @@ router.get('/', function(req, res, next) {
       playfabId: req.session.userId || null,
       opponentId: req.query.game || null,
       profile: req.session.profile || null,
+      computer: req.query.computer || false,
       noevent: req.query.noevent || false
     });
   } else {

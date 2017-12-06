@@ -157,9 +157,13 @@ mainState.prototype = {
     this.drawBorders();
     //this.startCountdown();
     var self = this;
-    socket.on('start_game', function (data) {
-      self.startCountdown();
-    });
+    if (computer) {
+      game.input.onDown.add(this.startCountdown, this);
+    } else {
+      socket.on('start_game', function (data) {
+        self.startCountdown();
+      });
+    }
 
     socket.on('move', function (data) {
       if(data.side === 'right' && !isHome) {
@@ -203,6 +207,21 @@ mainState.prototype = {
         });
         isBallListenerSet = true;
       }
+    }
+    if (computer) {
+      var y_pos = this.ballSprite.body.y;
+      var diff = -((this.paddleRightSprite.body.y + (this.paddleRightSprite.body.height / 2)) - y_pos);
+      if(diff < 0 && diff < -4) { // max speed left
+        diff = -5;
+      } else if(diff > 0 && diff > 4) { // max speed right
+        diff = 5;
+      }
+      game.physics.arcade.moveToXY(this.paddleRightSprite, gameProperties.paddleRight_x, this.paddleRightSprite.body.y + diff, 0, 17);
+      /*if(this.paddle.x < 0) {
+        this.paddle.x = 0;
+      } else if (this.paddle.x + this.paddle.width > 400) {
+        this.paddle.x = 400 - this.paddle.width;
+      }*/
     }
   },
 
