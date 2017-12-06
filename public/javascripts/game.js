@@ -216,9 +216,9 @@ mainState.prototype = {
       } else if(diff > 0 && diff > 4) { // max speed right
         diff = 5;
       }
-      if (diff > 0) {
+      if (diff > 0.5) {
         this.moveRightPaddle('down');
-      } else if (diff < 0) {
+      } else if (diff < 0.5) {
         this.moveRightPaddle('up');
       }
       /*if(this.paddle.x < 0) {
@@ -478,10 +478,10 @@ mainState.prototype = {
     }
     if (computer) {
       if (direction === 'up') {
-        this.paddleRightSprite.body.velocity.y = -gameProperties.paddleVelocity;
+        this.paddleRightSprite.body.velocity.y = -gameProperties.paddleVelocity * 0.66;
       }
       else if (direction === 'down') {
-        this.paddleRightSprite.body.velocity.y = gameProperties.paddleVelocity;
+        this.paddleRightSprite.body.velocity.y = gameProperties.paddleVelocity * 0.66;
       } else {
         this.paddleRightSprite.body.velocity.y = 0;
       }
