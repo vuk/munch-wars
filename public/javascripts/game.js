@@ -6,14 +6,14 @@ var initializeSound = function () {
   }
 };
 
-function getParameterByName(name, url) {
+function getParameterByName (name, url) {
   if (!url) url = window.location.href;
-  name = name.replace(/[\[\]]/g, "\\$&");
-  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+  name = name.replace(/[\[\]]/g, '\\$&');
+  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
     results = regex.exec(url);
   if (!results) return null;
   if (!results[2]) return '';
-  return decodeURIComponent(results[2].replace(/\+/g, " "));
+  return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 
 var toggleSound = function () {
@@ -168,11 +168,11 @@ mainState.prototype = {
     }
 
     socket.on('move', function (data) {
-      if(data.side === 'right' && !isHome) {
+      if (data.side === 'right' && !isHome) {
         game.physics.arcade.moveToXY(self.paddleRightSprite, gameProperties.paddleRight_x, data.y, 0, 17);
         //self.paddleRightSprite.body.velocity.y = data.velocity;
       }
-      if(data.side === 'left' && isHome) {
+      if (data.side === 'left' && isHome) {
         game.physics.arcade.moveToXY(self.paddleLeftSprite, gameProperties.paddleLeft_x, data.y, 0, 17);
         //self.paddleLeftSprite.body.velocity.y = data.velocity;
       }
@@ -200,7 +200,7 @@ mainState.prototype = {
         x: this.ballSprite.body.x,
         y: this.ballSprite.body.y,
         visible: this.ballSprite.visible
-      })
+      });
     } else {
       if (!isBallListenerSet) {
         socket.on('ball', function (data) {
@@ -213,9 +213,9 @@ mainState.prototype = {
     if (computer) {
       var y_pos = this.ballSprite.body.y;
       var diff = -((this.paddleRightSprite.body.y + (this.paddleRightSprite.body.height / 2)) - y_pos);
-      if(diff < 0 && diff < -4) { // max speed left
+      if (diff < 0 && diff < -4) { // max speed left
         diff = -5;
-      } else if(diff > 0 && diff > 4) { // max speed right
+      } else if (diff > 0 && diff > 4) { // max speed right
         diff = 5;
       }
       if (diff > 0.5) {
@@ -313,7 +313,7 @@ mainState.prototype = {
     this.timer.start();
   },
 
-  endTimer: function() {
+  endTimer: function () {
     // Stop the timer when the delayed event triggers
     this.timer.stop();
     this.countdownText.destroy();
@@ -322,13 +322,13 @@ mainState.prototype = {
 
   render: function () {
     if (this.timer && this.timer.running) {
-      this.countdownText.setText(this.formatTime(Math.round((this.timerEvent.delay - this.timer.ms) / 1000)), 2, 14, "#ff0");
+      this.countdownText.setText(this.formatTime(Math.round((this.timerEvent.delay - this.timer.ms) / 1000)), 2, 14, '#ff0');
     }
   },
 
-  formatTime: function(s) {
+  formatTime: function (s) {
     // Convert seconds (s) to a nicely formatted and padded time string
-    var minutes = "0" + Math.floor(s / 60);
+    var minutes = '0' + Math.floor(s / 60);
     var seconds = (s - minutes * 60);
     return seconds.toString().substr(-2);
   },
@@ -497,7 +497,7 @@ mainState.prototype = {
 
   collideWithPaddle: function (ball, paddle) {
     this.sndBallHit.play();
-    this.strikeCount ++;
+    this.strikeCount++;
 
     var returnAngle;
     var segmentHit = Math.floor((ball.y - paddle.y) / gameProperties.paddleSegmentHeight);
@@ -544,7 +544,7 @@ mainState.prototype = {
         id: getParameterByName('game'),
         scoreLeft: this.scoreLeft,
         scoreRight: this.scoreRight
-      })
+      });
     }
 
     if (this.scoreLeft >= gameProperties.scoreToWin) {
