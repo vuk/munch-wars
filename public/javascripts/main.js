@@ -37,7 +37,7 @@ $('#accept_invite').click(function () {
     myId: userId,
     id: localStorage.getItem('opponentId')
   });
-  if(window.location.href.indexOf("play?") === -1) {
+  if (window.location.href.indexOf('play?') === -1) {
     window.location.href = '/play?game=' + userId + '&noevent=true';
   }
 });
@@ -50,23 +50,23 @@ if (jQuery('#games').length > 0 && !noevent) {
   }
 }
 
-if($('.rank-row').length > 0) {
-  var totalPoints = _.find(stats.data.Statistics, function(obj) {
+if ($('.rank-row').length > 0) {
+  var totalPoints = _.find(stats.data.Statistics, function (obj) {
     return obj.StatisticName === 'Total Points';
   });
-  var weeklyPoints = _.find(stats.data.Statistics, function(obj) {
+  var weeklyPoints = _.find(stats.data.Statistics, function (obj) {
     return obj.StatisticName === 'Weekly Points';
   });
-  var dailyPoints = _.find(stats.data.Statistics, function(obj) {
+  var dailyPoints = _.find(stats.data.Statistics, function (obj) {
     return obj.StatisticName === 'Points';
   });
-  var weeklyWins = _.find(stats.data.Statistics, function(obj) {
+  var weeklyWins = _.find(stats.data.Statistics, function (obj) {
     return obj.StatisticName === 'Weekly Wins';
   });
-  var dailyWins = _.find(stats.data.Statistics, function(obj) {
+  var dailyWins = _.find(stats.data.Statistics, function (obj) {
     return obj.StatisticName === 'Wins';
   });
-  var monthlyWins = _.find(stats.data.Statistics, function(obj) {
+  var monthlyWins = _.find(stats.data.Statistics, function (obj) {
     return obj.StatisticName === 'Total Wins';
   });
   var dp = dailyPoints ? dailyPoints.Value : 0;
@@ -107,8 +107,8 @@ if (jQuery('#opponents').length > 0) {
     for (var key in data) {
       if (key !== userId) {
         $('#opponents').append(
-          '<div class="row opponent-row"><a href="/play?game='+ data[key].profile.PlayerId +'">' +
-          '    <div class="col-md-4">'+ data[key].profile.DisplayName +'</div>' +
+          '<div class="row opponent-row"><a href="/play?game=' + data[key].profile.PlayerId + '">' +
+          '    <div class="col-md-4">' + data[key].profile.DisplayName + '</div>' +
           '    <div class="col-md-8">' +
           '        <div class="row">' +
           '            <div class="col-md-2">0</div>' +
@@ -122,6 +122,34 @@ if (jQuery('#opponents').length > 0) {
           '</a></div>'
         );
       }
+    }
+  });
+}
+
+if (jQuery('.search-users #name').length > 0) {
+  jQuery('.search-users #name').change(function (val) {
+    if (val.length > 2) {
+      $.get('/profile/actives?filter=' + val, function (data) {
+        for (var key in data) {
+          if (key !== userId) {
+            $('#opponents').append(
+              '<div class="row opponent-row"><a href="/play?game=' + data[key].profile.PlayerId + '">' +
+              '    <div class="col-md-4">' + data[key].profile.DisplayName + '</div>' +
+              '    <div class="col-md-8">' +
+              '        <div class="row">' +
+              '            <div class="col-md-2">0</div>' +
+              '            <div class="col-md-2">0</div>' +
+              '            <div class="col-md-2">0</div>' +
+              '            <div class="col-md-2">0</div>' +
+              '            <div class="col-md-2">0</div>' +
+              '            <div class="col-md-2">0</div>' +
+              '        </div>' +
+              '    </div>' +
+              '</a></div>'
+            );
+          }
+        }
+      });
     }
   });
 }

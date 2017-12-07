@@ -47,12 +47,21 @@ router.get('/', function (req, res, next) {
 
 router.get('/actives', function (req, res, next) {
   let validUsers = {};
-  Object.keys(req.app.get('socketio').activeUsers).map((key) => {
-    console.log(req.session.userId);
-    if (Date.now() - req.app.get('socketio').activeUsers[key].time < 10 * 60 * 1000 && req.app.get('socketio').activeUsers[key].profile.PlayerId !== req.session.userId) {
-      validUsers[key] = req.app.get('socketio').activeUsers[key];
-    }
-  });
+  if (req.query.filter) {
+    Object.keys(req.app.get('socketio').activeUsers).map((key) => {
+      if (Date.now() - req.app.get('socketio').activeUsers[key].time < 10 * 60 * 1000
+        && req.app.get('socketio').activeUsers[key].profile.PlayerId !== req.session.userId
+        && req.app.get('socketio').activeUsers[key].profile.DisplayName.indexOf(req.query.filter) > -1) {
+        validUsers[key] = req.app.get('socketio').activeUsers[key];
+      }
+    });
+  } else {
+    Object.keys(req.app.get('socketio').activeUsers).map((key) => {
+      if (Date.now() - req.app.get('socketio').activeUsers[key].time < 10 * 60 * 1000 && req.app.get('socketio').activeUsers[key].profile.PlayerId !== req.session.userId) {
+        validUsers[key] = req.app.get('socketio').activeUsers[key];
+      }
+    });
+  }
   res.json(validUsers);
 });
 
