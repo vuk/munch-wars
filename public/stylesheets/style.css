@@ -216,6 +216,16 @@ img {
   margin: 1rem 0;
 }
 
+.contact-holder {
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  vertical-align: middle;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
 .login-head {
   padding-bottom: 2rem;
   margin-bottom: 2rem;

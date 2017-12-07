@@ -5,7 +5,8 @@ const router = express.Router();
 router.get('/', function(req, res, next) {
   res.render('pages/winners', {
     title: 'Pobednici',
-    active: 'winners'
+    active: 'winners',
+    playfabId: req.session.userId || null
   });
 });
 
