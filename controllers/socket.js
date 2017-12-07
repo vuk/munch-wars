@@ -69,7 +69,9 @@ module.exports = {
           console.log('accept_invite');
           this.io.to(data.id).emit('accept_invite', {
             player1: this.activeUsers[data.myId],
-            player2: this.activeUsers[data.id]
+            player2: this.activeUsers[data.id],
+            profile: data.profile,
+            stats: data.stats.data
           });
         }, 2000);
       });

@@ -25,6 +25,7 @@ socket.on('accept_invite', function (data) {
   if (data.player1.profile.PlayerId !== userId) {
     localStorage.setItem('opponentId', data.player1.profile.PlayerId);
     $('#accept_modal').modal();
+    $('#opponent-name').html(data.profile.DisplayName);
   }
   if (data.player2.profile.PlayerId !== userId) {
     localStorage.setItem('opponentId', data.player2.profile.PlayerId);
