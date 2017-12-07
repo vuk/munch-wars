@@ -81,15 +81,15 @@ if($('.rank-row').length > 0) {
   while (tp.toString().length < 5) {
     tp = '0' + tp;
   }
-  var dr = dailyRank.Position ++;
+  var dr = parseInt(dailyRank.Position, 10) + 1;
   while (dr.toString().length < 5) {
     dr = '0' + dr;
   }
-  var wr = weeklyRank.Position ++;
+  var wr = parseInt(weeklyRank.Position, 10) + 1;
   while (wr.toString().length < 5) {
     wr = '0' + wr;
   }
-  var tr = totalRank.Position ++;
+  var tr = parseInt(totalRank.Position, 10) + 1;
   while (tr.toString().length < 5) {
     tr = '0' + tr;
   }
