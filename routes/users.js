@@ -3,23 +3,32 @@ var router = express.Router();
 const playfabServer = require('playfab-sdk/Scripts/PlayFab/PlayFabServer');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
   playfabServer.settings.developerSecretKey = 'X6GUF8OHOC8OIXU1W9P3F77SIJW9X5EZESCNTG8J53G97ANDEE';
-  if(req.session.userId) {
-    var leaderboardPosition = playfabServer.GetLeaderboardAroundUser({
+  if (req.session.userId) {
+    var leaderboardPosition;
+    var leaderboardPosition2;
+    var leaderboardPosition3;
+      playfabServer.GetLeaderboardAroundUser({
       PlayFabId: req.session.userId,
-      StatisticName: "Total Points",
-      MaxResultsCount : 1
+      StatisticName: 'Total Points',
+      MaxResultsCount: 1
+    }, (err1, res1) => {
+      leaderboardPosition = res1.data.Leaderboard[0];
     });
-    var leaderboardPosition2 = playfabServer.GetLeaderboardAroundUser({
+    playfabServer.GetLeaderboardAroundUser({
       PlayFabId: req.session.userId,
-      StatisticName: "Weekly Points",
-      MaxResultsCount : 1
+      StatisticName: 'Weekly Points',
+      MaxResultsCount: 1
+    }, (err2, res2) => {
+      leaderboardPosition2 = res2.data.Leaderboard[0];
     });
-    var leaderboardPosition3 = playfabServer.GetLeaderboardAroundUser({
+    playfabServer.GetLeaderboardAroundUser({
       PlayFabId: req.session.userId,
-      StatisticName: "Points",
-      MaxResultsCount : 1
+      StatisticName: 'Points',
+      MaxResultsCount: 1
+    }, (err3, res3) => {
+      leaderboardPosition3 = res3.data.Leaderboard[0];
     });
     res.render('pages/profile', {
       title: 'Profil',
@@ -40,7 +49,7 @@ router.get('/actives', function (req, res, next) {
   let validUsers = {};
   Object.keys(req.app.get('socketio').activeUsers).map((key) => {
     console.log(req.session.userId);
-    if(Date.now() - req.app.get('socketio').activeUsers[key].time < 10*60*1000 && req.app.get('socketio').activeUsers[key].profile.PlayerId !== req.session.userId){
+    if (Date.now() - req.app.get('socketio').activeUsers[key].time < 10 * 60 * 1000 && req.app.get('socketio').activeUsers[key].profile.PlayerId !== req.session.userId) {
       validUsers[key] = req.app.get('socketio').activeUsers[key];
     }
   });
