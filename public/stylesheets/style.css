@@ -325,8 +325,7 @@ img {
 }
 .rules ol li strong {
   color: #FFDF00;
-  display: inline-block;
-  margin-bottom: 1rem;
+  padding-bottom: 1rem;
 }
 .rules ol li span strong {
   margin: 0;
