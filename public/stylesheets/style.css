@@ -186,6 +186,7 @@ img {
 
 .awards .award-holder {
   flex-direction: column;
+  margin-bottom: 4rem;
 }
 .awards .award-quantity {
   color: #FFDF00;
@@ -211,7 +212,6 @@ img {
 .notes {
   text-align: center;
   color: #fff;
-  margin-top: 4rem;
 }
 
 .munch-row-two.awards {
