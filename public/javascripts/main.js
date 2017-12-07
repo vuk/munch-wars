@@ -78,7 +78,7 @@ if($('.rank-row').length > 0) {
     wp = '0' + wp;
   }
   var tp = totalPoints ? totalPoints.Value : 0;
-  while (dp.toString().length < 5) {
+  while (tp.toString().length < 5) {
     tp = '0' + tp;
   }
   $('.daily-pts .pts-score').html(dp);
