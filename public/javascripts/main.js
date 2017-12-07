@@ -69,9 +69,21 @@ if($('.rank-row').length > 0) {
   var monthlyWins = _.find(stats.data.Statistics, function(obj) {
     return obj.StatisticName === 'Total Wins';
   });
-  $('.daily-pts .pts-score').html(dailyPoints ? dailyPoints.Value : 0);
-  $('.weekly-pts .pts-score').html(weeklyPoints ? weeklyPoints.Value : 0);
-  $('.total-pts .pts-score').html(totalPoints ? totalPoints.Value : 0);
+  var dp = dailyPoints ? dailyPoints.Value : 0;
+  while (dp.toString().length < 5) {
+    dp = '0' + dp;
+  }
+  var wp = weeklyPoints ? weeklyPoints.Value : 0;
+  while (wp.toString().length < 5) {
+    wp = '0' + wp;
+  }
+  var tp = totalPoints ? totalPoints.Value : 0;
+  while (dp.toString().length < 5) {
+    tp = '0' + tp;
+  }
+  $('.daily-pts .pts-score').html(dp);
+  $('.weekly-pts .pts-score').html(wp);
+  $('.total-pts .pts-score').html(tp);
 }
 
 // Load opponents
