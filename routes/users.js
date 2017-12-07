@@ -26,9 +26,9 @@ router.get('/', function(req, res, next) {
       title: 'Profil',
       active: 'play',
       playfabId: req.session.userId || null,
-      totalRank: leaderboardPosition,
-      weeklyRank: leaderboardPosition2,
-      dailyRank: leaderboardPosition3,
+      totalRank: leaderboardPosition.Leaderboard[0],
+      weeklyRank: leaderboardPosition2.Leaderboard[0],
+      dailyRank: leaderboardPosition3.Leaderboard[0],
       profile: req.session.profile || null,
       stats: req.session.stats || null
     });
