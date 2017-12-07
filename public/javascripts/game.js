@@ -36,11 +36,11 @@ var gameProperties = {
   paddleSegmentAngle: 8,
   paddleTopGap: 10,
 
-  ballVelocity: 500,
+  ballVelocity: 600,
   ballRandomStartingAngleLeft: [-120, 120],
   ballRandomStartingAngleRight: [-60, 60],
   ballStartDelay: 2,
-  ballVelocityIncrement: 25,
+  ballVelocityIncrement: 40,
   ballReturnCount: 4,
 
   scoreToWin: 6,
@@ -235,14 +235,14 @@ mainState.prototype = {
     if (computer) {
       var y_pos = this.ballSprite.body.y;
       var diff = -((this.paddleRightSprite.body.y + (this.paddleRightSprite.body.height / 2)) - y_pos);
-      if (diff < 0 && diff < -4) { // max speed left
+      /*if (diff < 0 && diff < -4) { // max speed left
         diff = -5;
       } else if (diff > 0 && diff > 4) { // max speed right
         diff = 5;
-      }
-      if (diff > 0.5) {
+      }*/
+      if (diff > 10) {
         this.moveRightPaddle('down');
-      } else if (diff < -0.5) {
+      } else if (diff < -10) {
         this.moveRightPaddle('up');
       }
       /*if(this.paddle.x < 0) {
@@ -503,10 +503,10 @@ mainState.prototype = {
     }
     if (computer) {
       if (direction === 'up') {
-        this.paddleRightSprite.body.velocity.y = -gameProperties.paddleVelocity * 0.66;
+        this.paddleRightSprite.body.velocity.y = -gameProperties.paddleVelocity;
       }
       else if (direction === 'down') {
-        this.paddleRightSprite.body.velocity.y = gameProperties.paddleVelocity * 0.66;
+        this.paddleRightSprite.body.velocity.y = gameProperties.paddleVelocity;
       } else {
         this.paddleRightSprite.body.velocity.y = 0;
       }
