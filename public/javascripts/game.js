@@ -127,12 +127,29 @@ var mainState = function (game) {
   this.ballVelocity;
 };
 
+function handleIncorrect(){
+  if(!game.device.desktop){
+    document.getElementById("turn").style.display="block";
+  }
+}
+
+function handleCorrect(){
+  if(!game.device.desktop){
+    document.getElementById("turn").style.display="none";
+  }
+}
+
 mainState.prototype = {
   preload: function () {
     if (userId === getParameterByName('game')) {
       isHome = true;
     }
     this.strikeCount = 0;
+
+    game.scale.forceOrientation(true, false);
+    game.scale.enterIncorrectOrientation.add(handleIncorrect);
+    game.scale.leaveIncorrectOrientation.add(handleCorrect);
+
     game.load.image(graphicAssets.ballName, graphicAssets.ballURL);
     game.load.image(graphicAssets.paddleName, graphicAssets.paddleURL);
     game.load.image(graphicAssets.paddleRightName, graphicAssets.paddleRightURL);
