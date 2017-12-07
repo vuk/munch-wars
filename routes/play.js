@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
           active: 'play',
           playfabId: req.session.userId || null,
           opponentId: req.session.userId === req.query.game ? null : req.query.game || null,
-          opponent: req.query.game && req.session.userId === req.query.game ? null : response.data.PlayerProfile,
+          opponent: req.query.computer || req.query.game && req.session.userId === req.query.game ? null : response.data.PlayerProfile,
           profile: req.session.profile || null,
           computer: req.query.computer || false,
           noevent: req.query.noevent || false
