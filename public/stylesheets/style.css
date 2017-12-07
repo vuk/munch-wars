@@ -177,11 +177,17 @@ img {
 .award-holder {
   padding: 0 10%;
   text-align: center;
+  display: flex;
+  flex-direction: row;
+  vertical-align: middle;
+  align-items: center;
+  justify-content: center;
 }
 
 .award-desc {
   color: #fff;
   margin-top: 2rem;
+  width: 40%;
 }
 
 .award-desc .number {
