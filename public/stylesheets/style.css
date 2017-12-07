@@ -307,6 +307,31 @@ img {
 .profile-body .welcome, .profile-body .username {
   color: #FFDF00;
 }
+.rules .title {
+  color: #FFDF00;
+  margin-bottom: 4rem;
+}
+.rules ol {
+  text-align: left;
+  color: #FFDF00;
+  list-style-position: inside;
+}
+.rules ol li {
+  margin-bottom: 1rem;
+}
+.rules ol li span {
+  color: #FFF;
+  font-weight: 400;
+}
+.rules ol li strong {
+  color: #FFDF00;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+.rules ol li span strong {
+  margin: 0;
+  display: initial;
+}
 /* Custom, iPhone Retina */
 @media only screen and (min-width : 320px) {
 
