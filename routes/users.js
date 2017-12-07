@@ -1,13 +1,33 @@
 var express = require('express');
 var router = express.Router();
+const playfabServer = require('playfab-sdk/Scripts/PlayFab/PlayFabServer');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   if(req.session.userId) {
+    var leaderboardPosition = playfabServer.GetLeaderboardAroundUser({
+      PlayFabId: req.session.userId,
+      StatisticName: "Total Points",
+      MaxResultsCount : 1
+    });
+    log.debug(leaderboardPosition.Position);
+    var leaderboardPosition2 = playfabServer.GetLeaderboardAroundUser({
+      PlayFabId: req.session.userId,
+      StatisticName: "Weekly Points",
+      MaxResultsCount : 1
+    });
+    var leaderboardPosition3 = playfabServer.GetLeaderboardAroundUser({
+      PlayFabId: req.session.userId,
+      StatisticName: "Points",
+      MaxResultsCount : 1
+    });
     res.render('pages/profile', {
       title: 'Profil',
       active: 'play',
       playfabId: req.session.userId || null,
+      totalRank: leaderboardPosition,
+      weeklyRank: leaderboardPosition2,
+      dailyRank: leaderboardPosition3,
       profile: req.session.profile || null,
       stats: req.session.stats || null
     });

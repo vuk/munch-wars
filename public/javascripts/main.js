@@ -81,9 +81,24 @@ if($('.rank-row').length > 0) {
   while (tp.toString().length < 5) {
     tp = '0' + tp;
   }
+  var dr = dailyRank.Position ++;
+  while (dr.toString().length < 5) {
+    dr = '0' + dr;
+  }
+  var wr = weeklyRank.Position ++;
+  while (wr.toString().length < 5) {
+    wr = '0' + wr;
+  }
+  var tr = totalRank.Position ++;
+  while (tr.toString().length < 5) {
+    tr = '0' + tr;
+  }
   $('.daily-pts .pts-score').html(dp);
   $('.weekly-pts .pts-score').html(wp);
   $('.total-pts .pts-score').html(tp);
+  $('.daily-rank .pts-score').html(dr);
+  $('.weekly-rank .pts-score').html(wr);
+  $('.total-rank .pts-score').html(tr);
 }
 
 // Load opponents

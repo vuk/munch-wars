@@ -42,15 +42,15 @@
                             </div>
                         </div>
                         <div class="row rank-row">
-                            <div class="col-sm-4 pts-container">
+                            <div class="col-sm-4 pts-container daily-rank">
                                 <span class="pts-label">dnevni<br/>rang</span><br/>
                                 <span class="pts-score">00123</span>
                             </div>
-                            <div class="col-sm-4 pts-container">
+                            <div class="col-sm-4 pts-container weekly-rank">
                                 <span class="pts-label">nedeljni<br/>rang</span><br/>
                                 <span class="pts-score">00123</span>
                             </div>
-                            <div class="col-sm-4 pts-container">
+                            <div class="col-sm-4 pts-container total-rank">
                                 <span class="pts-label">ukupni<br/>rang</span><br/>
                                 <span class="pts-score">00123</span>
                             </div>
@@ -118,6 +118,9 @@
         <script>
           var profile = <%- JSON.stringify(profile) %>;
           var stats = <%- JSON.stringify(stats) %>;
+          var totalRank = <%- JSON.stringify(totalRank) %>;
+          var weeklyRank = <%- JSON.stringify(weeklyRank) %>;
+          var dailyRank = <%- JSON.stringify(dailyRank) %>;
         </script>
         <% include ../partials/footer %>
     </footer>
