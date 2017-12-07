@@ -4,6 +4,7 @@ const playfabServer = require('playfab-sdk/Scripts/PlayFab/PlayFabServer');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
+  playfabServer.settings.developerSecretKey = 'X6GUF8OHOC8OIXU1W9P3F77SIJW9X5EZESCNTG8J53G97ANDEE';
   if(req.session.userId) {
     var leaderboardPosition = playfabServer.GetLeaderboardAroundUser({
       PlayFabId: req.session.userId,
