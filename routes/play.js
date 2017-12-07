@@ -14,7 +14,6 @@ router.get('/', function(req, res, next) {
     }, (error, response) => {
       if (error) {
         console.log(error);
-        res.redirect('/play');
       } else {
         res.render('pages/play', {
           title: 'Igraj Munch Pong',
