@@ -12,20 +12,16 @@ router.get('/', function(req, res, next) {
         ShowLinkedAccounts: true
       }
     }, (error, response) => {
-      if (error) {
-        console.log(error);
-      } else {
         res.render('pages/play', {
           title: 'Igraj Munch Pong',
           active: 'play',
           playfabId: req.session.userId || null,
           opponentId: req.session.userId === req.query.game ? null : req.query.game || null,
-          opponent: req.session.userId === req.query.game ? null : response.data.PlayerProfile,
+          opponent: req.query.game && req.session.userId === req.query.game ? null : response.data.PlayerProfile,
           profile: req.session.profile || null,
           computer: req.query.computer || false,
           noevent: req.query.noevent || false
         });
-      }
     });
   } else {
     res.render('pages/login', {
