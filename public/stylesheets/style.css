@@ -223,6 +223,23 @@ img {
   font-weight: 600;
   font-size:20px;
 }
+.winners-row ul{
+  list-style: none;
+  color: #FFDF00;
+  font-weight: 700;
+  margin-top: 2rem;
+}
+.winners-row ul li {
+  border-bottom: 2px solid rgba(255,255,255,0.8);
+  padding: 1rem;
+  text-align: center;
+}
+.winners-row ul li.period {
+  color: #fff;
+}
+.winners-row ul li:first-child {
+  border-top: 2px solid rgba(255,255,255,0.8);
+}
 .btn-holder {
   padding: 5% 10% 0 10%;
 }
@@ -397,7 +414,12 @@ img {
 
 /* Large Devices, Wide Screens */
 @media only screen and (min-width : 1200px) {
-
+  .munch-logo-row .col-md-4:first-child {
+    padding-left: 0;
+  }
+  .munch-logo-row .col-md-4:last-child {
+    padding-right: 0;
+  }
 }
 
 /*==========  Non-Mobile First Method  ==========*/
