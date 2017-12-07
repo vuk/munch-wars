@@ -127,7 +127,7 @@ if (jQuery('#opponents').length > 0) {
 }
 
 if (jQuery('.search-users #name').length > 0) {
-  jQuery('.search-users #name').on("change paste keyup", (function () {
+  jQuery('.search-users #name').on("change paste keyup", function () {
     if (val.length > 2) {
       $.get('/profile/actives?filter=' + $(this).val(), function (data) {
         for (var key in data) {
