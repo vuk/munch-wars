@@ -69,9 +69,9 @@ if($('.rank-row').length > 0) {
   var monthlyWins = _.find(stats.data.Statistics, function(obj) {
     return obj.StatisticName === 'Total Wins';
   });
-  $('.daily-pts .pts-score').html(dailyPoints.Value);
-  $('.weekly-pts .pts-score').html(weeklyPoints.Value);
-  $('.total-pts .pts-score').html(totalPoints.Value);
+  $('.daily-pts .pts-score').html(dailyPoints.Value || 0);
+  $('.weekly-pts .pts-score').html(weeklyPoints.Value || 0);
+  $('.total-pts .pts-score').html(totalPoints.Value || 0);
 }
 
 // Load opponents
