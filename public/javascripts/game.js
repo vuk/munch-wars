@@ -199,13 +199,18 @@ mainState.prototype = {
         id: getParameterByName('game'),
         x: this.ballSprite.body.x,
         y: this.ballSprite.body.y,
-        visible: this.ballSprite.visible
+        visible: this.ballSprite.visible,
+        time: Date.now()
       });
     } else {
       if (!isBallListenerSet) {
+        var localTime = 0;
         socket.on('ball', function (data) {
-          self.ballSprite.visible = data.visible;
-          game.physics.arcade.moveToXY(self.ballSprite, data.x, data.y, 0, 17);
+          if (data.time > localTime) {
+            self.ballSprite.visible = data.visible;
+            game.physics.arcade.moveToXY(self.ballSprite, data.x, data.y, 0, 17);
+            localTime = data.time;
+          }
         });
         isBallListenerSet = true;
       }
