@@ -47,7 +47,7 @@ var gameProperties = {
 };
 
 var graphicAssets = {
-  ballURL: 'assets/ball-10.png',
+  ballURL: 'assets/ball-15.png',
   ballName: 'ball',
 
   paddleURL: 'assets/left-45.png',
@@ -83,7 +83,7 @@ var fontAssets = {
 
   scoreFontStyle: { font: '80px orbitron', fill: '#FFFFFF', align: 'center' },
   instructionsFontStyle: { font: '20px orbitron', fill: '#FFDF00', align: 'center', fontWeight: 600 },
-  countdownFontStyle: { font: '30px orbitron', fill: '#FFDF00', align: 'center', fontWeight: 600 },
+  countdownFontStyle: { font: '48px orbitron', fill: '#FFDF00', align: 'center', fontWeight: 600 },
 };
 
 var labels = {
@@ -292,10 +292,10 @@ mainState.prototype = {
     this.backgroundGraphics = game.add.graphics(0, 0);
     this.backgroundGraphics.lineStyle(2, 0xFFFFFF, 1);
 
-    for (var y = 0; y < gameProperties.screenHeight; y += gameProperties.dashSize * 2) {
+    /*for (var y = 0; y < gameProperties.screenHeight; y += gameProperties.dashSize * 2) {
       this.backgroundGraphics.moveTo(game.world.centerX, y);
       this.backgroundGraphics.lineTo(game.world.centerX, y + gameProperties.dashSize);
-    }
+    }*/
 
     this.ballSprite = game.add.sprite(game.world.centerX, game.world.centerY, graphicAssets.ballName);
     this.ballSprite.anchor.set(0.5, 0.5);
@@ -393,7 +393,7 @@ mainState.prototype = {
 
   startDemo: function () {
     this.ballSprite.visible = false;
-    this.resetBall();
+    //this.resetBall();
     this.enablePaddles(false);
     this.enableBoundaries(true);
     /*if (computer) {
