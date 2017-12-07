@@ -132,6 +132,7 @@ mainState.prototype = {
     if (userId === getParameterByName('game')) {
       isHome = true;
     }
+    this.strikeCount = 0;
     game.load.image(graphicAssets.ballName, graphicAssets.ballURL);
     game.load.image(graphicAssets.paddleName, graphicAssets.paddleURL);
     game.load.image(graphicAssets.paddleRightName, graphicAssets.paddleRightURL);
@@ -496,6 +497,7 @@ mainState.prototype = {
 
   collideWithPaddle: function (ball, paddle) {
     this.sndBallHit.play();
+    this.strikeCount ++;
 
     var returnAngle;
     var segmentHit = Math.floor((ball.y - paddle.y) / gameProperties.paddleSegmentHeight);
@@ -549,7 +551,7 @@ mainState.prototype = {
       if ((getParameterByName('game') && getParameterByName('game') === userId && isHome) || computer) {
         socket.emit('winner', {
           id: userId,
-          points: this.scoreLeft,
+          points: this.strikeCount + 3 * this.scoreLeft,
           pointsLoser: this.scoreRight
         });
       }
@@ -559,7 +561,7 @@ mainState.prototype = {
       if (getParameterByName('game') && getParameterByName('game') !== userId && isHome) {
         socket.emit('winner', {
           id: opponent,
-          points: this.scoreRight,
+          points: this.strikeCount + 3 * this.scoreRight,
           pointsLoser: this.scoreLeft
         });
       }
