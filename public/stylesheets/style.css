@@ -381,7 +381,9 @@ img {
 
 /* Extra Small Devices, Phones */
 @media only screen and (max-width : 480px) {
-
+  .rules ol {
+    padding-left: 1rem;
+  }
 }
 
 /* Custom, iPhone Retina */
