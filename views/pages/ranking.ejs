@@ -4,16 +4,124 @@
     <% include ../partials/head %>
 </head>
 <body>
-<div id='stars'></div>
-<div id='stars2'></div>
-<div id='stars3'></div>
+<div class="star-field">
+    <div id='stars'></div>
+    <div id='stars2'></div>
+    <div id='stars3'></div>
+</div>
 <div class="container">
     <header>
         <% include ../partials/header %>
     </header>
 
     <main>
-        PLAY
+        <div class="row">
+            <div class="col-lg-offset-1 col-md-offset-0 col-lg-10 col-md-12">
+                <div class="login-head row">
+                    <div class="col-md-offset-1 col-sm-offset-0 col-md-10 col-sm-12 col-lg-offset-3 col-lg-6 logo">
+                        <img src="/assets/logo.png" alt="">
+                    </div>
+                </div>
+                <div class="ranking-row rank-head-row row">
+                    <div class="col-lg-4">
+                        <div class="row">
+                            <div class="col-lg-4 borders">
+                                <div class="table-cell total-rank"><a href="/ranking?period=total">ukupni<br/>rang</a></div>
+                            </div>
+                            <div class="col-lg-4 borders">
+                                <div class="table-cell weekly-rank"><a href="/ranking?period=weekly">nedeljni<br/>rang</a></div>
+                            </div>
+                            <div class="col-lg-4 borders">
+                                <div class="table-cell daily-rank"><a href="/ranking?period=daily">dnevni<br/>rang</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="table-cell username-rank">nadimak</div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="row">
+                            <div class="col-lg-4 borders">
+                                <div class="table-cell total-points">ukupno<br/>poena</div>
+                            </div>
+                            <div class="col-lg-4 borders">
+                                <div class="table-cell weekly-points">nedeljno<br/>poena</div>
+                            </div>
+                            <div class="col-lg-4 borders">
+                                <div class="table-cell daily-points">dnevnih<br/>poena</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% leaderboard.Leaderboard.forEach(function(player) { %>
+                <div class="ranking-row row">
+                    <div class="col-lg-4">
+                        <div class="row">
+                            <div class="col-lg-4 borders">
+                                <% var pos = (parseInt(player.Position, 10) + 1).toString(); while (pos.length < 5) { pos = '0' + pos } %>
+                                <div class="table-cell total-rank"><%= pos %></div>
+                            </div>
+                            <div class="col-lg-4 borders">
+                                <div class="table-cell weekly-rank">nedeljni<br/>rang</div>
+                            </div>
+                            <div class="col-lg-4 borders">
+                                <div class="table-cell daily-rank">dnevni<br/>rang</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="table-cell username-rank"><%= player.Profile.LinkedAccounts[0].Username %></div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="row">
+                            <div class="col-lg-4 borders">
+                                <div class="table-cell total-points">
+                                    <% var totalPoints = 0; if(period === 'total') { totalPoints = player.StatValue; } else { %>
+                                    <% totalPoints = _.find(player.Profile.Statistics, function (obj) {
+                                        return obj.Name === 'Total Points';
+                                    }).Value;
+                                    }
+                                        while (totalPoints.toString().length < 5) {
+                                            totalPoints = '0' + totalPoints;
+                                        }
+                                    %>
+                                    <%= totalPoints %>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 borders">
+                                <div class="table-cell weekly-points">
+                                    <% var weekly = 0; if (period === 'weekly') { weekly = player.StatValue } else {
+                                        weekly = _.find(player.Profile.Statistics, function (obj) {
+                                            return obj.Name === 'Weekly Points';
+                                        }).Value;
+                                    }
+                                        while (weekly.toString().length < 5) {
+                                            weekly = '0' + weekly;
+                                        }
+                                    %>
+                                    <%= weekly %>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 borders">
+                                <div class="table-cell daily-points">
+                                    <% var daily =  0; if (period === 'daily') { daily = player.StatValue } else {
+                                        daily = _.find(player.Profile.Statistics, function (obj) {
+                                            return obj.Name === 'Points';
+                                        }).Value;
+                                    }
+                                        while (daily.toString().length < 5) {
+                                            daily = '0' + daily;
+                                        }
+                                    %>
+                                    <%= daily %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+        </div>
     </main>
 
     <footer>

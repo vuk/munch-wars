@@ -388,6 +388,28 @@ img {
   margin: 0;
   display: initial;
 }
+
+.ranking-row {
+  color: #FFDF00;
+  text-align: center;
+  border-bottom: 2px solid rgba(255,255,255, 0.8);
+  padding-bottom: 7px;
+  margin-bottom: 7px;
+  font-weight: 700;
+}
+.ranking-row a {
+  color: #fff;
+}
+.ranking-row.rank-head-row {
+  color: #fff;
+}
+.ranking-row .col-lg-4.borders{
+  border-left: 2px solid rgba(255,255,255, 0.8);
+  min-height: 45px;
+}
+.ranking-row .col-lg-4.borders:last-child{
+  border-right: 2px solid rgba(255,255,255, 0.8);
+}
 /* Custom, iPhone Retina */
 @media only screen and (min-width : 320px) {
 

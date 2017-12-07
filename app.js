@@ -29,8 +29,10 @@ const rules = require('./routes/rules');
 const winners = require('./routes/winners');
 const auth = require('./routes/auth');
 const playfab = require('playfab-sdk/Scripts/PlayFab/PlayFabClient');
+const _ = require('lodash');
 
 const app = express();
+app.locals._ = _;
 
 passport.serializeUser(function (user, done) {
   done(null, user);
