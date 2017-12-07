@@ -27,7 +27,7 @@
             <div class="col-lg-3">
                 <span id="right-score" class="score">0</span>
                 <span id="left-rank"></span>
-                <span class="name-label" id="right-name"><% if(opponent) { %><%- opponent.DisplayName %> <% } else if(computer) { %> Computer <% } { %><%- profile.DisplayName %><% } %></span>
+                <span class="name-label" id="right-name"><% if(opponent) { %><%- opponent.DisplayName %> <% } else if(computer) { %> Computer <% } else { %><%- profile.DisplayName %><% } %></span>
                 <span class="points-label" id="right-score">101150</span>
             </div>
             <div class="col-lg-1"></div>
