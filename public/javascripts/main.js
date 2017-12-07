@@ -127,9 +127,21 @@ if (jQuery('#opponents').length > 0) {
 }
 
 if (jQuery('.search-users #name').length > 0) {
-  jQuery('.search-users #name').on("change paste keyup", function () {
+  jQuery('.search-users #name').on('change paste keyup', function () {
     if ($(this).val().length > 2) {
-      $('#opponents').html('');
+      $('#opponents').html('<div class="row opponent-row--header">' +
+        '                                <div class="col-md-4">nadimak</div>' +
+        '                                <div class="col-md-8">' +
+        '                                    <div class="row">' +
+        '                                        <div class="col-md-2">ukupni<br/>rang</div>' +
+        '                                        <div class="col-md-2">nedeljni<br/>rang</div>' +
+        '                                        <div class="col-md-2">dnevni<br/>rang</div>' +
+        '                                        <div class="col-md-2">ukupno<br/>poena</div>' +
+        '                                        <div class="col-md-2">nedeljnih<br/>poena</div>' +
+        '                                        <div class="col-md-2">dnevnih<br/>poena</div>' +
+        '                                    </div>' +
+        '                                </div>' +
+        '                            </div>');
       $.get('/profile/actives?filter=' + $(this).val(), function (data) {
         for (var key in data) {
           if (key !== userId) {
