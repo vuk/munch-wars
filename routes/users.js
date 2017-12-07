@@ -11,7 +11,6 @@ router.get('/', function(req, res, next) {
       StatisticName: "Total Points",
       MaxResultsCount : 1
     });
-    log.debug(leaderboardPosition.Position);
     var leaderboardPosition2 = playfabServer.GetLeaderboardAroundUser({
       PlayFabId: req.session.userId,
       StatisticName: "Weekly Points",
