@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
   if(req.query.period === 'weekly') {
     statisticsName = 'Weekly Points';
   }
-  console.log(statisticsName);
+  //console.log(statisticsName);
   playfab.GetLeaderboard({
     StartPosition: 0,
     MaxResultsCount: 20,
@@ -28,9 +28,9 @@ router.get('/', function(req, res, next) {
       console.log(err);
     }
     else {
-      console.log(response.data);
+      //console.log(response.data);
       response.data.Leaderboard.forEach(lb => {
-        console.log(lb.Profile.Statistics);
+        //console.log(lb.Profile.Statistics);
       });
       res.render('pages/ranking', {
         title: 'Rang lista',
