@@ -28,10 +28,20 @@
                         <p>Ako se se već registrovao, prijavi se kao postojeći korisnik:</p>
                         <div class="form">
                             <form method="post" action="/auth/register">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label class="error">
+                                            <% if (typeof errorObject !== 'undefined' && errorObject.errorCode === 1058){ %>
+                                            Korisničko ime već postoji, molimo te da izabereš drugo
+                                            <% } %>
+                                        </label>
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <label for="username" class="col-sm-12 col-md-4 col-form-label">izaberi nadimak:</label>
                                     <div class="col-sm-12 col-md-8">
-                                        <input name="username" type="text" class="form-control" id="username">
+                                        <input value="<% if(typeof username !== 'undefined') { %> <%= username %> <% }%>" name="username" type="text"
+                                               class="<% if (typeof errorObject !== 'undefined' && errorObject.errorCode === 1058){ %> error <% } %>form-control" id="username">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -46,10 +56,15 @@
                                         <input name="password_confirm" type="password" class="form-control" id="inputPassword2" placeholder="">
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <label class="error col-sm-12 col-md-12 col-form-label">
+                                        <% if(typeof errorObject !== 'undefined' && typeof errorObject.errorDetails !== 'undefined' && errorObject.errorDetails.Email) { %> <%= errorObject.errorDetails.Email[0] %> <% } %>
+                                    </label>
+                                </div>
                                 <div class="form-group row">
                                     <label for="email" class="col-sm-12 col-md-4 col-form-label">e-mail adresa:</label>
                                     <div class="col-sm-12 col-md-8">
-                                        <input name="email" type="text" class="form-control" id="email">
+                                        <input value="<% if(typeof email !== 'undefined') { %> <%= email %> <% }%>" name="email" type="text" class="form-control<% if(typeof errorObject !== 'undefined' && typeof errorObject.errorDetails !== 'undefined' && errorObject.errorDetails.Email) { %> error <% }%>" id="email">
                                     </div>
                                 </div>
                                 <div class="row">

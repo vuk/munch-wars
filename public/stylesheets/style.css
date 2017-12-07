@@ -301,6 +301,9 @@ img {
 .login-body .form {
   padding: 2rem 10%;
 }
+.login-body .form input.error {
+  border: 2px solid #FF0000;
+}
 .login-body .form input {
   background: transparent;
   border: 2px solid #FFDF00;
@@ -318,6 +321,10 @@ img {
 }
 .forgot-pass-link:hover {
   color: #FFDF00;
+}
+.login-body .form label.error {
+  color: #ff0000;
+  text-align: center;
 }
 .login-body .form label {
   text-align: left;
