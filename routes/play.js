@@ -19,7 +19,7 @@ router.get('/', function(req, res, next) {
           opponentId: req.session.userId === req.query.game ? null : req.query.game || null,
           opponent: req.query.computer || req.query.game && req.session.userId === req.query.game ? null : response.data.PlayerProfile,
           profile: req.session.profile || null,
-          stats: req.session.stats || null
+          stats: req.session.stats || null,
           computer: req.query.computer || false,
           noevent: req.query.noevent || false
         });
