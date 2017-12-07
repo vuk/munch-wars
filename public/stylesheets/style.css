@@ -464,6 +464,10 @@ img {
     font-weight: 700;
     font-size: 16px;
 }
+.modal-content #opponent-name {
+    color: #FFDF00;
+    padding: 1rem;
+}
 
 .btn.munch-button {
     border: 2px solid #FFDF00;
