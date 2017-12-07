@@ -184,10 +184,38 @@ img {
   justify-content: center;
 }
 
+.awards .award-holder {
+  flex-direction: column;
+}
+.awards .award-quantity {
+  color: #FFDF00;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 1rem;
+}
+
+.awards .award-img {
+  max-width: 75%;
+}
+
 .award-desc {
   color: #fff;
   margin-top: 2rem;
   width: 40%;
+}
+
+.awards .award-desc {
+  width: auto;
+}
+
+.notes {
+  text-align: center;
+  color: #fff;
+  margin-top: 4rem;
+}
+
+.munch-row-two.awards {
+  display: block;
 }
 
 .award-desc .number {
