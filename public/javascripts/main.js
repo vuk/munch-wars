@@ -51,22 +51,22 @@ if (jQuery('#games').length > 0 && !noevent) {
 }
 
 if($('.rank-row').length > 0) {
-  var totalPoints = _.find(stats.Statistics, function(obj) {
+  var totalPoints = _.find(stats.data.Statistics, function(obj) {
     return obj.StatisticName === 'Total Points';
   });
-  var weeklyPoints = _.find(stats.Statistics, function(obj) {
+  var weeklyPoints = _.find(stats.data.Statistics, function(obj) {
     return obj.StatisticName === 'Weekly Points';
   });
-  var dailyPoints = _.find(stats.Statistics, function(obj) {
+  var dailyPoints = _.find(stats.data.Statistics, function(obj) {
     return obj.StatisticName === 'Points';
   });
-  var weeklyWins = _.find(stats.Statistics, function(obj) {
+  var weeklyWins = _.find(stats.data.Statistics, function(obj) {
     return obj.StatisticName === 'Weekly Wins';
   });
-  var dailyWins = _.find(stats.Statistics, function(obj) {
+  var dailyWins = _.find(stats.data.Statistics, function(obj) {
     return obj.StatisticName === 'Wins';
   });
-  var monthlyWins = _.find(stats.Statistics, function(obj) {
+  var monthlyWins = _.find(stats.data.Statistics, function(obj) {
     return obj.StatisticName === 'Total Wins';
   });
   $('.daily-pts .pts-score').html(dailyPoints);
