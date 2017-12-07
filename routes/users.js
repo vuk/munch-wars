@@ -9,36 +9,36 @@ router.get('/', function (req, res, next) {
     var leaderboardPosition;
     var leaderboardPosition2;
     var leaderboardPosition3;
-      playfabServer.GetLeaderboardAroundUser({
+    playfabServer.GetLeaderboardAroundUser({
       PlayFabId: req.session.userId,
       StatisticName: 'Total Points',
       MaxResultsCount: 1
     }, (err1, res1) => {
       leaderboardPosition = res1.data.Leaderboard[0];
-    });
-    playfabServer.GetLeaderboardAroundUser({
-      PlayFabId: req.session.userId,
-      StatisticName: 'Weekly Points',
-      MaxResultsCount: 1
-    }, (err2, res2) => {
-      leaderboardPosition2 = res2.data.Leaderboard[0];
-    });
-    playfabServer.GetLeaderboardAroundUser({
-      PlayFabId: req.session.userId,
-      StatisticName: 'Points',
-      MaxResultsCount: 1
-    }, (err3, res3) => {
-      leaderboardPosition3 = res3.data.Leaderboard[0];
-    });
-    res.render('pages/profile', {
-      title: 'Profil',
-      active: 'play',
-      playfabId: req.session.userId || null,
-      totalRank: leaderboardPosition.Leaderboard[0],
-      weeklyRank: leaderboardPosition2.Leaderboard[0],
-      dailyRank: leaderboardPosition3.Leaderboard[0],
-      profile: req.session.profile || null,
-      stats: req.session.stats || null
+      playfabServer.GetLeaderboardAroundUser({
+        PlayFabId: req.session.userId,
+        StatisticName: 'Weekly Points',
+        MaxResultsCount: 1
+      }, (err2, res2) => {
+        leaderboardPosition2 = res2.data.Leaderboard[0];
+        playfabServer.GetLeaderboardAroundUser({
+          PlayFabId: req.session.userId,
+          StatisticName: 'Points',
+          MaxResultsCount: 1
+        }, (err3, res3) => {
+          leaderboardPosition3 = res3.data.Leaderboard[0];
+          res.render('pages/profile', {
+            title: 'Profil',
+            active: 'play',
+            playfabId: req.session.userId || null,
+            totalRank: leaderboardPosition,
+            weeklyRank: leaderboardPosition2,
+            dailyRank: leaderboardPosition3,
+            profile: req.session.profile || null,
+            stats: req.session.stats || null
+          });
+        });
+      });
     });
   } else {
     res.redirect('/play');
