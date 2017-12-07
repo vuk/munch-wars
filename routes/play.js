@@ -4,7 +4,7 @@ const playfab = require('playfab-sdk/Scripts/PlayFab/PlayFabClient');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   console.log(req.query.game);
-  if(req.session.userId && req.query.game) {
+  if(req.session.userId && (req.query.game || req.query.computer)) {
     playfab.GetPlayerProfile({
       PlayFabId: req.query.game,
       ProfileConstraints: {
@@ -23,7 +23,7 @@ router.get('/', function(req, res, next) {
           noevent: req.query.noevent || false
         });
     });
-  } else if (req.session.userId && !req.query.game) {
+  } else if (req.session.userId && !req.query.game && !req.query.computer) {
     res.redirect('/profile');
   } else {
     res.render('pages/login', {
