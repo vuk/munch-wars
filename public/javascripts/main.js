@@ -46,7 +46,7 @@ if (jQuery('#games').length > 0 && !noevent) {
   if (window.location.href.indexOf('?game=') === -1 && window.location.href.indexOf('?computer') === -1) {
     window.location.href = '/profile';
   } else if (window.location.href.indexOf('?game=') > -1) {
-    socket.emit('invite', { id: opponent, myId: userId });
+    socket.emit('invite', { id: opponent, myId: userId, profile: profile, stats: stats });
   }
 }
 

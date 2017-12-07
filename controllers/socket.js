@@ -61,7 +61,7 @@ module.exports = {
         }
       });
       socket.on('invite', (data) => {
-        console.log('invite');
+        console.log('invite', data);
         socket.join(data.id);
         this.sockets[data.id].join(data.id);
         console.log(this.io.sockets.adapter.rooms[data.id].sockets);
