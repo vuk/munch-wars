@@ -538,6 +538,21 @@ img {
     font-weight: 700;
 }
 
+.navbar-toggle {
+    float: left;
+    margin-top: 15px;
+}
+.navbar-default .navbar-toggle {
+    border: 1px solid #FFDF00;
+    border-radius: 0;
+}
+.navbar-default .navbar-toggle .icon-bar {
+    background: #FFDF00;
+}
+.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
+    background: transparent;
+}
+
 /* Custom, iPhone Retina */
 @media only screen and (min-width: 320px) {
 
@@ -598,6 +613,19 @@ img {
 @media only screen and (max-width: 480px) {
     .rules ol {
         padding-left: 1rem;
+    }
+    .navbar-default .navbar-collapse, .navbar-default .navbar-form {
+        border: none;
+        position: absolute;
+        width: 100vw;
+        z-index: 9;
+        background: rgba(0,0,0,0.8);
+        height: 100vh !important;
+        margin-left: -15px;
+        text-align: center;
+        padding: 5rem;
+        font-size: 18px;
+        font-weight: 700;
     }
 }
 

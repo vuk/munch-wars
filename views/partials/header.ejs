@@ -1,34 +1,34 @@
 <nav class="navbar navbar-default" role="navigation">
-    <div class="container-fluid">
-
-        <div class="navbar-header">
-            <!--<a class="navbar-brand" href="#">
-                <span class="glyphicon glyphicon glyphicon-tree-deciduous"></span>
-                EJS Is Fun
-            </a>-->
-            <ul class="nav navbar-nav">
-                <li><a href="/" <% if(active === 'index') { %> <%= "class=active" %> <% } %>>Home</a></li>
-                <li><a href="/play" <% if(active === 'play') { %> <%= "class=active" %> <% } %>>Igraj Munch Pong</a></li>
-                <li><a href="/ranking" <% if(active === 'ranking') { %> <%= "class=active" %> <% } %>>Rang lista</a></li>
-                <li><a href="/winners" <% if(active === 'winners') { %> <%= "class=active" %> <% } %>>Dobitnici</a></li>
-                <li><a href="/awards" <% if(active === 'awards') { %> <%= "class=active" %> <% } %>>Nagrade</a></li>
-                <li><a href="/rules" <% if(active === 'rules') { %> <%= "class=active" %> <% } %>>Pravila</a></li>
-                <li><a href="/contact" <% if(active === 'contact') { %> <%= "class=active" %> <% } %>>Kontakt</a></li>
-                <li>
-                    <a id="toggle-sound" href="javascript:void(0);">Zvuk
-                        <div class="sound-wrap">
-                            <div class="sound-on-wrapper">
-                                <div id="sound-on"></div>
-                            </div>
-                            <div id="sound-separator"> / </div>
-                            <div class="sound-off-wrapper">
-                                <div id="sound-off"></div>
-                            </div>
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNav">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#"><img src="/assets/logo.png" alt=""></a>
+    </div>
+    <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="nav navbar-nav">
+            <li><a href="/" <% if(active === 'index') { %> <%= "class=active" %> <% } %>>Home</a></li>
+            <li><a href="/play" <% if(active === 'play') { %> <%= "class=active" %> <% } %>>Igraj Munch Pong</a></li>
+            <li><a href="/ranking" <% if(active === 'ranking') { %> <%= "class=active" %> <% } %>>Rang lista</a></li>
+            <li><a href="/winners" <% if(active === 'winners') { %> <%= "class=active" %> <% } %>>Dobitnici</a></li>
+            <li><a href="/awards" <% if(active === 'awards') { %> <%= "class=active" %> <% } %>>Nagrade</a></li>
+            <li><a href="/rules" <% if(active === 'rules') { %> <%= "class=active" %> <% } %>>Pravila</a></li>
+            <li><a href="/contact" <% if(active === 'contact') { %> <%= "class=active" %> <% } %>>Kontakt</a></li>
+            <li>
+                <a id="toggle-sound" href="javascript:void(0);">Zvuk
+                    <div class="sound-wrap">
+                        <div class="sound-on-wrapper">
+                            <div id="sound-on"></div>
                         </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
-
+                        <div id="sound-separator"> / </div>
+                        <div class="sound-off-wrapper">
+                            <div id="sound-off"></div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
     </div>
 </nav>
