@@ -129,7 +129,7 @@ var mainState = function (game) {
 
 function handleIncorrect(){
   if(!game.device.desktop){
-    document.getElementById("turn").style.display="block";
+    document.getElementById("turn").style.display="flex";
   }
 }
 
