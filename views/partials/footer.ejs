@@ -1,5 +1,5 @@
 <script>
-  var userId = <%- JSON.stringify(playfabId) %>;
+  var userId = <% if (typeof playfabId !== 'undefined') { %><%= JSON.stringify(playfabId) %><% } else { %> <%= null %><% } %>;
 </script>
 
 <div class="modal fade" id="accept_modal" tabindex="-1" role="dialog" aria-labelledby="accept_modalLabel">

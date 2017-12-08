@@ -577,6 +577,17 @@ img {
     font-size: 55%;
     margin-top: 1rem;
 }
+.login-body .form button.reset-btn {
+    border: 2px solid #FFDF00;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    color: #FFDF00;
+    padding: 1rem 5rem;
+    max-width: none;
+    margin-top: 3rem;
+    margin-bottom: 5rem;
+}
 
 /* Custom, iPhone Retina */
 @media only screen and (min-width: 320px) {

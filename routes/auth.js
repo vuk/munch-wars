@@ -221,4 +221,36 @@ router.get('/logout', (req, res, next) => {
   })
 });
 
+router.get('/forgot', (req, res, next) => {
+  if (req.session.userId) {
+    res.redirect('/profile');
+  } else {
+    res.render('pages/forgot', {
+      title: 'Zaboravljena šifra',
+      active: 'play'
+    });
+  }
+});
+
+router.post('/reset', (req, res, next) => {
+  if (req.body.email) {
+    playfab.SendAccountRecoveryEmail({
+      Email: req.body.email,
+      TitleId: 'F06D'
+    }, (err, response) => {
+      if (err) {
+        console.log(err);
+        res.redirect('/forgot');
+      } else {
+        res.render('pages/reset-confirm', {
+          title: 'Zaboravljena šifra',
+          active: 'play'
+        });
+      }
+    });
+  } else {
+    res.redirect('/forgot');
+  }
+});
+
 module.exports = router;
