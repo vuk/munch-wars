@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
 const playfabServer = require('playfab-sdk/Scripts/PlayFab/PlayFabServer');
+playfabServer.settings.developerSecretKey = 'X6GUF8OHOC8OIXU1W9P3F77SIJW9X5EZESCNTG8J53G97ANDEE';
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
-  playfabServer.settings.developerSecretKey = 'X6GUF8OHOC8OIXU1W9P3F77SIJW9X5EZESCNTG8J53G97ANDEE';
   if (req.session.userId) {
     var leaderboardPosition;
     var leaderboardPosition2;
@@ -27,6 +27,9 @@ router.get('/', function (req, res, next) {
           MaxResultsCount: 1
         }, (err3, res3) => {
           leaderboardPosition3 = res3.data.Leaderboard[0];
+          req.session.totalRank = leaderboardPosition;
+          req.session.weeklyRank = leaderboardPosition2;
+          req.session.dailyRank = leaderboardPosition3;
           res.render('pages/profile', {
             title: 'Profil',
             active: 'play',

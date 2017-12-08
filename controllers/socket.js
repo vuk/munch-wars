@@ -1,12 +1,11 @@
 'use strict';
-const playfab = require('playfab-sdk/Scripts/PlayFab/PlayFabClient');
 const playfabServer = require('playfab-sdk/Scripts/PlayFab/PlayFabServer');
+playfabServer.settings.developerSecretKey = 'X6GUF8OHOC8OIXU1W9P3F77SIJW9X5EZESCNTG8J53G97ANDEE';
 module.exports = {
   sockets: {},
   activeUsers: {},
   io: null,
   submitScore: (data) => {
-    playfabServer.settings.developerSecretKey = 'X6GUF8OHOC8OIXU1W9P3F77SIJW9X5EZESCNTG8J53G97ANDEE';
     playfabServer.UpdatePlayerStatistics({
       "PlayFabId": data.id,
       "Statistics": [
@@ -71,7 +70,7 @@ module.exports = {
             player1: this.activeUsers[data.myId],
             player2: this.activeUsers[data.id],
             profile: data.profile,
-            stats: data.stats.data
+            ranks: this.activeUsers[data.myId].ranks
           });
         }, 2000);
       });

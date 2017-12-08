@@ -22,10 +22,26 @@ socket.on('connected', function (data) {
 });
 
 socket.on('accept_invite', function (data) {
+  console.log('accept invite', data);
   if (data.player1.profile.PlayerId !== userId) {
     localStorage.setItem('opponentId', data.player1.profile.PlayerId);
     $('#accept_modal').modal();
     $('#opponent-name').html(data.profile.DisplayName);
+    var daily = parseInt(data.ranks.daily.Position, 10) + 1;
+    while (daily.toString().length < 5) {
+      daily = '0' + daily;
+    }
+    var weekly = parseInt(data.ranks.daily.Position, 10) + 1;
+    while (weekly.toString().length < 5) {
+      weekly = '0' + weekly;
+    }
+    var total = parseInt(data.ranks.daily.Position, 10) + 1;
+    while (total.toString().length < 5) {
+      total = '0' + total;
+    }
+    $('#daily-rang').html(daily);
+    $('#weekly-rang').html(weekly);
+    $('#total-rang').html(total);
   }
   if (data.player2.profile.PlayerId !== userId) {
     localStorage.setItem('opponentId', data.player2.profile.PlayerId);

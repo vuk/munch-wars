@@ -1,9 +1,12 @@
 const express = require('express');
 const playfab = require('playfab-sdk/Scripts/PlayFab/PlayFabClient');
+const playfabServer = require('playfab-sdk/Scripts/PlayFab/PlayFabServer');
+playfabServer.settings.developerSecretKey = 'X6GUF8OHOC8OIXU1W9P3F77SIJW9X5EZESCNTG8J53G97ANDEE';
 const router = express.Router();
 const passport = require('passport');
 
 playfab.settings.titleId = 'F06D';
+playfabServer.settings.titleId = 'F06D';
 
 router.post('/login', function (req, res, next) {
   playfab.LoginWithEmailAddress({
@@ -29,18 +32,23 @@ router.post('/login', function (req, res, next) {
         }
         else {
           playfab.GetPlayerStatistics({}, (err, stats) => {
-            console.log(stats);
             delete response.data.PlayerProfile.TitleId;
             if (response.data.PlayerProfile.LinkedAccounts && response.data.PlayerProfile.LinkedAccounts[0].Username) {
               response.data.PlayerProfile.DisplayName = response.data.PlayerProfile.LinkedAccounts[0].Username;
             }
             req.session.profile = response.data.PlayerProfile;
-            req.app.get('socketio').activeUsers[result.data.PlayFabId] = {
-              profile: response.data.PlayerProfile,
-              time: Date.now()
-            };
             req.session.stats = stats;
-            res.redirect('/profile');
+            getRankings(req)
+              .then(ranks => {
+                req.session.ranks = ranks;
+                req.app.get('socketio').activeUsers[result.data.PlayFabId] = {
+                  profile: response.data.PlayerProfile,
+                  time: Date.now(),
+                  stats: stats,
+                  ranks: ranks
+                };
+                res.redirect('/profile');
+              });
           });
         }
       });
@@ -81,18 +89,23 @@ router.get('/social-login', passport.authenticate('facebook'),
         }
         else {
           playfab.GetPlayerStatistics({}, (err, stats) => {
-            console.log(stats);
             req.session.stats = stats;
             delete response.data.PlayerProfile.TitleId;
             if (response.data.PlayerProfile.LinkedAccounts && response.data.PlayerProfile.LinkedAccounts[0].Username) {
               response.data.PlayerProfile.DisplayName = response.data.PlayerProfile.LinkedAccounts[0].Username;
             }
             req.session.profile = response.data.PlayerProfile;
-            req.app.get('socketio').activeUsers[req.session.userId] = {
-              profile: response.data.PlayerProfile,
-              time: Date.now()
-            };
-            res.redirect('/profile');
+            req.session.stats = stats;
+            getRankings(req)
+              .then(ranks => {
+                req.app.get('socketio').activeUsers[req.session.userId] = {
+                  profile: response.data.PlayerProfile,
+                  time: Date.now(),
+                  stats: stats,
+                  ranks: ranks
+                };
+                res.redirect('/profile');
+              });
           });
         }
       });
@@ -134,24 +147,72 @@ router.post('/register', function (req, res, next) {
         }
         else {
           playfab.GetPlayerStatistics({}, (err, stats) => {
-            console.log(stats);
             req.session.stats = stats;
             delete response.data.PlayerProfile.TitleId;
             if (response.data.PlayerProfile.LinkedAccounts && response.data.PlayerProfile.LinkedAccounts[0].Username) {
               response.data.PlayerProfile.DisplayName = response.data.PlayerProfile.LinkedAccounts[0].Username;
             }
             req.session.profile = response.data.PlayerProfile;
-            req.app.get('socketio').activeUsers[req.session.userId] = {
-              profile: response.data.PlayerProfile,
-              time: Date.now()
-            };
-            res.redirect('/profile');
+            req.session.stats = stats;
+            getRankings(req)
+              .then(ranks => {
+                req.app.get('socketio').activeUsers[req.session.userId] = {
+                  profile: response.data.PlayerProfile,
+                  time: Date.now(),
+                  stats: stats,
+                  ranks: ranks
+                };
+                res.redirect('/profile');
+              });
           });
         }
       });
     }
   });
 });
+
+function getRankings (req) {
+  var leaderboardPosition;
+  var leaderboardPosition2;
+  var leaderboardPosition3;
+  return new Promise((resolve, reject) => {
+    playfabServer.GetLeaderboardAroundUser({
+      PlayFabId: req.session.userId,
+      StatisticName: 'Total Points',
+      MaxResultsCount: 1
+    }, (err1, res1) => {
+      if (err1) {
+        reject(err1);
+      }
+      leaderboardPosition = res1.data.Leaderboard[0];
+      playfabServer.GetLeaderboardAroundUser({
+        PlayFabId: req.session.userId,
+        StatisticName: 'Weekly Points',
+        MaxResultsCount: 1
+      }, (err2, res2) => {
+        if (err2) {
+          reject(err2);
+        }
+        leaderboardPosition2 = res2.data.Leaderboard[0];
+        playfabServer.GetLeaderboardAroundUser({
+          PlayFabId: req.session.userId,
+          StatisticName: 'Points',
+          MaxResultsCount: 1
+        }, (err3, res3) => {
+          if (err3) {
+            reject(err3);
+          }
+          leaderboardPosition3 = res3.data.Leaderboard[0];
+          resolve({
+            total: leaderboardPosition,
+            weekly: leaderboardPosition2,
+            daily: leaderboardPosition3,
+          })
+        });
+      });
+    });
+  });
+}
 
 router.get('/logout', (req, res, next) => {
   req.session.destroy(function(err) {

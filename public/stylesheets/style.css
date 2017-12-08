@@ -464,6 +464,15 @@ img {
     font-weight: 700;
     font-size: 16px;
 }
+.gold {
+    color: #FFDF00;
+}
+.rankings-modal-row .col-sm-4 {
+    border-left: 2px solid rgba(255,255,255, 0.8);
+}
+.rankings-modal-row .col-sm-4:last-child {
+    border-right: 2px solid rgba(255,255,255, 0.8);
+}
 .modal-content #opponent-name {
     color: #FFDF00;
     padding: 1rem;
@@ -480,6 +489,7 @@ img {
 .modal-footer {
     text-align: center;
     border: none;
+    padding-bottom: 5rem;
 }
 
 .modal-body {
