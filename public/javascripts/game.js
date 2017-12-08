@@ -225,7 +225,7 @@ mainState.prototype = {
         socket.on('ball', function (data) {
           if (data.time > localTime) {
             self.ballSprite.visible = data.visible;
-            if (Math.abs(self.ballSprite.body.x - data.x) < 50 && Math.abs(self.ballSprite.body.y - data.y) < 50)
+            /*if (Math.abs(self.ballSprite.body.x - data.x) < 50 && Math.abs(self.ballSprite.body.y - data.y) < 50)*/
             game.physics.arcade.moveToXY(self.ballSprite, data.x, data.y, 0, 100);
             localTime = data.time;
           }
