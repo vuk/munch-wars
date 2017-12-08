@@ -200,9 +200,11 @@ mainState.prototype = {
       self.scoreRight = data.scoreRight;
       self.updateScoreTextFields();
     });
+    this.swipe = new Swipe(this.game);
   },
 
   update: function () {
+    console.log(this.swipe.check());
     this.moveLeftPaddle();
     this.moveRightPaddle();
     game.physics.arcade.overlap(this.ballSprite, this.paddleGroup, this.collideWithPaddle, null, this);
@@ -459,10 +461,18 @@ mainState.prototype = {
 
   moveLeftPaddle: function (direction) {
     if (!isHome || computer) {
-      if (this.paddleRight_up.isDown) {
+      if (this.paddleRight_up.isDown
+        || this.swipe.check() === this.swipe.DIRECTION_UP
+        || this.swipe.check() === this.swipe.DIRECTION_UP_LEFT
+        || this.swipe.check() === this.swipe.DIRECTION_UP_RIGHT
+      ) {
         this.paddleLeftSprite.body.velocity.y = -gameProperties.paddleVelocity;
       }
-      else if (this.paddleRight_down.isDown) {
+      else if (this.paddleRight_down.isDown
+        || this.swipe.check() === this.swipe.DIRECTION_UP
+        || this.swipe.check() === this.swipe.DIRECTION_UP_LEFT
+        || this.swipe.check() === this.swipe.DIRECTION_UP_RIGHT
+      ) {
         this.paddleLeftSprite.body.velocity.y = gameProperties.paddleVelocity;
       } else {
         this.paddleLeftSprite.body.velocity.y = 0;
@@ -483,10 +493,16 @@ mainState.prototype = {
   moveRightPaddle: function (direction) {
     var direction = direction || null;
     if (isHome) {
-      if (this.paddleRight_up.isDown) {
+      if (this.paddleRight_up.isDown
+        || this.swipe.check() === this.swipe.DIRECTION_UP
+        || this.swipe.check() === this.swipe.DIRECTION_UP_LEFT
+        || this.swipe.check() === this.swipe.DIRECTION_UP_RIGHT) {
         this.paddleRightSprite.body.velocity.y = -gameProperties.paddleVelocity;
       }
-      else if (this.paddleRight_down.isDown) {
+      else if (this.paddleRight_down.isDown
+        || this.swipe.check() === this.swipe.DIRECTION_UP
+        || this.swipe.check() === this.swipe.DIRECTION_UP_LEFT
+        || this.swipe.check() === this.swipe.DIRECTION_UP_RIGHT) {
         this.paddleRightSprite.body.velocity.y = gameProperties.paddleVelocity;
       } else {
         this.paddleRightSprite.body.velocity.y = 0;
