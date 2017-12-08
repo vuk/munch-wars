@@ -204,7 +204,6 @@ mainState.prototype = {
   },
 
   update: function () {
-    console.log(this.swipe.check());
     this.moveLeftPaddle();
     this.moveRightPaddle();
     game.physics.arcade.overlap(this.ballSprite, this.paddleGroup, this.collideWithPaddle, null, this);
@@ -460,6 +459,7 @@ mainState.prototype = {
   },
 
   moveLeftPaddle: function (direction) {
+    console.log(this.swipe.check());
     if (!isHome || computer) {
       if (this.paddleRight_up.isDown
         || this.swipe.check() === this.swipe.DIRECTION_UP
