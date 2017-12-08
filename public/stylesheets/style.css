@@ -567,6 +567,15 @@ img {
 .navbar-header {
     margin-bottom: 1rem;
 }
+.poziv a {
+    color: #FFDF00;
+    display: block;
+    margin-top: 1rem;
+}
+.poziv .col-xs-3 p {
+    font-size: 55%;
+    margin-top: 1rem;
+}
 
 /* Custom, iPhone Retina */
 @media only screen and (min-width: 320px) {

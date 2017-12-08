@@ -92,8 +92,34 @@
                         </div>
                         <div class="poziv">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-offset-1 col-md-10 col-xs-12">
                                     <p>pošalji poziv za igru prijatelju:</p>
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <a href="#">
+                                                <img src="/assets/email.png"/>
+                                                <p>email</p>
+                                            </a>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <a href="#">
+                                                <img src="/assets/fb.png"/>
+                                                <p>facebook</p>
+                                            </a>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <a href="https://api.whatsapp.com/send?text=<%= encodeURIComponent('Igraj Munch Wars http://sentora.vukstankovic.com/play?game=' + playfabId) %>">
+                                                <img src="/assets/wa.png"/>
+                                                <p>whatsapp</p>
+                                            </a>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <a href="#">
+                                                <img src="/assets/phone.png"/>
+                                                <p>phone</p>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

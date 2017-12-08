@@ -30,11 +30,9 @@
                             <form method="post" action="/auth/register">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <label class="error">
-                                            <% if (typeof errorObject !== 'undefined' && errorObject.errorCode === 1058){ %>
-                                            Korisničko ime već postoji, molimo te da izabereš drugo
+                                        <% if (typeof errorObject !== 'undefined' && errorObject.errorCode === 1058){ %>
+                                        <label class="error">Korisničko ime već postoji, molimo te da izabereš drugo</label>
                                             <% } %>
-                                        </label>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -44,10 +42,23 @@
                                                class="<% if (typeof errorObject !== 'undefined' && errorObject.errorCode === 1058){ %> error <% } %>form-control" id="username">
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <% if (typeof errorObject !== 'undefined'
+                                                    && typeof errorObject.errorDetails !== 'undefined'
+                                                    && errorObject.errorDetails.Password){ %>
+                                        <label class="error">Lozinka mora imati najmanje 6, a najviše 100 karaktera</label>
+                                            <% } %>
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <label for="inputPassword" class="col-sm-12 col-md-4 col-form-label">izaberi šifru</label>
                                     <div class="col-sm-12 col-md-8">
-                                        <input name="password" type="password" class="form-control" id="inputPassword" placeholder="">
+                                        <input name="password" type="password" class="<% if (typeof errorObject !== 'undefined'
+                                                && typeof errorObject.errorDetails !== 'undefined'
+                                                && errorObject.errorDetails.Password){ %>
+                                            error
+                                            <% } %> form-control" id="inputPassword" placeholder="">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -57,9 +68,10 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="error col-sm-12 col-md-12 col-form-label">
-                                        <% if(typeof errorObject !== 'undefined' && typeof errorObject.errorDetails !== 'undefined' && errorObject.errorDetails.Email) { %> <%= errorObject.errorDetails.Email[0] %> <% } %>
-                                    </label>
+                                    <% if(typeof errorObject !== 'undefined'
+                                                && typeof errorObject.errorDetails !== 'undefined'
+                                                && errorObject.errorDetails.Email) { %>
+                                    <label class="error col-sm-12 col-md-12 col-form-label"><%= errorObject.errorDetails.Email[0] %> </label><% } %>
                                 </div>
                                 <div class="form-group row">
                                     <label for="email" class="col-sm-12 col-md-4 col-form-label">e-mail adresa:</label>
