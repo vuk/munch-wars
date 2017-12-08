@@ -372,12 +372,24 @@ img {
     color: #FFDF00;
 }
 
-.logout .username {
-    color: #FFDF00;
+.logout {
+    font-size: 14px;
 }
 
-.pts-container, .pick-side {
+.profile-body .logout .username {
+    color: #FFDF00;
+    font-size: 14px;
+}
+
+.pts-container {
     border-left: 2px solid #fff;
+    font-size: 85%;
+}
+.pick-side {
+    border-left: 2px solid #fff;
+    border-right: 2px solid #fff;
+}
+.pts-container:last-child, .pick-side:last-child{
     border-right: 2px solid #fff;
 }
 
@@ -552,6 +564,9 @@ img {
 .navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
     background: transparent;
 }
+.navbar-header {
+    margin-bottom: 1rem;
+}
 
 /* Custom, iPhone Retina */
 @media only screen and (min-width: 320px) {
@@ -567,6 +582,9 @@ img {
 @media only screen and (min-width: 768px) {
     .modal-dialog {
         margin-top: 120px;
+    }
+    .navbar-brand {
+        display: none;
     }
 }
 
@@ -626,6 +644,22 @@ img {
         padding: 5rem;
         font-size: 18px;
         font-weight: 700;
+    }
+    .login-head-login-page {
+        display: none;
+    }
+    .center-for-mobile .col-sm-6 {
+        text-align: center !important;
+    }
+    .munch-btn.btn-signin {
+        text-align: center;
+        margin-top: 1rem;
+    }
+    .profile-body .welcome, .profile-body .username {
+        font-size: 28px;
+    }
+    .hide-on-mobile {
+        display: none;
     }
 }
 
