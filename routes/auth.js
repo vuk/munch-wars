@@ -114,10 +114,10 @@ router.get('/social-login', passport.authenticate('facebook'),
 
 router.post('/register', function (req, res, next) {
   playfab.RegisterPlayFabUser({
-    DisplayName: req.body.username,
-    Username: req.body.username,
-    Email: req.body.email,
-    Password: req.body.password,
+    DisplayName: req.body.username.trim(),
+    Username: req.body.username.trim(),
+    Email: req.body.email.trim(),
+    Password: req.body.password.trim(),
     TitleId: playfab.settings.titleId
   }, function (err, result) {
     console.log(err);

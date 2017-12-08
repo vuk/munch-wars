@@ -38,7 +38,7 @@
                                 <div class="form-group row">
                                     <label for="username" class="col-sm-12 col-md-4 col-form-label">izaberi nadimak:</label>
                                     <div class="col-sm-12 col-md-8">
-                                        <input value="<% if(typeof username !== 'undefined') { %> <%= username %> <% }%>" name="username" type="text"
+                                        <input value="<% if(typeof username !== 'undefined') { %><%= username %><% }%>" name="username" type="text"
                                                class="<% if (typeof errorObject !== 'undefined' && errorObject.errorCode === 1058){ %> error <% } %>form-control" id="username">
                                     </div>
                                 </div>
@@ -76,7 +76,7 @@
                                 <div class="form-group row">
                                     <label for="email" class="col-sm-12 col-md-4 col-form-label">e-mail adresa:</label>
                                     <div class="col-sm-12 col-md-8">
-                                        <input value="<% if(typeof email !== 'undefined') { %> <%= email %> <% }%>" name="email" type="text" class="form-control<% if(typeof errorObject !== 'undefined' && typeof errorObject.errorDetails !== 'undefined' && errorObject.errorDetails.Email) { %> error <% }%>" id="email">
+                                        <input value="<% if(typeof email !== 'undefined') { %><%= email %><% }%>" name="email" type="text" class="form-control<% if(typeof errorObject !== 'undefined' && typeof errorObject.errorDetails !== 'undefined' && errorObject.errorDetails.Email) { %> error <% }%>" id="email">
                                     </div>
                                 </div>
                                 <div class="row">
