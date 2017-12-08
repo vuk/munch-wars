@@ -6,7 +6,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
                 <h4 class="modal-title" id="exampleModalLabel"></h4>
             </div>
             <div class="modal-body">
@@ -53,7 +54,12 @@
 </audio>
 
 <script>
-  $('#mainNav a').click(function () {
+  $('#mainNav a').click(function (evt) {
+    evt.preventDefault();
+    var self = this;
+    document.getElementById("linkAudio").onended = function () {
+      window.location.href = $(self).attr('href');
+    };
     document.getElementById("linkAudio").play();
   });
 </script>
