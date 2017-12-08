@@ -1,6 +1,17 @@
 body {
     font-family: "orbitron", Helvetica, Arial, sans-serif;
     background-color: #06000c;
+    background: rgba(30,20,86,1);
+    background: -moz-radial-gradient(center, ellipse cover, rgba(30,20,86,1) 0%, rgba(30,20,86,1) 14%, rgba(6,0,12,1) 57%, rgba(6,0,12,1) 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(30,20,86,1)), color-stop(14%, rgba(30,20,86,1)), color-stop(57%, rgba(6,0,12,1)), color-stop(100%, rgba(6,0,12,1)));
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(30,20,86,1) 0%, rgba(30,20,86,1) 14%, rgba(6,0,12,1) 57%, rgba(6,0,12,1) 100%);
+    background: -o-radial-gradient(center, ellipse cover, rgba(30,20,86,1) 0%, rgba(30,20,86,1) 14%, rgba(6,0,12,1) 57%, rgba(6,0,12,1) 100%);
+    background: -ms-radial-gradient(center, ellipse cover, rgba(30,20,86,1) 0%, rgba(30,20,86,1) 14%, rgba(6,0,12,1) 57%, rgba(6,0,12,1) 100%);
+    background: radial-gradient(ellipse at center, rgba(30,20,86,1) 0%, rgba(30,20,86,1) 14%, rgba(6,0,12,1) 57%, rgba(6,0,12,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e1456', endColorstr='#06000c', GradientType=1 );
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1d1351+0,1d1351+50,06000c+51,06000c+100 */
     /*background: #1d1351; !* Old browsers *!
     background: -moz-radial-gradient(center, ellipse cover, #1d1351 0%, #1d1351 50%, #06000c 51%, #06000c 100%); !* FF3.6-15 *!
