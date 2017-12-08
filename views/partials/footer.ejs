@@ -1,5 +1,5 @@
 <script>
-  var userId = <% if (typeof playfabId !== 'undefined') { %><%= JSON.stringify(playfabId) %><% } else { %> <%= null %><% } %>;
+  var userId = <% if (typeof playfabId !== 'undefined') { %><%- JSON.stringify(playfabId) %><% } else { %> <%- null %><% } %>;
 </script>
 
 <div class="modal fade" id="accept_modal" tabindex="-1" role="dialog" aria-labelledby="accept_modalLabel">
@@ -47,3 +47,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
 <script src="/javascripts/main.js"></script>
 <script src='/javascripts/game.js'></script>
+<audio id="linkAudio" style="display: none;">
+    <source src="/assets/audio/menu.ogg" type="audio/ogg">
+    <source src="/assets/audio/menu.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  $('#mainNav a').click(function () {
+    document.getElementById("linkAudio").play();
+  });
+</script>
