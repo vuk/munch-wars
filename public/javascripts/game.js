@@ -264,10 +264,23 @@ mainState.prototype = {
   },
 
   shotRight: function () {
+    var timer = game.time.create(false);
+    var self = this;
+    this.blockRightPaddle = true;
+    timer.loop(3000, function () {
+      self.blockRightPaddle = false;
+    }, this);
+    timer.start();
     this.bulletLeftSprite.kill();
   },
   shotLeft: function () {
-    console.log('shot!!!');
+    var timer = game.time.create(false);
+    var self = this;
+    this.blockLeftPaddle = true;
+    timer.loop(3000, function () {
+      self.blockLeftPaddle = false;
+    }, this);
+    timer.start();
     this.bulletRightSprite.kill();
   },
   leftOutBounds: function () {
@@ -574,80 +587,84 @@ mainState.prototype = {
 
   moveLeftPaddle: function (direction) {
     var direction = direction || null;
-    if (this.side === 'black') {
-      if (this.paddleRight_up.isDown || this.y > game.input.y) {
-        this.paddleLeftSprite.body.velocity.y = -gameProperties.paddleVelocity;
-      }
-      else if (this.paddleRight_down.isDown || this.y < game.input.y) {
-        this.paddleLeftSprite.body.velocity.y = gameProperties.paddleVelocity;
-      } else {
-        this.paddleLeftSprite.body.velocity.y = 0;
-      }
+    if (!this.blockLeftPaddle) {
+      if (this.side === 'black') {
+        if (this.paddleRight_up.isDown || this.y > game.input.y) {
+          this.paddleLeftSprite.body.velocity.y = -gameProperties.paddleVelocity;
+        }
+        else if (this.paddleRight_down.isDown || this.y < game.input.y) {
+          this.paddleLeftSprite.body.velocity.y = gameProperties.paddleVelocity;
+        } else {
+          this.paddleLeftSprite.body.velocity.y = 0;
+        }
 
-      if (this.paddleLeftSprite.body.y < gameProperties.paddleTopGap) {
-        this.paddleLeftSprite.body.y = gameProperties.paddleTopGap;
+        if (this.paddleLeftSprite.body.y < gameProperties.paddleTopGap) {
+          this.paddleLeftSprite.body.y = gameProperties.paddleTopGap;
+        }
+        if (!computer) {
+          socket.emit('move_paddle', {
+            id: getParameterByName('game'),
+            side: 'left',
+            velocity: this.paddleLeftSprite.body.velocity.y,
+            y: this.paddleLeftSprite.body.y + this.paddleLeftSprite.body.height / 2
+          });
+        }
       }
-      if (!computer) {
-        socket.emit('move_paddle', {
-          id: getParameterByName('game'),
-          side: 'left',
-          velocity: this.paddleLeftSprite.body.velocity.y,
-          y: this.paddleLeftSprite.body.y + this.paddleLeftSprite.body.height / 2
-        });
-      }
-    }
-    if (computer && this.side === 'white') {
-      if (direction === 'up') {
-        this.paddleLeftSprite.body.velocity.y = -gameProperties.paddleVelocity;
-      }
-      else if (direction === 'down') {
-        this.paddleLeftSprite.body.velocity.y = gameProperties.paddleVelocity;
-      } else {
-        this.paddleLeftSprite.body.velocity.y = 0;
-      }
+      if (computer && this.side === 'white') {
+        if (direction === 'up') {
+          this.paddleLeftSprite.body.velocity.y = -gameProperties.paddleVelocity;
+        }
+        else if (direction === 'down') {
+          this.paddleLeftSprite.body.velocity.y = gameProperties.paddleVelocity;
+        } else {
+          this.paddleLeftSprite.body.velocity.y = 0;
+        }
 
-      if (this.paddleLeftSprite.body.y < gameProperties.paddleTopGap) {
-        this.paddleLeftSprite.body.y = gameProperties.paddleTopGap;
+        if (this.paddleLeftSprite.body.y < gameProperties.paddleTopGap) {
+          this.paddleLeftSprite.body.y = gameProperties.paddleTopGap;
+        }
       }
     }
   },
 
   moveRightPaddle: function (direction) {
     var direction = direction || null;
-    if (this.side === 'white') {
-      if (this.paddleRight_up.isDown || this.y > game.input.y) {
-        this.paddleRightSprite.body.velocity.y = -gameProperties.paddleVelocity;
-      }
-      else if (this.paddleRight_down.isDown || this.y < game.input.y) {
-        this.paddleRightSprite.body.velocity.y = gameProperties.paddleVelocity;
-      } else {
-        this.paddleRightSprite.body.velocity.y = 0;
-      }
+    if (!this.blockRightPaddle) {
+      if (this.side === 'white') {
+        if (this.paddleRight_up.isDown || this.y > game.input.y) {
+          this.paddleRightSprite.body.velocity.y = -gameProperties.paddleVelocity;
+        }
+        else if (this.paddleRight_down.isDown || this.y < game.input.y) {
+          this.paddleRightSprite.body.velocity.y = gameProperties.paddleVelocity;
+        } else {
+          this.paddleRightSprite.body.velocity.y = 0;
+        }
 
-      if (this.paddleRightSprite.body.y < gameProperties.paddleTopGap) {
-        this.paddleRightSprite.body.y = gameProperties.paddleTopGap;
+        if (this.paddleRightSprite.body.y < gameProperties.paddleTopGap) {
+          this.paddleRightSprite.body.y = gameProperties.paddleTopGap;
+        }
+        if (!computer) {
+          socket.emit('move_paddle', {
+            id: getParameterByName('game'),
+            side: 'right',
+            velocity: this.paddleRightSprite.body.velocity.y,
+            y: this.paddleRightSprite.body.y + this.paddleRightSprite.body.height / 2
+          });
+        }
       }
-      if (!computer) {
-        socket.emit('move_paddle', {
-          id: getParameterByName('game'),
-          side: 'right',
-          velocity: this.paddleRightSprite.body.velocity.y,
-          y: this.paddleRightSprite.body.y + this.paddleRightSprite.body.height / 2
-        });
-      }
-    }
-    if (computer && this.side === 'black') {
-      if (direction === 'up') {
-        this.paddleRightSprite.body.velocity.y = -gameProperties.paddleVelocity;
-      }
-      else if (direction === 'down') {
-        this.paddleRightSprite.body.velocity.y = gameProperties.paddleVelocity;
-      } else {
-        this.paddleRightSprite.body.velocity.y = 0;
-      }
+      if (computer && this.side === 'black') {
+        if (direction === 'up') {
+          this.paddleRightSprite.body.velocity.y = -gameProperties.paddleVelocity;
+        }
+        else if (direction === 'down') {
+          this.paddleRightSprite.body.velocity.y = gameProperties.paddleVelocity;
+        } else {
+          this.paddleRightSprite.body.velocity.y = 0;
+        }
 
-      if (this.paddleRightSprite.body.y < gameProperties.paddleTopGap) {
-        this.paddleRightSprite.body.y = gameProperties.paddleTopGap;
+        if (this.paddleRightSprite.body.y < gameProperties.paddleTopGap) {
+          this.paddleRightSprite.body.y = gameProperties.paddleTopGap;
+        }
       }
     }
   },
