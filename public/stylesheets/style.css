@@ -761,9 +761,9 @@ img {
         border-right: none;
     }
 
-    .pts-container:last-child {
+    /*.pts-container:last-child {
         border-left: none;
-    }
+    }*/
 }
 
 /* Large Devices, Wide Screens */
