@@ -705,32 +705,42 @@ mainState.prototype = {
   },
 
   collideWithMagicBounds: function (ball, magicBound) {
-    if (this.lastHitBy < 0 || this.magicCountdown > 0) {
-      this.magicCountdown --;
-      return;
+    if (isHome) {
+      if (this.lastHitBy < 0 || this.magicCountdown > 0) {
+        this.magicCountdown--;
+        return;
+      }
+      var player = this.players[this.lastHitBy];
+      if (player.magic.length >= 3) {
+        return;
+      }
+      var randomMagic = Math.floor(Math.random() * 4);
+      console.log(player.id + ' gets some random WOODOO: ' + randomMagic);
+      switch (randomMagic) {
+        case 0:
+          player.magic.push('shoot');
+          break;
+        case 1:
+          player.magic.push('double-size');
+          break;
+        case 2:
+          player.magic.push('hor-position');
+          break;
+        case 3:
+          player.magic.push('ver-position');
+          break;
+      }
+      this.magicCountdown = 1;
+
+      socket.emit('magic_sync', this.players);
+      this.renderPlayerMagic(player);
+    } else {
+      var self = this;
+      socket.on('magic', function (data) {
+        self.renderPlayerMagic(data[0]);
+        self.renderPlayerMagic(data[1]);
+      });
     }
-    var player = this.players[this.lastHitBy];
-    if (player.magic.length >= 3) {
-      return;
-    }
-    var randomMagic = Math.floor(Math.random() * 4);
-    console.log(player.id + ' gets some random WOODOO: ' + randomMagic);
-    switch (randomMagic) {
-      case 0:
-        player.magic.push('shoot');
-        break;
-      case 1:
-        player.magic.push('double-size');
-        break;
-      case 2:
-        player.magic.push('hor-position');
-        break;
-      case 3:
-        player.magic.push('ver-position');
-        break;
-    }
-    this.magicCountdown = 1;
-    this.renderPlayerMagic(player);
   },
 
   renderPlayerMagic: function(player) {
