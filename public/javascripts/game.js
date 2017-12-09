@@ -81,6 +81,9 @@ var soundAssets = {
   ballMissedURL: 'assets/ballMissed',
   ballMissedName: 'ballMissed',
 
+  shotUrl: 'assets/audio/shot',
+  shotName: 'shot',
+
   mp4URL: '.m4a',
   oggURL: '.ogg',
 };
@@ -187,6 +190,8 @@ mainState.prototype = {
     game.load.audio(soundAssets.ballBounceName, [soundAssets.ballBounceURL + soundAssets.mp4URL, soundAssets.ballBounceURL + soundAssets.oggURL]);
     game.load.audio(soundAssets.ballHitName, [soundAssets.ballHitURL + soundAssets.mp4URL, soundAssets.ballHitURL + soundAssets.oggURL]);
     game.load.audio(soundAssets.ballMissedName, [soundAssets.ballMissedURL + soundAssets.mp4URL, soundAssets.ballMissedURL + soundAssets.oggURL]);
+    game.load.audio(soundAssets.ballMissedName, [soundAssets.ballMissedURL + soundAssets.mp4URL, soundAssets.ballMissedURL + soundAssets.oggURL]);
+    game.load.audio(soundAssets.shotName, [soundAssets.shotUrl + soundAssets.mp4URL, soundAssets.shotUrl + soundAssets.oggURL]);
   },
 
   create: function () {
@@ -265,9 +270,11 @@ mainState.prototype = {
     this.bulletRightSprite.kill();
   },
   leftOutBounds: function () {
+    console.log('out bounds to the right');
     this.bulletLeftSprite.destroy();
   },
   rightOutBounds: function () {
+    console.log('out bounds to the left');
     this.bulletRightSprite.destroy();
   },
   update: function () {
@@ -494,6 +501,7 @@ mainState.prototype = {
     this.sndBallHit = game.add.audio(soundAssets.ballHitName);
     this.sndBallBounce = game.add.audio(soundAssets.ballBounceName);
     this.sndBallMissed = game.add.audio(soundAssets.ballMissedName);
+    this.shotSound = game.add.audio(soundAssets.shotName);
   },
 
   startDemo: function () {
@@ -760,6 +768,7 @@ mainState.prototype = {
     }
   },
   processShot: function (side) {
+    this.shotSound.play();
     if(side === 0) {
       this.bulletLeftSprite = game.add.sprite(gameProperties.paddleLeft_x, this.paddleLeftSprite.y, graphicAssets.bulletLeftName);
       game.physics.enable(this.bulletLeftSprite, Phaser.Physics.ARCADE);
