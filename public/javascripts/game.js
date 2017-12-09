@@ -646,11 +646,12 @@ mainState.prototype = {
   },
 
   collideWithMagicBounds: function (ball, magicBound) {
-    if (this.lastHitBy < 0) {
+    if (this.lastHitBy < 0 || this.magicCountdown > 0) {
+      this.magicCountdown --;
       return;
     }
     var player = this.players[this.lastHitBy];
-    if (player.magic.length > 3) {
+    if (player.magic.length >= 3) {
       return;
     }
     var randomMagic = Math.floor(Math.random() * 4);
@@ -669,6 +670,7 @@ mainState.prototype = {
         player.magic.push('ver-position');
         break;
     }
+    this.magicCountdown = 20;
     this.renderPlayerMagic(player);
   },
 
@@ -678,22 +680,28 @@ mainState.prototype = {
     jQuery('#' +player.id + '-player-magic-2').removeClass(allSpriteClassNames).addClass((player.magic[1] !== void 0) ? 'sprite-' + player.magic[1] : 'sprite-empty');
     jQuery('#' +player.id + '-player-magic-3').removeClass(allSpriteClassNames).addClass((player.magic[2] !== void 0) ? 'sprite-' + player.magic[2] : 'sprite-empty');
   },
+  fireCount: 0,
 
   fireMagic: function () {
-    var side = this.side === 'white' ? 1 : 0;
-    if (this.buttonOne.isDown && this.players[side].magic[0]) {
-      this.processMagic(this.players[side].magic[0], side);
-      this.players[side].magic.splice(0, 1);
+    if (this.fireCount > 10) {
+      this.fireCount = 0;
+      var side = this.side === 'white' ? 1 : 0;
+      if (this.buttonOne.isDown && this.players[side].magic[0]) {
+        this.processMagic(this.players[side].magic[0], side);
+        this.players[side].magic.splice(0, 1);
+      }
+      if (this.buttonTwo.isDown && this.players[side].magic[1]) {
+        this.processMagic(this.players[side].magic[1], side);
+        this.players[side].magic.splice(1, 1);
+      }
+      if (this.buttonThree.isDown && this.players[side].magic[2]) {
+        this.processMagic(this.players[side].magic[2], side);
+        this.players[side].magic.splice(2, 1);
+      }
+      this.renderPlayerMagic(this.players[side]);
+    } else {
+      this.fireCount ++;
     }
-    if (this.buttonTwo.isDown && this.players[side].magic[1]) {
-      this.processMagic(this.players[side].magic[1], side);
-      this.players[side].magic.splice(1, 1);
-    }
-    if (this.buttonThree.isDown && this.players[side].magic[2]) {
-      this.processMagic(this.players[side].magic[2], side);
-      this.players[side].magic.splice(2, 1);
-    }
-    this.renderPlayerMagic(this.players[side]);
   },
 
   processMagic: function (magic, side) {
