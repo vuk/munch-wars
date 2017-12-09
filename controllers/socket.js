@@ -93,6 +93,7 @@ module.exports = {
       });
       socket.on('accept', (data) => {
         // Make sure room has exactly two members before starting a game
+        console.log(this.io.sockets.adapter.rooms[data.host].sockets);
         if (Object.keys(this.io.sockets.adapter.rooms[data.host].sockets).length >= 2) {
           setTimeout(() => {
             console.log('start_game');
