@@ -85,7 +85,7 @@ module.exports = {
           this.io.to(data.host).emit('respond_to_invite', {
             player1: this.activeUsers[data.guest],
             player2: this.activeUsers[data.host],
-            profile: data.guestPofile,
+            profile: this.activeUsers[data.guest].profile,
             ranks: this.activeUsers[data.guest].ranks,
             guestSide: data.guestSide
           });
