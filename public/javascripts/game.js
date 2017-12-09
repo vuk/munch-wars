@@ -522,6 +522,8 @@ mainState.prototype = {
 
   startDemo: function () {
     this.ballSprite.visible = false;
+    this.ballSprite.velocity.x = 0;
+    this.ballSprite.velocity.y = 0;
     //this.resetBall();
     this.enablePaddles(false);
     this.enableBoundaries(true);
