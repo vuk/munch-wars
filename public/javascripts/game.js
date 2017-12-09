@@ -765,7 +765,7 @@ mainState.prototype = {
     }
     if(side === 1) {
       this.bulletRightSprite = game.add.sprite(gameProperties.paddleRight_x, this.paddleRightSprite.y, graphicAssets.bulletRightName);
-      game.physics.enable(this.bulletLeftSprite, Phaser.Physics.ARCADE);
+      game.physics.enable(this.bulletRightSprite, Phaser.Physics.ARCADE);
       this.bulletRightSprite.body.velocity.x = 800;
       this.bulletRightSprite.body.velocity.y = 0;
     }
