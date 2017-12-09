@@ -630,6 +630,74 @@ img {
     font-size: 16px;
 }
 
+#games {
+    padding-top: 15px;
+}
+
+.sprite-left {
+    background: url("./../assets/buttons/magic-left.png") no-repeat;
+    width: 70px; /* Icon width */
+    height: 70px; /* Icon height */
+    background-size: 70px;
+    float: left;
+    margin-right: 15px;
+    position: relative;
+}
+
+.sprite-left.sprite-empty {
+    background-position: 0 -280px;
+}
+
+.sprite-left.sprite-shoot {
+    background-position: 0 -210px;
+}
+
+.sprite-left.sprite-double-size {
+    background-position: 0 -140px;
+}
+
+.sprite-right {
+    background: url("./../assets/buttons/magic-right.png") no-repeat;
+    width: 70px; /* Icon width */
+    height: 70px; /* Icon height */
+    background-size: 70px;
+    float: right;
+    margin-left: 15px;
+    position: relative;
+}
+
+.sprite-right.sprite-empty {
+    background-position: 0 0px;
+}
+
+.sprite-right.sprite-shoot {
+    background-position: 0 -70px;
+}
+
+.sprite-right.sprite-double-size {
+    background-position: 0 -140px;
+}
+
+.sprite-right.sprite-position {
+    background-position: 0 -210px;
+}
+
+.magic-label {
+    text-align: center;
+    position: absolute;
+    bottom: -60px;
+    width: 100%;
+    font-size: xx-large;
+    color: #666666;
+}
+
+.sprite-double-size .magic-label, .sprite-shoot .magic-label {
+    color: #00B7FF;
+}
+
+.sprite-position .magic-label {
+    color: gold;
+}
 /* Custom, iPhone Retina */
 @media only screen and (min-width: 320px) {
 
