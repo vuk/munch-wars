@@ -680,7 +680,7 @@ mainState.prototype = {
   },
 
   fireMagic: function () {
-    var side = this.side === 'white' ? 'left' : 'right';
+    var side = this.side === 'white' ? 1 : 0;
     if (this.buttonOne.isDown && this.players[side].magic[0]) {
       this.processMagic(this.players[side].magic[0], side);
       this.players[side].magic.splice(0, 1);
