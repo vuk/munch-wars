@@ -235,6 +235,7 @@ mainState.prototype = {
           self.side = data.guestSide;
         }
         console.log(self.side);
+        console.log('start game', data);
         if (self.side === 'white') {
           $('#right-name').html(data.player1.profile.DisplayName);
           $('#right-name-go').html(data.player1.profile.DisplayName);
