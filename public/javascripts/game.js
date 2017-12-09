@@ -141,13 +141,6 @@ function handleCorrect(){
 
 mainState.prototype = {
   preload: function () {
-    this.side = localStorage.getItem('side');
-    if (!this.side) {
-      this.side = 'black';
-    }
-    if (userId === getParameterByName('game')) {
-      isHome = true;
-    }
     this.strikeCount = 0;
 
     game.scale.forceOrientation(true, false);
@@ -180,11 +173,25 @@ mainState.prototype = {
     this.drawBorders();
     //this.startCountdown();
     var self = this;
+
+    /** If I'm playing vs computer just take my choice of side from local storage **/
     if (computer) {
+      this.side = localStorage.getItem('side');
+      if (!this.side) {
+        this.side = 'black';
+      }
       //game.input.onDown.add(this.startCountdown, this);
       this.startCountdown();
     } else {
+      if (userId === getParameterByName('game')) {
+        isHome = true;
+      }
       socket.on('start_game', function (data) {
+        if (isHome) {
+          self.side = data.guestSide === 'white' ? 'black' : 'white';
+        } else {
+          self.side = data.guestSide;
+        }
         self.startCountdown();
       });
     }
@@ -485,7 +492,7 @@ mainState.prototype = {
 
   moveLeftPaddle: function (direction) {
     var direction = direction || null;
-    if (!isHome || (computer && this.side === 'black')) {
+    if (this.side === 'black') {
       if (this.paddleRight_up.isDown || this.y > game.input.y) {
         this.paddleLeftSprite.body.velocity.y = -gameProperties.paddleVelocity;
       }
@@ -525,7 +532,7 @@ mainState.prototype = {
 
   moveRightPaddle: function (direction) {
     var direction = direction || null;
-    if (isHome || (computer && this.side === 'white')) {
+    if (this.side === 'white') {
       if (this.paddleRight_up.isDown || this.y > game.input.y) {
         this.paddleRightSprite.body.velocity.y = -gameProperties.paddleVelocity;
       }
@@ -608,15 +615,24 @@ mainState.prototype = {
       }
 
       this.updateScoreTextFields();
-      socket.emit('relevant_score', {
-        id: getParameterByName('game'),
-        scoreLeft: this.scoreLeft,
-        scoreRight: this.scoreRight
-      });
+      if (!computer) {
+        socket.emit('relevant_score', {
+          id: getParameterByName('game'),
+          scoreLeft: this.scoreLeft,
+          scoreRight: this.scoreRight
+        });
+      }
     }
 
     if (this.scoreLeft >= gameProperties.scoreToWin) {
-      if ((getParameterByName('game') && getParameterByName('game') === userId && isHome) || computer) {
+      // If host is black player means he's won
+      if (isHome) {
+        socket.emit('winner', {
+          id: this.side === 'black' ? userId : opponent,
+          points: this.strikeCount + 3 * this.scoreLeft,
+          pointsLoser: this.scoreRight
+        });
+      } else if (computer && this.side === 'black') {
         socket.emit('winner', {
           id: userId,
           points: this.strikeCount + 3 * this.scoreLeft,
@@ -625,11 +641,18 @@ mainState.prototype = {
       }
       this.gameOver();
     } else if (this.scoreRight >= gameProperties.scoreToWin) {
-      if (getParameterByName('game') && getParameterByName('game') !== userId && isHome) {
+      // If host is black player, means guest has won
+      if (isHome) {
         socket.emit('winner', {
-          id: opponent,
+          id: this.side === 'black' ? opponent : userId,
           points: this.strikeCount + 3 * this.scoreRight,
           pointsLoser: this.scoreLeft
+        });
+      } else if (computer && this.side === 'white') {
+        socket.emit('winner', {
+          id: userId,
+          points: this.strikeCount + 3 * this.scoreLeft,
+          pointsLoser: this.scoreRight
         });
       }
       this.gameOver();
