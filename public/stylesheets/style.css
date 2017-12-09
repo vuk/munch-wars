@@ -46,6 +46,7 @@ a {
     color: #FFDF00;
 }
 .navbar-default .navbar-nav > li > a:hover {
+    color: #FFDF00;
     text-shadow: 1px 0px 10px #FFDF00;
 }
 
