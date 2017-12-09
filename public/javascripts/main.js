@@ -222,3 +222,14 @@ if ($('#pickWhite').length > 0) {
     setSelectedSide('white');
   })
 }
+
+if (computer && $('#game-over').length > 0) {
+  if (localStorage.getItem('side') === 'black') {
+    $('#left-name, #left-name-go').html(profile.DisplayName);
+    $('#right-name, #right-name-go').html('Computer');
+  }
+  if (localStorage.getItem('side') === 'white') {
+    $('#left-name, #left-name-go').html('Computer');
+    $('#right-name, #right-name-go').html(profile.DisplayName);
+  }
+}
