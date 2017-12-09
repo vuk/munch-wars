@@ -302,6 +302,7 @@ img {
 
 .munch-btn:hover .over {
     display: block;
+    margin: 0 auto;
 }
 
 .munch-btn:hover .regular {
