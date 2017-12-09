@@ -40,6 +40,7 @@ a {
 .navbar-default .navbar-nav > li > a {
     color: #fff;
     font-weight: 600;
+    text-transform: uppercase;
 }
 
 .navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a.active {
@@ -532,7 +533,6 @@ img {
     background: transparent;
     width: 45%;
     display: inline-block;
-    margin-bottom: 2rem;
 }
 
 .modal-body {
@@ -762,9 +762,9 @@ img {
         border-right: none;
     }
 
-    .pts-container:last-child {
+    /*.pts-container:last-child {
         border-left: none;
-    }
+    }*/
 }
 
 /* Large Devices, Wide Screens */

@@ -171,6 +171,8 @@ function handleCorrect(){
 mainState.prototype = {
   preload: function () {
     this.strikeCount = 0;
+    this.leftStrikeCount = 0;
+    this.rightStrikeCount = 0;
     this.bulletLeftSprite = null;
     this.bulletRightSprite = null;
 
@@ -232,6 +234,8 @@ mainState.prototype = {
         } else {
           self.side = data.guestSide;
         }
+        console.log(self.side);
+        console.log('start game', data);
         if (data.guestSide === 'white') {
           $('#right-name').html(data.player1.profile.DisplayName);
           $('#right-name-go').html(data.player1.profile.DisplayName);
@@ -265,8 +269,27 @@ mainState.prototype = {
     socket.on('score', function (data) {
       self.scoreLeft = data.scoreLeft;
       self.scoreRight = data.scoreRight;
+      self.leftStrikeCount = data.leftStrikeCount;
+      self.rightStrikeCount = data.rightStrikeCount;
       self.updateScoreTextFields();
     });
+
+    socket.on('magic', function (data) {
+      console.log(data, 'magic');
+      self.players = data.players;
+      self.renderPlayerMagic(self.players[0]);
+      self.renderPlayerMagic(self.players[1]);
+    });
+
+    if (!isHome) {
+      socket.on('gameover', function (data) {
+        $('#game-over').show();
+        self.ballSprite.visible = false;
+        self.enablePaddles(false);
+        self.enableBoundaries(true);
+        $('.hide-on-go span').hide();
+      });
+    }
   },
 
   shotRight: function () {
@@ -539,6 +562,15 @@ mainState.prototype = {
     this.enablePaddles(false);
     this.enableBoundaries(true);
     $('.hide-on-go span').hide();
+    if (isHome) {
+      socket.emit('gameover', {
+        id: getParameterByName('game'),
+        scoreLeft: this.scoreLeft,
+        leftStrikeCount: this.leftStrikeCount,
+        scoreRight: this.scoreRight,
+        rightStrikeCount: this.rightStrikeCount
+      });
+    }
   },
 
   startGame: function () {
@@ -684,6 +716,11 @@ mainState.prototype = {
     this.strikeCount++;
 
     this.lastHitBy = (ball.x < gameProperties.screenWidth * 0.5) ? 0 : 1;
+    if (this.lastHitBy === 0) {
+      this.leftStrikeCount ++;
+    } else {
+      this.rightStrikeCount ++;
+    }
 
     var returnAngle;
     var segmentHit = Math.floor((ball.y - paddle.y) / gameProperties.paddleSegmentHeight);
@@ -751,14 +788,6 @@ mainState.prototype = {
         });
       }
       this.renderPlayerMagic(player);
-    } else {
-      var self = this;
-      socket.on('magic', function (data) {
-        console.log(data, 'magic');
-        self.players = data.players;
-        self.renderPlayerMagic(self.players[0]);
-        self.renderPlayerMagic(self.players[1]);
-      });
     }
   },
 
@@ -790,14 +819,14 @@ mainState.prototype = {
     } else {
       this.fireCount ++;
     }
+  },
+
+  processMagic: function (magic, side) {
     socket.emit('magic_sync', {
       id: getParameterByName('game'),
       players: this.players,
       evt: 'fired'
     });
-  },
-
-  processMagic: function (magic, side) {
     switch (magic) {
       case 'shoot':
         this.processShot(side);
@@ -892,7 +921,9 @@ mainState.prototype = {
         socket.emit('relevant_score', {
           id: getParameterByName('game'),
           scoreLeft: this.scoreLeft,
-          scoreRight: this.scoreRight
+          leftStrikeCount: this.leftStrikeCount,
+          scoreRight: this.scoreRight,
+          rightStrikeCount: this.rightStrikeCount
         });
       }
     }
@@ -902,13 +933,13 @@ mainState.prototype = {
       if (isHome) {
         socket.emit('winner', {
           id: this.side === 'black' ? userId : opponent,
-          points: this.strikeCount + 3 * this.scoreLeft,
+          points: this.leftStrikeCount + 3 * this.scoreLeft,
           pointsLoser: this.scoreRight
         });
       } else if (computer && this.side === 'black') {
         socket.emit('winner', {
           id: userId,
-          points: this.strikeCount + 3 * this.scoreLeft,
+          points: this.leftStrikeCount + 3 * this.scoreLeft,
           pointsLoser: this.scoreRight
         });
       }
@@ -918,13 +949,13 @@ mainState.prototype = {
       if (isHome) {
         socket.emit('winner', {
           id: this.side === 'black' ? opponent : userId,
-          points: this.strikeCount + 3 * this.scoreRight,
+          points: this.rightStrikeCount + 3 * this.scoreRight,
           pointsLoser: this.scoreLeft
         });
       } else if (computer && this.side === 'white') {
         socket.emit('winner', {
           id: userId,
-          points: this.strikeCount + 3 * this.scoreLeft,
+          points: this.rightStrikeCount + 3 * this.scoreLeft,
           pointsLoser: this.scoreRight
         });
       }
@@ -941,11 +972,11 @@ mainState.prototype = {
 
   updateScoreTextFields: function () {
     //this.tf_scoreLeft.text = this.scoreLeft;
-    jQuery('#left-score').html(this.scoreLeft);
-    jQuery('#left-score-go').html(this.scoreLeft);
+    jQuery('#left-score').html(this.scoreLeft * 3 + this.leftStrikeCount);
+    jQuery('#left-score-go').html(this.scoreLeft * 3 + this.leftStrikeCount);
     //this.tf_scoreRight.text = this.scoreRight;
-    jQuery('#right-score').html(this.scoreRight);
-    jQuery('#right-score-go').html(this.scoreRight);
+    jQuery('#right-score').html(this.scoreRight * 3 + this.rightStrikeCount);
+    jQuery('#right-score-go').html(this.scoreRight * 3 + this.rightStrikeCount);
   },
 
   hideTextFields: function () {

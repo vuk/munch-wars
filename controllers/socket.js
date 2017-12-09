@@ -93,10 +93,11 @@ module.exports = {
       });
       socket.on('accept', (data) => {
         // Make sure room has exactly two members before starting a game
-        if (Object.keys(this.io.sockets.adapter.rooms[data.guest].sockets).length === 2) {
+        console.log(this.io.sockets.adapter.rooms[data.host].sockets);
+        if (Object.keys(this.io.sockets.adapter.rooms[data.host].sockets).length >= 2) {
           setTimeout(() => {
             console.log('start_game');
-            this.io.to(data.guest).emit('start_game', {
+            this.io.to(data.host).emit('start_game', {
               player1: this.activeUsers[data.guest], // <- this is me
               player2: this.activeUsers[data.host],
               guestSide: data.guestSide

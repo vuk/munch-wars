@@ -217,7 +217,7 @@ function getRankings (req) {
 router.get('/logout', (req, res, next) => {
   req.session.destroy(function(err) {
     // cannot access session here
-    res.redirect('/');
+    res.redirect('/play');
   })
 });
 
