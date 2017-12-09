@@ -745,6 +745,10 @@ mainState.prototype = {
     }
     this.doubleActive[side] = true;
   },
+  processHor: function (side) {},
+  processVer: function (side) {
+    this.ballSprite.body.velocity.set(-1 * this.ballSprite.body.velocity.x, -1 * this.ballSprite.body.velocity.y);
+  },
   undoMagics: function () {
     this.undoDouble();
   },
@@ -762,8 +766,6 @@ mainState.prototype = {
       this.doubleActive[1] = false;
     }
   },
-  processHor: function (side) {},
-  processVer: function (side) {},
 
   ballOutOfBounds: function () {
     this.lastHitBy = -1;
