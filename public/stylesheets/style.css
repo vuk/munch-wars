@@ -544,6 +544,7 @@ img {
     left: 50%;
     transform: translate(-50%, 0);
     display: none;
+    z-index: 90;
 }
 
 #turn p {
@@ -768,13 +769,8 @@ img {
 
 /* Small Devices, Tablets */
 @media only screen and (max-width: 768px) {
-
-}
-
-/* Extra Small Devices, Phones */
-@media only screen and (max-width: 480px) {
-    .rules ol {
-        padding-left: 1rem;
+    .hide-on-mobile {
+        display: none;
     }
     .navbar-default .navbar-collapse, .navbar-default .navbar-form {
         border: none;
@@ -802,9 +798,6 @@ img {
     .profile-body .welcome, .profile-body .username {
         font-size: 28px;
     }
-    .hide-on-mobile {
-        display: none;
-    }
     .go-buttons .col-sm-6:first-child {
         text-align: center;
     }
@@ -816,6 +809,59 @@ img {
     }
     .go-buttons .col-sm-6:first-child a {
         margin-right: 0;
+    }
+    .munc-box-holder {
+        text-align: center;
+    }
+    .munch-row-two {
+        margin-bottom: 5rem;
+    }
+    .play-page .navbar-brand {
+        display: none;
+    }
+    .play-page .title-row.play-landscape {
+        position: absolute;
+        top: 0;
+        right: 15%;
+        width: 65%;
+    }
+    .play-page .title-row.play-landscape .score {
+        font-size: 24px;
+    }
+    .play-page .navbar-header {
+        margin: 0;
+    }
+    .play-page .navbar-default {
+        border: none;
+    }
+    .play-page .navbar {
+        max-width: 75%;
+        margin: 0 auto;
+    }
+    #munch-pong {
+        max-width: 75%;
+        margin: 0 auto;
+    }
+    .play-page .title-row.play-landscape .name-label {
+        font-size:14px;
+    }
+    .play-page .sprite-left, .play-page .sprite-right {
+        zoom: 0.5;
+    }
+    .play-page #games {
+        padding-top: 5px;
+        max-width: 75%;
+        margin: 0 auto;
+    }
+    .play-page .magic-label{
+        display: none;
+    }
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width: 480px) {
+    .rules ol {
+        padding-left: 1rem;
     }
 }
 

@@ -77,3 +77,10 @@
         transform: translateY(-2000px);
     }
 }
+@media only screen and (max-width: 768px) {
+    #stars, #stars2, #stars:after, #stars2:after, #stars3 {
+        -webkit-animation: none;
+        -o-animation: none;
+        animation: none;
+    }
+}
