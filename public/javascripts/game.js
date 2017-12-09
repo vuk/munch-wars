@@ -267,6 +267,8 @@ mainState.prototype = {
     socket.on('score', function (data) {
       self.scoreLeft = data.scoreLeft;
       self.scoreRight = data.scoreRight;
+      self.leftStrikeCount = data.leftStrikeCount;
+      self.rightStrikeCount = data.rightStrikeCount;
       self.updateScoreTextFields();
     });
   },
@@ -898,8 +900,10 @@ mainState.prototype = {
       if (!computer) {
         socket.emit('relevant_score', {
           id: getParameterByName('game'),
-          scoreLeft: this.scoreLeft * 3 + this.leftStrikeCount,
-          scoreRight: this.scoreRight * 3 + this.rightStrikeCount
+          scoreLeft: this.scoreLeft,
+          leftStrikeCount: this.leftStrikeCount,
+          scoreRight: this.scoreRight,
+          rightStrikeCount: this.rightStrikeCount
         });
       }
     }
@@ -909,13 +913,13 @@ mainState.prototype = {
       if (isHome) {
         socket.emit('winner', {
           id: this.side === 'black' ? userId : opponent,
-          points: this.strikeCount + 3 * this.scoreLeft,
+          points: this.leftStrikeCount + 3 * this.scoreLeft,
           pointsLoser: this.scoreRight
         });
       } else if (computer && this.side === 'black') {
         socket.emit('winner', {
           id: userId,
-          points: this.strikeCount + 3 * this.scoreLeft,
+          points: this.leftStrikeCount + 3 * this.scoreLeft,
           pointsLoser: this.scoreRight
         });
       }
@@ -925,13 +929,13 @@ mainState.prototype = {
       if (isHome) {
         socket.emit('winner', {
           id: this.side === 'black' ? opponent : userId,
-          points: this.strikeCount + 3 * this.scoreRight,
+          points: this.rightStrikeCount + 3 * this.scoreRight,
           pointsLoser: this.scoreLeft
         });
       } else if (computer && this.side === 'white') {
         socket.emit('winner', {
           id: userId,
-          points: this.strikeCount + 3 * this.scoreLeft,
+          points: this.rightStrikeCount + 3 * this.scoreLeft,
           pointsLoser: this.scoreRight
         });
       }
