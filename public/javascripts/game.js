@@ -234,6 +234,7 @@ mainState.prototype = {
         } else {
           self.side = data.guestSide;
         }
+        console.log(self.side);
         if (self.side === 'white') {
           $('#right-name').html(data.player1.profile.DisplayName);
           $('#right-name-go').html(data.player1.profile.DisplayName);
@@ -270,6 +271,13 @@ mainState.prototype = {
       self.leftStrikeCount = data.leftStrikeCount;
       self.rightStrikeCount = data.rightStrikeCount;
       self.updateScoreTextFields();
+    });
+
+    socket.on('magic', function (data) {
+      console.log(data, 'magic');
+      self.players = data.players;
+      self.renderPlayerMagic(self.players[0]);
+      self.renderPlayerMagic(self.players[1]);
     });
   },
 
@@ -760,14 +768,6 @@ mainState.prototype = {
         });
       }
       this.renderPlayerMagic(player);
-    } else {
-      var self = this;
-      socket.on('magic', function (data) {
-        console.log(data, 'magic');
-        self.players = data.players;
-        self.renderPlayerMagic(self.players[0]);
-        self.renderPlayerMagic(self.players[1]);
-      });
     }
   },
 
