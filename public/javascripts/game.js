@@ -670,7 +670,7 @@ mainState.prototype = {
         player.magic.push('ver-position');
         break;
     }
-    this.magicCountdown = 2;
+    this.magicCountdown = 1;
     this.renderPlayerMagic(player);
   },
 
@@ -683,7 +683,7 @@ mainState.prototype = {
   fireCount: 0,
 
   fireMagic: function () {
-    if (this.fireCount > 10) {
+    if (this.fireCount > 5) {
       this.fireCount = 0;
       var side = this.side === 'white' ? 1 : 0;
       if (this.buttonOne.isDown && this.players[side].magic[0]) {
