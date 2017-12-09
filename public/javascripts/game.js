@@ -580,11 +580,7 @@ mainState.prototype = {
           pointsLoser: this.scoreRight
         });
       }
-      //this.winnerLeft.visible = true;
-      //this.startDemo(false); // So end of game here
-      $('#game-over').show();
-      this.enablePaddles(false);
-      this.enableBoundaries(true);
+      this.gameOver();
     } else if (this.scoreRight >= gameProperties.scoreToWin) {
       if (getParameterByName('game') && getParameterByName('game') !== userId && isHome) {
         socket.emit('winner', {
@@ -593,16 +589,17 @@ mainState.prototype = {
           pointsLoser: this.scoreLeft
         });
       }
-      //this.winnerRight.visible = true;
-      //this.startDemo(); // So end of game here
-      $('#game-over').show();
-      this.enablePaddles(false);
-      this.enableBoundaries(true);
+      this.gameOver();
     } else {
       this.resetBall();
     }
   },
-
+  gameOver: function () {
+    $('#game-over').show();
+    this.enablePaddles(false);
+    this.enableBoundaries(true);
+    $('.hide-on-go span').hide();
+  },
   resetScores: function () {
     this.scoreLeft = 0;
     this.scoreRight = 0;
