@@ -705,7 +705,7 @@ mainState.prototype = {
   },
 
   collideWithMagicBounds: function (ball, magicBound) {
-    if (isHome) {
+    if (isHome || computer) {
       if (this.lastHitBy < 0 || this.magicCountdown > 0) {
         this.magicCountdown--;
         return;
@@ -732,10 +732,12 @@ mainState.prototype = {
       }
       this.magicCountdown = 1;
 
-      socket.emit('magic_sync', {
-        id: getParameterByName('game'),
-        players: this.players
-      });
+      if (!computer) {
+        socket.emit('magic_sync', {
+          id: getParameterByName('game'),
+          players: this.players
+        });
+      }
       this.renderPlayerMagic(player);
     } else {
       var self = this;
