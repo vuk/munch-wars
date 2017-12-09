@@ -183,3 +183,30 @@ if (jQuery('.search-users #name').length > 0) {
     }
   });
 }
+
+function setSelectedSide (side) {
+  if(side === 'white') {
+    $('#pickWhite .active').show();
+    $('#pickWhite .inactive').hide();
+    $('#pickBlack .inactive').show();
+    $('#pickBlack .active').hide();
+  } else if (side === 'black') {
+    $('#pickWhite .active').hide();
+    $('#pickWhite .inactive').show();
+    $('#pickBlack .inactive').hide();
+    $('#pickBlack .active').show();
+  }
+}
+
+if ($('#pickWhite').length > 0) {
+  var side = localStorage.getItem('side');
+  setSelectedSide(side);
+  $('#pickBlack').click(function () {
+    localStorage.setItem('side', 'black');
+    setSelectedSide('black');
+  });
+  $('#pickWhite').click(function () {
+    localStorage.setItem('side', 'white');
+    setSelectedSide('white');
+  })
+}
