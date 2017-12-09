@@ -282,6 +282,7 @@ mainState.prototype = {
     game.physics.arcade.overlap(this.ballSprite, this.centerTopBorder, this.collideWithMagicBounds, null, this);
 
     if(this.bulletRightSprite) {
+      console.log('check shot to the left');
       this.bulletRightSprite.events.onOutOfBounds.add(this.rightOutBounds, this);
       game.physics.arcade.overlap(this.bulletRightSprite, this.paddleLeftSprite, this.shotLeft, null, this);
     }
