@@ -21,14 +21,12 @@
                 <span id="left-score" class="score">0</span>
                 <span id="left-rank"></span>
                 <span class="name-label" id="left-name"><% if(opponent || computer) { %><%- profile.DisplayName %><% } %></span>
-                <span class="points-label" id="left-score"></span>
             </div>
             <div class="col-xs-4 logo"><img src="/assets/logo.png" alt="" class="hide-on-mobile"></div>
             <div class="col-xs-3">
                 <span id="right-score" class="score">0</span>
                 <span id="left-rank"></span>
                 <span class="name-label" id="right-name"><% if(opponent) { %><%- opponent.DisplayName %> <% } else if(computer) { %> Computer <% } else { %><%- profile.DisplayName %><% } %></span>
-                <span class="points-label" id="right-score"></span>
             </div>
             <div class="col-lg-1"></div>
         </div>
@@ -37,6 +35,33 @@
             <div class="col-lg-10">
                 <div class="game-container">
                     <div id="munch-pong"></div>
+                    <div id="game-over">
+                        <div class="row title-row">
+                            <div class="col-xs-4">
+                                <span id="left-score-go" class="score">0</span>
+                                <span id="left-rank-go"></span>
+                                <span class="name-label" id="left-name"><% if(opponent || computer) { %><%- profile.DisplayName %><% } %></span>
+                            </div>
+                            <div class="col-xs-4 logo"><div class="go-label">GAME<br/>OVER</div></div>
+                            <div class="col-xs-4">
+                                <span id="left-rank-go"></span>
+                                <span class="name-label" id="right-name-go"><% if(opponent) { %><%- opponent.DisplayName %> <% } else if(computer) { %> Computer <% } else { %><%- profile.DisplayName %><% } %></span>
+                                <span id="right-score-go" class="score">0</span>
+                            </div>
+                        </div>
+                        <div class="row go-buttons">
+                            <div class="col-sm-6">
+                                <a href="javascript:window.location.href=window.location.href" type="button" class="reset-btn">
+                                    igraj ponovo
+                                </a>
+                            </div>
+                            <div class="col-sm-6">
+                                <a href="/" class="reset-btn">
+                                    glavni meni
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-1"></div>

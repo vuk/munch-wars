@@ -581,7 +581,10 @@ mainState.prototype = {
         });
       }
       //this.winnerLeft.visible = true;
-      this.startDemo();
+      //this.startDemo(false); // So end of game here
+      $('#game-over').show();
+      this.enablePaddles(false);
+      this.enableBoundaries(true);
     } else if (this.scoreRight >= gameProperties.scoreToWin) {
       if (getParameterByName('game') && getParameterByName('game') !== userId && isHome) {
         socket.emit('winner', {
@@ -591,7 +594,10 @@ mainState.prototype = {
         });
       }
       //this.winnerRight.visible = true;
-      this.startDemo();
+      //this.startDemo(); // So end of game here
+      $('#game-over').show();
+      this.enablePaddles(false);
+      this.enableBoundaries(true);
     } else {
       this.resetBall();
     }
@@ -606,8 +612,10 @@ mainState.prototype = {
   updateScoreTextFields: function () {
     //this.tf_scoreLeft.text = this.scoreLeft;
     jQuery('#left-score').html(this.scoreLeft);
+    jQuery('#left-score-go').html(this.scoreLeft);
     //this.tf_scoreRight.text = this.scoreRight;
     jQuery('#right-score').html(this.scoreRight);
+    jQuery('#right-score-go').html(this.scoreRight);
   },
 
   hideTextFields: function () {
