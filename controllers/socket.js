@@ -50,41 +50,56 @@ module.exports = {
     this.io = require('socket.io')(server);
     console.log('Socket server running');
 
+    /**
+     * User connects -> gets added to list of active players
+     * For the sake of explanation let's look at this from first person
+     * So - I connect to game
+     */
     this.io.on('connection', (socket) => {
+      /** I receive an event saying that I'm connected properly */
       socket.emit('connected', { status: true });
+      /** From the client I identify myself by sending my playfab ID */
       socket.on('identify', (data) => {
+        // If I exist in list of active users I join my own room and my timestamp is updated to current one so that
+        // I appear in the list of active users
         if (data.id && this.activeUsers[data.id]) {
+          // User joins a room with his own ID
           socket.join(data.id);
           this.activeUsers[data.id].time = Date.now();
           this.sockets[data.id] = socket;
         }
       });
+      /**
+       * If I select a player from the list of active players, I'll visit a room with ID that is his ID
+       * So basically even though I started a game, I am a guest. Player invited to play will act as host
+       */
       socket.on('invite', (data) => {
         console.log('invite', data);
-        socket.join(data.id);
-        this.sockets[data.id].join(data.id);
-        console.log(this.io.sockets.adapter.rooms[data.id].sockets);
+        socket.join(data.host);
+        this.sockets[data.host].join(data.host);
+        console.log(this.io.sockets.adapter.rooms[data.host].sockets);
         setTimeout(() => {
           console.log('accept_invite');
-          this.io.to(data.id).emit('accept_invite', {
-            player1: this.activeUsers[data.myId],
-            player2: this.activeUsers[data.id],
-            profile: data.profile,
-            ranks: this.activeUsers[data.myId].ranks
+          // So I as a guest will be a player 1
+          // And opponent as a host will be a player 2
+          this.io.to(data.host).emit('respond_to_invite', {
+            player1: this.activeUsers[data.guest],
+            player2: this.activeUsers[data.host],
+            profile: this.activeUsers[data.guest].profile,
+            ranks: this.activeUsers[data.guest].ranks,
+            guestSide: data.guestSide
           });
         }, 2000);
       });
-      let player1;
-      let player2;
       socket.on('accept', (data) => {
-        player1 = data.myId;
-        player2 = data.id;
-        if (Object.keys(this.io.sockets.adapter.rooms[data.myId].sockets).length === 2) {
+        // Make sure room has exactly two members before starting a game
+        if (Object.keys(this.io.sockets.adapter.rooms[data.guest].sockets).length === 2) {
           setTimeout(() => {
             console.log('start_game');
-            this.io.to(data.myId).emit('start_game', {
-              player1: this.activeUsers[data.myId],
-              player2: this.activeUsers[data.id]
+            this.io.to(data.guest).emit('start_game', {
+              player1: this.activeUsers[data.guest], // <- this is me
+              player2: this.activeUsers[data.host],
+              guestSide: data.guestSide
             });
           }, 5000);
         }

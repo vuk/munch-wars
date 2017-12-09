@@ -7,6 +7,9 @@ var socket;
     console.log('toggle sound');
     try {
       toggleSound();
+      if (!localStorage.getItem('side')) {
+        localStorage.setItem('side', 'black');
+      }
     } catch (err) {
       console.debug(err);
     }
@@ -21,8 +24,9 @@ socket.on('connected', function (data) {
   }
 });
 
-socket.on('accept_invite', function (data) {
+socket.on('respond_to_invite', function (data) {
   console.log('accept invite', data);
+  localStorage.setItem('opponentSide', data.guestSide);
   if (data.player1.profile.PlayerId !== userId) {
     localStorage.setItem('opponentId', data.player1.profile.PlayerId);
     $('#accept_modal').modal();
@@ -42,6 +46,7 @@ socket.on('accept_invite', function (data) {
     $('#daily-rang').html(daily);
     $('#weekly-rang').html(weekly);
     $('#total-rang').html(total);
+    $('.' + data.guestSide).show();
   }
   if (data.player2.profile.PlayerId !== userId) {
     localStorage.setItem('opponentId', data.player2.profile.PlayerId);
@@ -51,8 +56,9 @@ socket.on('accept_invite', function (data) {
 $('#accept_invite').click(function () {
   $('#accept_modal').modal('hide');
   socket.emit('accept', {
-    myId: userId,
-    id: localStorage.getItem('opponentId')
+    guest: userId,
+    host: localStorage.getItem('opponentId'),
+    guestSide: localStorage.getItem('opponentSide')
   });
   if (window.location.href.indexOf('play?') === -1) {
     window.location.href = '/play?game=' + userId + '&noevent=true';
@@ -63,7 +69,13 @@ if (jQuery('#games').length > 0 && !noevent) {
   if (window.location.href.indexOf('?game=') === -1 && window.location.href.indexOf('?computer') === -1) {
     window.location.href = '/profile';
   } else if (window.location.href.indexOf('?game=') > -1) {
-    socket.emit('invite', { id: opponent, myId: userId, profile: profile, stats: stats });
+    socket.emit('invite', {
+      host: opponent,
+      guest: userId,
+      guestProfile: profile,
+      guestStats: stats,
+      guestSide: localStorage.getItem('side')
+    });
   }
 }
 

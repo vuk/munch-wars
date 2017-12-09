@@ -140,27 +140,20 @@ var mainState = function (game) {
   ]
 };
 
-function handleIncorrect() {
-  if (!game.device.desktop) {
-    document.getElementById("turn").style.display = "flex";
+function handleIncorrect(){
+  if(!game.device.desktop){
+    document.getElementById('turn').style.display='flex';
   }
 }
 
-function handleCorrect() {
-  if (!game.device.desktop) {
-    document.getElementById("turn").style.display = "none";
+function handleCorrect(){
+  if(!game.device.desktop){
+    document.getElementById('turn').style.display='none';
   }
 }
 
 mainState.prototype = {
   preload: function () {
-    this.side = localStorage.getItem('side');
-    if (!this.side) {
-      this.side = 'black';
-    }
-    if (userId === getParameterByName('game')) {
-      isHome = true;
-    }
     this.strikeCount = 0;
 
     game.scale.forceOrientation(true, false);
@@ -193,22 +186,52 @@ mainState.prototype = {
     this.drawBorders();
     //this.startCountdown();
     var self = this;
+    this.cnt = 1;
+
+    /** If I'm playing vs computer just take my choice of side from local storage **/
     if (computer) {
+      this.side = localStorage.getItem('side');
+      if (!this.side) {
+        this.side = 'black';
+      }
       //game.input.onDown.add(this.startCountdown, this);
       this.startCountdown();
     } else {
+      if (userId === getParameterByName('game')) {
+        isHome = true;
+      }
       socket.on('start_game', function (data) {
+        if (isHome) {
+          self.side = data.guestSide === 'white' ? 'black' : 'white';
+        } else {
+          self.side = data.guestSide;
+        }
+        if (data.guestSide === 'white') {
+          $('#right-name').html(data.player1.profile.DisplayName);
+          $('#right-name-go').html(data.player1.profile.DisplayName);
+          $('#left-name').html(data.player2.profile.DisplayName);
+          $('#left-name-go').html(data.player2.profile.DisplayName);
+        } else {
+          $('#right-name').html(data.player2.profile.DisplayName);
+          $('#right-name-go').html(data.player2.profile.DisplayName);
+          $('#left-name').html(data.player1.profile.DisplayName);
+          $('#left-name-go').html(data.player1.profile.DisplayName);
+        }
         self.startCountdown();
       });
     }
 
     socket.on('move', function (data) {
-      if (data.side === 'right' && !isHome) {
-        game.physics.arcade.moveToXY(self.paddleRightSprite, gameProperties.paddleRight_x, data.y, 0, 100);
+      if (data.side === 'right' && self.side === 'black') {
+        self.paddleRightSprite.y = data.y;
+        self.paddleRightSprite.body.velocity.y = data.velocity;
+        //game.physics.arcade.moveToXY(self.paddleRightSprite, gameProperties.paddleRight_x, data.y, 0, 40);
         //self.paddleRightSprite.body.velocity.y = data.velocity;
       }
-      if (data.side === 'left' && isHome) {
-        game.physics.arcade.moveToXY(self.paddleLeftSprite, gameProperties.paddleLeft_x, data.y, 0, 100);
+      if (data.side === 'left' && self.side === 'white') {
+        self.paddleLeftSprite.y = data.y;
+        self.paddleLeftSprite.body.velocity.y = data.velocity;
+        //game.physics.arcade.moveToXY(self.paddleLeftSprite, gameProperties.paddleLeft_x, data.y, 0, 40);
         //self.paddleLeftSprite.body.velocity.y = data.velocity;
       }
     });
@@ -237,19 +260,24 @@ mainState.prototype = {
         id: getParameterByName('game'),
         x: this.ballSprite.body.x,
         y: this.ballSprite.body.y,
+        velocityX: this.ballSprite.body.velocity.x,
+        velocityY: this.ballSprite.body.velocity.y,
         visible: this.ballSprite.visible,
-        time: Date.now()
       });
     } else {
       if (!isBallListenerSet) {
-        var localTime = 0;
+        self.ballSprite.body.allowGravity = false;
+        self.ballSprite.body.velocity.x = 0;
+        self.ballSprite.body.velocity.y = 0;
         socket.on('ball', function (data) {
-          if (data.time > localTime) {
-            self.ballSprite.visible = data.visible;
-            /*if (Math.abs(self.ballSprite.body.x - data.x) < 50 && Math.abs(self.ballSprite.body.y - data.y) < 50)*/
-            game.physics.arcade.moveToXY(self.ballSprite, data.x, data.y, 0, 34);
-            localTime = data.time;
-          }
+          self.ballSprite.visible = data.visible;
+          /*if (Math.abs(self.ballSprite.body.x - data.x) < 50 && Math.abs(self.ballSprite.body.y - data.y) < 50)*/
+          //game.physics.arcade.moveToXY(self.ballSprite, data.x, data.y, 0, 40);
+          self.ballSprite.x = data.x;
+          self.ballSprite.y = data.y;
+          self.ballSprite.body.velocity.set(data.velocityX, data.velocityY);
+          /*game.ballSprite.body.velocity.x = data.velocityX;
+          game.ballSprite.body.velocity.y = data.velocityY;*/
         });
         isBallListenerSet = true;
       }
@@ -500,7 +528,7 @@ mainState.prototype = {
 
   moveLeftPaddle: function (direction) {
     var direction = direction || null;
-    if (!isHome || (computer && this.side === 'black')) {
+    if (this.side === 'black') {
       if (this.paddleRight_up.isDown || this.y > game.input.y) {
         this.paddleLeftSprite.body.velocity.y = -gameProperties.paddleVelocity;
       }
@@ -540,7 +568,7 @@ mainState.prototype = {
 
   moveRightPaddle: function (direction) {
     var direction = direction || null;
-    if (isHome || (computer && this.side === 'white')) {
+    if (this.side === 'white') {
       if (this.paddleRight_up.isDown || this.y > game.input.y) {
         this.paddleRightSprite.body.velocity.y = -gameProperties.paddleVelocity;
       }
@@ -660,15 +688,24 @@ mainState.prototype = {
       }
 
       this.updateScoreTextFields();
-      socket.emit('relevant_score', {
-        id: getParameterByName('game'),
-        scoreLeft: this.scoreLeft,
-        scoreRight: this.scoreRight
-      });
+      if (!computer) {
+        socket.emit('relevant_score', {
+          id: getParameterByName('game'),
+          scoreLeft: this.scoreLeft,
+          scoreRight: this.scoreRight
+        });
+      }
     }
 
     if (this.scoreLeft >= gameProperties.scoreToWin) {
-      if ((getParameterByName('game') && getParameterByName('game') === userId && isHome) || computer) {
+      // If host is black player means he's won
+      if (isHome) {
+        socket.emit('winner', {
+          id: this.side === 'black' ? userId : opponent,
+          points: this.strikeCount + 3 * this.scoreLeft,
+          pointsLoser: this.scoreRight
+        });
+      } else if (computer && this.side === 'black') {
         socket.emit('winner', {
           id: userId,
           points: this.strikeCount + 3 * this.scoreLeft,
@@ -677,11 +714,18 @@ mainState.prototype = {
       }
       this.gameOver();
     } else if (this.scoreRight >= gameProperties.scoreToWin) {
-      if (getParameterByName('game') && getParameterByName('game') !== userId && isHome) {
+      // If host is black player, means guest has won
+      if (isHome) {
         socket.emit('winner', {
-          id: opponent,
+          id: this.side === 'black' ? opponent : userId,
           points: this.strikeCount + 3 * this.scoreRight,
           pointsLoser: this.scoreLeft
+        });
+      } else if (computer && this.side === 'white') {
+        socket.emit('winner', {
+          id: userId,
+          points: this.strikeCount + 3 * this.scoreLeft,
+          pointsLoser: this.scoreRight
         });
       }
       this.gameOver();
