@@ -713,6 +713,9 @@ img {
 .sprite-ver-position .magic-label, .sprite-hor-position .magic-label {
     color: gold;
 }
+.vs-player img, .vs-computer img {
+    max-width: 75%;
+}
 /* Custom, iPhone Retina */
 @media only screen and (min-width: 320px) {
 
