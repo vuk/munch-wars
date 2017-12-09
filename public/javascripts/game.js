@@ -257,8 +257,8 @@ mainState.prototype = {
             self.ballSprite.visible = data.visible;
             /*if (Math.abs(self.ballSprite.body.x - data.x) < 50 && Math.abs(self.ballSprite.body.y - data.y) < 50)*/
             //game.physics.arcade.moveToXY(self.ballSprite, data.x, data.y, 0, 40);
-            game.ballSprite.body.x = data.x;
-            game.ballSprite.body.y = data.y;
+            game.ballSprite.x = data.x;
+            game.ballSprite.y = data.y;
             game.ballSprite.body.velocity.x = data.velocityX;
             game.ballSprite.body.velocity.y = data.velocityY;
             localTime = data.time;
