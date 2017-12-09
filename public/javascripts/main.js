@@ -223,7 +223,7 @@ if ($('#pickWhite').length > 0) {
   })
 }
 
-if (computer && $('#game-over').length > 0) {
+if (typeof computer !== 'undefined' && computer && $('#game-over').length > 0) {
   if (localStorage.getItem('side') === 'black') {
     $('#left-name, #left-name-go').html(profile.DisplayName);
     $('#right-name, #right-name-go').html('Computer');
