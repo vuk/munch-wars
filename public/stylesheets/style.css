@@ -577,7 +577,7 @@ img {
     font-size: 55%;
     margin-top: 1rem;
 }
-.login-body .form button.reset-btn {
+.login-body .form button.reset-btn, .reset-btn {
     border: 2px solid #FFDF00;
     -webkit-border-radius: 50px;
     -moz-border-radius: 50px;
@@ -587,6 +587,47 @@ img {
     max-width: none;
     margin-top: 3rem;
     margin-bottom: 5rem;
+    background: transparent;
+}
+.reset-btn:hover {
+    color: #FFDF00;
+    text-decoration: none;
+}
+#game-over {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
+    text-align: center;
+    display: none;
+}
+#game-over .go-label {
+    font-size: 32px;
+    color: #FFDF00;
+    font-weight: 700;
+}
+.go-buttons .col-sm-6:first-child {
+    text-align: right;
+}
+.go-buttons .col-sm-6:first-child a {
+    margin-right: 10%;
+}
+.go-buttons .col-sm-6:last-child {
+    text-align: left;
+}
+
+.go-buttons .col-sm-6:last-child a {
+    margin-left: 10%;
+}
+
+#left-score-go, #right-score-go {
+    padding: 1rem;
+}
+.name-label {
+    font-weight: 700;
+    color: #FFDF00;
+    font-size: 16px;
 }
 
 /* Custom, iPhone Retina */
@@ -681,6 +722,18 @@ img {
     }
     .hide-on-mobile {
         display: none;
+    }
+    .go-buttons .col-sm-6:first-child {
+        text-align: center;
+    }
+    .go-buttons .col-sm-6:last-child {
+        text-align: center;
+    }
+    .go-buttons .col-sm-6:last-child a {
+        margin-left: 0;
+    }
+    .go-buttons .col-sm-6:first-child a {
+        margin-right: 0;
     }
 }
 

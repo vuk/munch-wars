@@ -405,6 +405,14 @@ mainState.prototype = {
     this.instructions.visible = true;
   },
 
+  gameOver: function () {
+    $('#game-over').show();
+    this.ballSprite.visible = false;
+    this.enablePaddles(false);
+    this.enableBoundaries(true);
+    $('.hide-on-go span').hide();
+  },
+
   startGame: function () {
     game.input.onDown.remove(this.startCountdown, this);
 
@@ -580,8 +588,7 @@ mainState.prototype = {
           pointsLoser: this.scoreRight
         });
       }
-      //this.winnerLeft.visible = true;
-      this.startDemo();
+      this.gameOver();
     } else if (this.scoreRight >= gameProperties.scoreToWin) {
       if (getParameterByName('game') && getParameterByName('game') !== userId && isHome) {
         socket.emit('winner', {
@@ -590,13 +597,11 @@ mainState.prototype = {
           pointsLoser: this.scoreLeft
         });
       }
-      //this.winnerRight.visible = true;
-      this.startDemo();
+      this.gameOver();
     } else {
       this.resetBall();
     }
   },
-
   resetScores: function () {
     this.scoreLeft = 0;
     this.scoreRight = 0;
@@ -606,8 +611,10 @@ mainState.prototype = {
   updateScoreTextFields: function () {
     //this.tf_scoreLeft.text = this.scoreLeft;
     jQuery('#left-score').html(this.scoreLeft);
+    jQuery('#left-score-go').html(this.scoreLeft);
     //this.tf_scoreRight.text = this.scoreRight;
     jQuery('#right-score').html(this.scoreRight);
+    jQuery('#right-score-go').html(this.scoreRight);
   },
 
   hideTextFields: function () {
