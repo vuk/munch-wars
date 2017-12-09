@@ -414,6 +414,8 @@ img {
 
 .pick-side span {
     color: #FFDF00;
+    margin-top: 1rem;
+    display: block;
 }
 
 .vs-player, .vs-computer {
