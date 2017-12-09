@@ -6,7 +6,7 @@ var initializeSound = function () {
   }
 };
 
-function getParameterByName (name, url) {
+function getParameterByName(name, url) {
   if (!url) url = window.location.href;
   name = name.replace(/[\[\]]/g, '\\$&');
   var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
@@ -81,9 +81,9 @@ var fontAssets = {
   scoreRight_x: gameProperties.screenWidth * 0.75,
   scoreTop_y: 10,
 
-  scoreFontStyle: { font: '80px orbitron', fill: '#FFFFFF', align: 'center' },
-  instructionsFontStyle: { font: '20px orbitron', fill: '#FFDF00', align: 'center', fontWeight: 600 },
-  countdownFontStyle: { font: '48px orbitron', fill: '#FFDF00', align: 'center', fontWeight: 600 },
+  scoreFontStyle: {font: '80px orbitron', fill: '#FFFFFF', align: 'center'},
+  instructionsFontStyle: {font: '20px orbitron', fill: '#FFDF00', align: 'center', fontWeight: 600},
+  countdownFontStyle: {font: '48px orbitron', fill: '#FFDF00', align: 'center', fontWeight: 600},
 };
 
 var labels = {
@@ -125,17 +125,30 @@ var mainState = function (game) {
   //this.winnerRight;
 
   this.ballVelocity;
+
+  // 0 left paddle, 1 right paddle, -1 just lounched
+  this.lastHitBy = -1;
+  this.players = [
+    {
+      id: 'left',
+      magic: []
+    },
+    {
+      id: 'right',
+      magic: []
+    }
+  ]
 };
 
-function handleIncorrect(){
-  if(!game.device.desktop){
-    document.getElementById("turn").style.display="flex";
+function handleIncorrect() {
+  if (!game.device.desktop) {
+    document.getElementById("turn").style.display = "flex";
   }
 }
 
-function handleCorrect(){
-  if(!game.device.desktop){
-    document.getElementById("turn").style.display="none";
+function handleCorrect() {
+  if (!game.device.desktop) {
+    document.getElementById("turn").style.display = "none";
   }
 }
 
@@ -212,6 +225,8 @@ mainState.prototype = {
     this.moveRightPaddle();
     this.y = game.input.y;
     game.physics.arcade.overlap(this.ballSprite, this.paddleGroup, this.collideWithPaddle, null, this);
+    game.physics.arcade.overlap(this.ballSprite, this.centerBottomBorder, this.collideWithMagicBounds, null, this);
+    game.physics.arcade.overlap(this.ballSprite, this.centerTopBorder, this.collideWithMagicBounds, null, this);
 
     if (this.ballSprite.body.blocked.up || this.ballSprite.body.blocked.down || this.ballSprite.body.blocked.left || this.ballSprite.body.blocked.right) {
       this.sndBallBounce.play();
@@ -567,6 +582,8 @@ mainState.prototype = {
     this.sndBallHit.play();
     this.strikeCount++;
 
+    this.lastHitBy = (ball.x < gameProperties.screenWidth * 0.5) ? 0 : 1;
+
     var returnAngle;
     var segmentHit = Math.floor((ball.y - paddle.y) / gameProperties.paddleSegmentHeight);
 
@@ -596,7 +613,42 @@ mainState.prototype = {
     }
   },
 
+  collideWithMagicBounds: function (ball, magicBound) {
+    if (this.lastHitBy < 0) {
+      return;
+    }
+    var player = this.players[this.lastHitBy];
+    if (player.magic.length > 3) {
+      return;
+    }
+    var randomMagic = Math.floor(Math.random() * 4);
+    console.log(player.id + ' gets some random WOODOO: ' + randomMagic);
+    switch (randomMagic) {
+      case 0:
+        player.magic.push('shoot');
+        break;
+      case 1:
+        player.magic.push('double-size');
+        break;
+      case 2:
+        player.magic.push('hor-position');
+        break;
+      case 3:
+        player.magic.push('ver-position');
+        break;
+    }
+    this.renderPlayerMagic(player);
+  },
+
+  renderPlayerMagic: function(player) {
+    var allSpriteClassNames = 'sprite-double-size sprite-shoot sprite-hor-position sprite-ver-position sprite-empty';
+    jQuery('#' + player.id + '-player-magic-1').removeClass(allSpriteClassNames).addClass((player.magic[0] !== void 0) ? 'sprite-' + player.magic[0] : 'sprite-empty');
+    jQuery('#' +player.id + '-player-magic-2').removeClass(allSpriteClassNames).addClass((player.magic[1] !== void 0) ? 'sprite-' + player.magic[1] : 'sprite-empty');
+    jQuery('#' +player.id + '-player-magic-3').removeClass(allSpriteClassNames).addClass((player.magic[2] !== void 0) ? 'sprite-' + player.magic[2] : 'sprite-empty');
+  },
+
   ballOutOfBounds: function () {
+    this.lastHitBy = -1;
     this.sndBallMissed.play();
     if (isHome || computer) {
       if (this.ballSprite.x < 0) {

@@ -658,6 +658,14 @@ img {
     background-position: 0 -140px;
 }
 
+.sprite-left.sprite-ver-position {
+    background-position: 0 -70px;
+}
+
+.sprite-left.sprite-hor-position {
+    background-position: 0 0px;
+}
+
 .sprite-right {
     background: url("./../assets/buttons/magic-right.png") no-repeat;
     width: 70px; /* Icon width */
@@ -680,8 +688,12 @@ img {
     background-position: 0 -140px;
 }
 
-.sprite-right.sprite-position {
+.sprite-right.sprite-ver-position {
     background-position: 0 -210px;
+}
+
+.sprite-right.sprite-hor-position {
+    background-position: 0 -280px;
 }
 
 .magic-label {
