@@ -83,6 +83,10 @@ var soundAssets = {
 
   shotUrl: 'assets/audio/shot',
   shotName: 'shot',
+  getMagicUrl: 'assets/audio/getmagic',
+  getMagicName: 'getMagic',
+  useMagicUrl: 'assets/audio/usemagic',
+  useMagicName: 'useMagic',
 
   mp4URL: '.m4a',
   oggURL: '.ogg',
@@ -194,6 +198,8 @@ mainState.prototype = {
     game.load.audio(soundAssets.ballMissedName, [soundAssets.ballMissedURL + soundAssets.mp4URL, soundAssets.ballMissedURL + soundAssets.oggURL]);
     game.load.audio(soundAssets.ballMissedName, [soundAssets.ballMissedURL + soundAssets.mp4URL, soundAssets.ballMissedURL + soundAssets.oggURL]);
     game.load.audio(soundAssets.shotName, [soundAssets.shotUrl + soundAssets.mp4URL, soundAssets.shotUrl + soundAssets.oggURL]);
+    game.load.audio(soundAssets.useMagicName, [soundAssets.useMagicUrl + soundAssets.mp4URL, soundAssets.useMagicUrl + soundAssets.oggURL]);
+    game.load.audio(soundAssets.getMagicName, [soundAssets.getMagicUrl + soundAssets.mp4URL, soundAssets.getMagicUrl + soundAssets.oggURL]);
   },
 
   create: function () {
@@ -510,6 +516,8 @@ mainState.prototype = {
     this.sndBallBounce = game.add.audio(soundAssets.ballBounceName);
     this.sndBallMissed = game.add.audio(soundAssets.ballMissedName);
     this.shotSound = game.add.audio(soundAssets.shotName);
+    this.getMagic = game.add.audio(soundAssets.getMagicName);
+    this.useMagic = game.add.audio(soundAssets.useMagicName);
   },
 
   startDemo: function () {
@@ -730,6 +738,7 @@ mainState.prototype = {
           player.magic.push('ver-position');
           break;
       }
+      this.getMagic.play();
       this.magicCountdown = 1;
 
       if (!computer) {
@@ -759,33 +768,29 @@ mainState.prototype = {
   fireCount: 0,
 
   fireMagic: function () {
-    if (isHome || computer) {
-      if (this.fireCount > 5) {
-        this.fireCount = 0;
-        var side = this.side === 'white' ? 1 : 0;
-        if (this.buttonOne.isDown && this.players[side].magic[0]) {
-          this.processMagic(this.players[side].magic[0], side);
-          this.players[side].magic.splice(0, 1);
-        }
-        if (this.buttonTwo.isDown && this.players[side].magic[1]) {
-          this.processMagic(this.players[side].magic[1], side);
-          this.players[side].magic.splice(1, 1);
-        }
-        if (this.buttonThree.isDown && this.players[side].magic[2]) {
-          this.processMagic(this.players[side].magic[2], side);
-          this.players[side].magic.splice(2, 1);
-        }
-        this.renderPlayerMagic(this.players[side]);
-      } else {
-        this.fireCount ++;
+    if (this.fireCount > 5) {
+      this.fireCount = 0;
+      var side = this.side === 'white' ? 1 : 0;
+      if (this.buttonOne.isDown && this.players[side].magic[0]) {
+        this.processMagic(this.players[side].magic[0], side);
+        this.players[side].magic.splice(0, 1);
       }
-      if (!computer) {
-        socket.emit('magic_sync', {
-          id: getParameterByName('game'),
-          players: this.players
-        });
+      if (this.buttonTwo.isDown && this.players[side].magic[1]) {
+        this.processMagic(this.players[side].magic[1], side);
+        this.players[side].magic.splice(1, 1);
       }
+      if (this.buttonThree.isDown && this.players[side].magic[2]) {
+        this.processMagic(this.players[side].magic[2], side);
+        this.players[side].magic.splice(2, 1);
+      }
+      this.renderPlayerMagic(this.players[side]);
+    } else {
+      this.fireCount ++;
     }
+    socket.emit('magic_sync', {
+      id: getParameterByName('game'),
+      players: this.players
+    });
   },
 
   processMagic: function (magic, side) {
@@ -824,6 +829,7 @@ mainState.prototype = {
   doubleActive: [],
   originalPaddleHeight: 0,
   processDouble: function (side) {
+    this.useMagic.play();
     if (side === 0 && !this.doubleActive[side]) {
       this.paddleLeftSprite.key = graphicAssets.paddleDoubleName;
       this.paddleLeftSprite.loadTexture(graphicAssets.paddleDoubleName, 0);
@@ -839,9 +845,11 @@ mainState.prototype = {
     this.doubleActive[side] = true;
   },
   processHor: function (side) {
+    this.useMagic.play();
     this.ballSprite.body.velocity.set(-1 * this.ballSprite.body.velocity.x, -1 * this.ballSprite.body.velocity.y);
   },
   processVer: function (side) {
+    this.useMagic.play();
     this.ballSprite.body.velocity.set(this.ballSprite.body.velocity.x * 1.25, -1 * this.ballSprite.body.velocity.y);
   },
   undoMagics: function () {
