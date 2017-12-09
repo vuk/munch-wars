@@ -246,6 +246,7 @@ mainState.prototype = {
   update: function () {
     this.moveLeftPaddle();
     this.moveRightPaddle();
+    this.fireMagic();
     this.y = game.input.y;
     game.physics.arcade.overlap(this.ballSprite, this.paddleGroup, this.collideWithPaddle, null, this);
     game.physics.arcade.overlap(this.ballSprite, this.centerBottomBorder, this.collideWithMagicBounds, null, this);
@@ -442,6 +443,9 @@ mainState.prototype = {
   initKeyboard: function () {
     this.paddleLeft_up = game.input.keyboard.addKey(Phaser.Keyboard.A);
     this.paddleLeft_down = game.input.keyboard.addKey(Phaser.Keyboard.Z);
+    this.buttonOne = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
+    this.buttonTwo = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
+    this.buttonThree = game.input.keyboard.addKey(Phaser.Keyboard.THREE);
 
     this.paddleRight_up = game.input.keyboard.addKey(Phaser.Keyboard.UP);
     this.paddleRight_down = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
@@ -674,6 +678,45 @@ mainState.prototype = {
     jQuery('#' +player.id + '-player-magic-2').removeClass(allSpriteClassNames).addClass((player.magic[1] !== void 0) ? 'sprite-' + player.magic[1] : 'sprite-empty');
     jQuery('#' +player.id + '-player-magic-3').removeClass(allSpriteClassNames).addClass((player.magic[2] !== void 0) ? 'sprite-' + player.magic[2] : 'sprite-empty');
   },
+
+  fireMagic: function () {
+    var side = this.side === 'white' ? 'left' : 'right';
+    if (this.buttonOne.isDown && this.players[side].magic[0]) {
+      this.processMagic(this.players[side].magic[0], side);
+      this.players[side].magic.splice(0, 1);
+    }
+    if (this.buttonTwo.isDown && this.players[side].magic[1]) {
+      this.processMagic(this.players[side].magic[1], side);
+      this.players[side].magic.splice(1, 1);
+    }
+    if (this.buttonThree.isDown && this.players[side].magic[2]) {
+      this.processMagic(this.players[side].magic[2], side);
+      this.players[side].magic.splice(2, 1);
+    }
+  },
+
+  processMagic: function (magic, side) {
+    switch (magic) {
+      case 'shoot':
+        this.processShot(side);
+        break;
+      case 'double-size':
+        this.processDouble(side);
+        break;
+      case 'hor-position':
+        this.processHor(side);
+        break;
+      case 'ver-position':
+        this.processVer(side);
+        break;
+    }
+    this.renderPlayerMagic(this.players[side]);
+  },
+
+  processShot: function (side) {},
+  processDouble: function (side) {},
+  processHor: function (side) {},
+  processVer: function (side) {},
 
   ballOutOfBounds: function () {
     this.lastHitBy = -1;
