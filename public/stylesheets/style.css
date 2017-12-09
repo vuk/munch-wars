@@ -45,6 +45,9 @@ a {
 .navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a.active {
     color: #FFDF00;
 }
+.navbar-default .navbar-nav > li > a:hover {
+    text-shadow: 1px 0px 10px #FFDF00;
+}
 
 .sound-wrap {
     display: flex;
