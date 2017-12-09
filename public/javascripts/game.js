@@ -737,7 +737,7 @@ mainState.prototype = {
     if (side === 1) {
       this.paddleRightSprite.key = graphicAssets.paddleDoubleRightName;
       this.paddleRightSprite.loadTexture(graphicAssets.paddleDoubleRightName, 0);
-      this.paddleLeftSprite.height *= 2;
+      this.paddleRightSprite.height *= 2;
     }
   },
   processHor: function (side) {},
