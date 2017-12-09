@@ -405,6 +405,14 @@ mainState.prototype = {
     this.instructions.visible = true;
   },
 
+  gameOver: function () {
+    $('#game-over').show();
+    this.ballSprite.visible = false;
+    this.enablePaddles(false);
+    this.enableBoundaries(true);
+    $('.hide-on-go span').hide();
+  },
+
   startGame: function () {
     game.input.onDown.remove(this.startCountdown, this);
 
@@ -593,12 +601,6 @@ mainState.prototype = {
     } else {
       this.resetBall();
     }
-  },
-  gameOver: function () {
-    $('#game-over').show();
-    this.enablePaddles(false);
-    this.enableBoundaries(true);
-    $('.hide-on-go span').hide();
   },
   resetScores: function () {
     this.scoreLeft = 0;
