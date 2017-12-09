@@ -367,7 +367,8 @@ img {
 }
 
 .login-body .form button.register-btn {
-    max-width: 250px;
+    max-width: 300px;
+    margin-top: 2rem;
 }
 
 .pts-score {
