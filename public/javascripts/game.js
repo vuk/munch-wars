@@ -171,6 +171,8 @@ function handleCorrect(){
 mainState.prototype = {
   preload: function () {
     this.strikeCount = 0;
+    this.leftStrikeCount = 0;
+    this.rightStrikeCount = 0;
     this.bulletLeftSprite = null;
     this.bulletRightSprite = null;
 
@@ -684,6 +686,11 @@ mainState.prototype = {
     this.strikeCount++;
 
     this.lastHitBy = (ball.x < gameProperties.screenWidth * 0.5) ? 0 : 1;
+    if (this.lastHitBy === 0) {
+      this.leftStrikeCount ++;
+    } else {
+      this.rightStrikeCount ++;
+    }
 
     var returnAngle;
     var segmentHit = Math.floor((ball.y - paddle.y) / gameProperties.paddleSegmentHeight);
@@ -941,11 +948,11 @@ mainState.prototype = {
 
   updateScoreTextFields: function () {
     //this.tf_scoreLeft.text = this.scoreLeft;
-    jQuery('#left-score').html(this.scoreLeft);
-    jQuery('#left-score-go').html(this.scoreLeft);
+    jQuery('#left-score').html(this.scoreLeft * 3 + this.leftStrikeCount);
+    jQuery('#left-score-go').html(this.scoreLeft * 3 + this.leftStrikeCount);
     //this.tf_scoreRight.text = this.scoreRight;
-    jQuery('#right-score').html(this.scoreRight);
-    jQuery('#right-score-go').html(this.scoreRight);
+    jQuery('#right-score').html(this.scoreRight * 3 + this.rightStrikeCount);
+    jQuery('#right-score-go').html(this.scoreRight * 3 + this.rightStrikeCount);
   },
 
   hideTextFields: function () {
