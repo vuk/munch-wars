@@ -47,8 +47,9 @@ a {
     color: #FFDF00;
 }
 .navbar-default .navbar-nav > li > a:hover {
-    color: #FFDF00;
-    text-shadow: 1px 0px 10px #FFDF00;
+    color: #fff;
+    text-shadow: 2px 0 15px #FFDF00;
+    font-weight: 900;
 }
 
 .sound-wrap {
