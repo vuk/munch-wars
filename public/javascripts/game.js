@@ -280,6 +280,16 @@ mainState.prototype = {
       self.renderPlayerMagic(self.players[0]);
       self.renderPlayerMagic(self.players[1]);
     });
+
+    if (!isHome) {
+      socket.on('gameover', function (data) {
+        $('#game-over').show();
+        self.ballSprite.visible = false;
+        self.enablePaddles(false);
+        self.enableBoundaries(true);
+        $('.hide-on-go span').hide();
+      });
+    }
   },
 
   shotRight: function () {
@@ -552,6 +562,15 @@ mainState.prototype = {
     this.enablePaddles(false);
     this.enableBoundaries(true);
     $('.hide-on-go span').hide();
+    if (isHome) {
+      socket.emit('gameover', {
+        id: getParameterByName('game'),
+        scoreLeft: this.scoreLeft,
+        leftStrikeCount: this.leftStrikeCount,
+        scoreRight: this.scoreRight,
+        rightStrikeCount: this.rightStrikeCount
+      });
+    }
   },
 
   startGame: function () {
