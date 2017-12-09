@@ -743,9 +743,9 @@ mainState.prototype = {
       var self = this;
       socket.on('magic', function (data) {
         console.log(data, 'magic');
-        this.players = data.players;
-        self.renderPlayerMagic(this.players[0]);
-        self.renderPlayerMagic(this.players[1]);
+        self.players = data.players;
+        self.renderPlayerMagic(self.players[0]);
+        self.renderPlayerMagic(self.players[1]);
       });
     }
   },
