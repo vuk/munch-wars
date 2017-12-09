@@ -728,17 +728,19 @@ mainState.prototype = {
   },
 
   processShot: function (side) {},
+  doubleActive: [],
   processDouble: function (side) {
-    if (side === 0) {
+    if (side === 0 && !this.doubleActive[side]) {
       this.paddleLeftSprite.key = graphicAssets.paddleDoubleName;
       this.paddleLeftSprite.loadTexture(graphicAssets.paddleDoubleName, 0);
-      this.paddleLeftSprite.height *= 2;
+      this.paddleLeftSprite.height *= 1.5;
     }
-    if (side === 1) {
+    if (side === 1 && !this.doubleActive[side]) {
       this.paddleRightSprite.key = graphicAssets.paddleDoubleRightName;
       this.paddleRightSprite.loadTexture(graphicAssets.paddleDoubleRightName, 0);
-      this.paddleRightSprite.height *= 2;
+      this.paddleRightSprite.height *= 1.5;
     }
+    this.doubleActive[side] = true;
   },
   processHor: function (side) {},
   processVer: function (side) {},
