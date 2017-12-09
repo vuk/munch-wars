@@ -1,15 +1,14 @@
 'use strict';
 var socket;
 (function () {
-
+  if (!localStorage.getItem('side')) {
+    localStorage.setItem('side', 'black');
+  }
   var soundToggle = document.getElementById('toggle-sound');
   soundToggle.addEventListener('click', function (evt) {
     console.log('toggle sound');
     try {
       toggleSound();
-      if (!localStorage.getItem('side')) {
-        localStorage.setItem('side', 'black');
-      }
     } catch (err) {
       console.debug(err);
     }
