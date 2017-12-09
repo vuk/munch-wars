@@ -732,13 +732,16 @@ mainState.prototype = {
       }
       this.magicCountdown = 1;
 
-      socket.emit('magic_sync', this.players);
+      socket.emit('magic_sync', {
+        id: getParameterByName('game'),
+        players: this.players
+      });
       this.renderPlayerMagic(player);
     } else {
       var self = this;
       socket.on('magic', function (data) {
         console.log(data, 'magic');
-        this.players = data;
+        this.players = data.players;
         self.renderPlayerMagic(this.players[0]);
         self.renderPlayerMagic(this.players[1]);
       });
