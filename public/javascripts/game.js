@@ -167,6 +167,8 @@ function handleCorrect(){
 mainState.prototype = {
   preload: function () {
     this.strikeCount = 0;
+    this.bulletLeftSprite = null;
+    this.bulletRightSprite = null;
 
     game.scale.forceOrientation(true, false);
     game.scale.enterIncorrectOrientation.add(handleIncorrect);
@@ -262,24 +264,19 @@ mainState.prototype = {
   },
 
   shotRight: function () {
-    console.log('hit right');
     this.bulletLeftSprite.kill();
   },
   shotLeft: function () {
-    console.log('hit left');
+    console.log('shot!!!');
     this.bulletRightSprite.kill();
   },
   leftOutBounds: function () {
-    console.log('out bounds to the right');
     this.bulletLeftSprite.destroy();
   },
   rightOutBounds: function () {
-    console.log('out bounds to the left');
     this.bulletRightSprite.destroy();
   },
   update: function () {
-    this.bulletLeftSprite = null;
-    this.bulletRightSprite = null;
     this.moveLeftPaddle();
     this.moveRightPaddle();
     this.fireMagic();
@@ -287,9 +284,7 @@ mainState.prototype = {
     game.physics.arcade.overlap(this.ballSprite, this.paddleGroup, this.collideWithPaddle, null, this);
     game.physics.arcade.overlap(this.ballSprite, this.centerBottomBorder, this.collideWithMagicBounds, null, this);
     game.physics.arcade.overlap(this.ballSprite, this.centerTopBorder, this.collideWithMagicBounds, null, this);
-
     if(this.bulletRightSprite) {
-      console.log('check shot to the left');
       this.bulletRightSprite.events.onOutOfBounds.add(this.rightOutBounds, this);
       game.physics.arcade.overlap(this.bulletRightSprite, this.paddleLeftSprite, this.shotLeft, null, this);
     }
