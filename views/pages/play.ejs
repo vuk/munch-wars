@@ -20,13 +20,13 @@
             <div class="col-xs-3 hide-on-go">
                 <span id="left-score" class="score">0</span>
                 <span id="left-rank"></span>
-                <span class="name-label" id="left-name"><% if(opponent || computer) { %><%- profile.DisplayName %><% } %></span>
+                <span class="name-label" id="left-name"></span>
             </div>
             <div class="col-xs-4 logo"><img src="/assets/logo.png" alt="" class="hide-on-mobile"></div>
             <div class="col-xs-3 hide-on-go">
                 <span id="right-score" class="score">0</span>
                 <span id="left-rank"></span>
-                <span class="name-label" id="right-name"><% if(opponent) { %><%- opponent.DisplayName %> <% } else if(computer) { %> Computer <% } else { %><%- profile.DisplayName %><% } %></span>
+                <span class="name-label" id="right-name"></span>
             </div>
             <div class="col-lg-1"></div>
         </div>
@@ -40,12 +40,12 @@
                             <div class="col-xs-4">
                                 <span id="left-score-go" class="score">0</span>
                                 <span id="left-rank-go"></span>
-                                <span class="name-label" id="left-name"><% if(opponent || computer) { %><%- profile.DisplayName %><% } %></span>
+                                <span class="name-label" id="left-name"></span>
                             </div>
                             <div class="col-xs-4 logo"><div class="go-label">GAME<br/>OVER</div></div>
                             <div class="col-xs-4">
                                 <span id="left-rank-go"></span>
-                                <span class="name-label" id="right-name-go"><% if(opponent) { %><%- opponent.DisplayName %> <% } else if(computer) { %> Computer <% } else { %><%- profile.DisplayName %><% } %></span>
+                                <span class="name-label" id="right-name-go"></span>
                                 <span id="right-score-go" class="score">0</span>
                             </div>
                         </div>

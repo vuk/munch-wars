@@ -192,6 +192,17 @@ mainState.prototype = {
         } else {
           self.side = data.guestSide;
         }
+        if (data.guestSide === 'white') {
+          $('#right-name').html(data.player1.profile.DisplayName);
+          $('#right-name-go').html(data.player1.profile.DisplayName);
+          $('#left-name').html(data.player2.profile.DisplayName);
+          $('#left-name-go').html(data.player2.profile.DisplayName);
+        } else {
+          $('#right-name').html(data.player2.profile.DisplayName);
+          $('#right-name-go').html(data.player2.profile.DisplayName);
+          $('#left-name').html(data.player1.profile.DisplayName);
+          $('#left-name-go').html(data.player1.profile.DisplayName);
+        }
         self.startCountdown();
       });
     }
