@@ -759,11 +759,13 @@ mainState.prototype = {
   processShot: function (side) {
     if(side === 0) {
       this.bulletLeftSprite = game.add.sprite(gameProperties.paddleLeft_x, this.paddleLeftSprite.y, graphicAssets.bulletLeftName);
+      game.physics.enable(this.bulletLeftSprite, Phaser.Physics.ARCADE);
       this.bulletLeftSprite.body.velocity.x = 800;
       this.bulletLeftSprite.body.velocity.y = 0;
     }
     if(side === 1) {
       this.bulletRightSprite = game.add.sprite(gameProperties.paddleRight_x, this.paddleRightSprite.y, graphicAssets.bulletRightName);
+      game.physics.enable(this.bulletLeftSprite, Phaser.Physics.ARCADE);
       this.bulletRightSprite.body.velocity.x = 800;
       this.bulletRightSprite.body.velocity.y = 0;
     }
