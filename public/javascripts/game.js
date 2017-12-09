@@ -670,7 +670,7 @@ mainState.prototype = {
         player.magic.push('ver-position');
         break;
     }
-    this.magicCountdown = 20;
+    this.magicCountdown = 3;
     this.renderPlayerMagic(player);
   },
 
