@@ -709,7 +709,7 @@ img {
     color: #00B7FF;
 }
 
-.sprite-position .magic-label {
+.sprite-ver-position .magic-label, .sprite-hor-position .magic-label {
     color: gold;
 }
 /* Custom, iPhone Retina */
