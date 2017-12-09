@@ -120,6 +120,9 @@ module.exports = {
       socket.on('magic_sync', data => {
         this.io.to(data.id).emit('magic', data);
       });
+      socket.on('sync_shot', data => {
+        this.io.to(data.id).emit('shot_sync', data);
+      });
       socket.on('disconnect', () => {
         console.log('disconnected', socket.id);
       });

@@ -249,14 +249,14 @@ mainState.prototype = {
 
     socket.on('move', function (data) {
       if (data.side === 'right' && self.side === 'black') {
-        self.paddleRightSprite.y = data.y;
         self.paddleRightSprite.body.velocity.y = data.velocity;
+        self.paddleRightSprite.y = data.y;
         //game.physics.arcade.moveToXY(self.paddleRightSprite, gameProperties.paddleRight_x, data.y, 0, 40);
         //self.paddleRightSprite.body.velocity.y = data.velocity;
       }
       if (data.side === 'left' && self.side === 'white') {
-        self.paddleLeftSprite.y = data.y;
         self.paddleLeftSprite.body.velocity.y = data.velocity;
+        self.paddleLeftSprite.y = data.y;
         //game.physics.arcade.moveToXY(self.paddleLeftSprite, gameProperties.paddleLeft_x, data.y, 0, 40);
         //self.paddleLeftSprite.body.velocity.y = data.velocity;
       }
@@ -746,7 +746,8 @@ mainState.prototype = {
       if (!computer) {
         socket.emit('magic_sync', {
           id: getParameterByName('game'),
-          players: this.players
+          players: this.players,
+          evt: 'earned'
         });
       }
       this.renderPlayerMagic(player);
@@ -791,7 +792,8 @@ mainState.prototype = {
     }
     socket.emit('magic_sync', {
       id: getParameterByName('game'),
-      players: this.players
+      players: this.players,
+      evt: 'fired'
     });
   },
 
