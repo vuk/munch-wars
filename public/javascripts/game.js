@@ -729,18 +729,36 @@ mainState.prototype = {
 
   processShot: function (side) {},
   doubleActive: [],
+  originalPaddleHeight: 0,
   processDouble: function (side) {
     if (side === 0 && !this.doubleActive[side]) {
       this.paddleLeftSprite.key = graphicAssets.paddleDoubleName;
       this.paddleLeftSprite.loadTexture(graphicAssets.paddleDoubleName, 0);
+      this.originalPaddleHeight = this.paddleLeftSprite.height;
       this.paddleLeftSprite.height *= 1.5;
     }
     if (side === 1 && !this.doubleActive[side]) {
       this.paddleRightSprite.key = graphicAssets.paddleDoubleRightName;
       this.paddleRightSprite.loadTexture(graphicAssets.paddleDoubleRightName, 0);
+      this.originalPaddleHeight = this.paddleRightSprite.height;
       this.paddleRightSprite.height *= 1.5;
     }
     this.doubleActive[side] = true;
+  },
+  undoMagics: function () {
+    this.undoDouble();
+  },
+  undoDouble: function () {
+    if (this.doubleActive[side]) {
+      this.paddleLeftSprite.key = graphicAssets.paddleName;
+      this.paddleLeftSprite.loadTexture(graphicAssets.paddleName, 0);
+      this.paddleLeftSprite.height = this.originalPaddleHeight;
+    }
+    if (this.doubleActive[side]) {
+      this.paddleRightSprite.key = graphicAssets.paddleRightName;
+      this.paddleRightSprite.loadTexture(graphicAssets.paddleRightName, 0);
+      this.paddleRightSprite.height = this.originalPaddleHeight;
+    }
   },
   processHor: function (side) {},
   processVer: function (side) {},
@@ -758,6 +776,7 @@ mainState.prototype = {
       }
 
       this.updateScoreTextFields();
+      this.undoMagics();
       if (!computer) {
         socket.emit('relevant_score', {
           id: getParameterByName('game'),
