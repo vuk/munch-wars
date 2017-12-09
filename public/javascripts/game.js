@@ -173,6 +173,7 @@ mainState.prototype = {
     this.drawBorders();
     //this.startCountdown();
     var self = this;
+    this.cnt = 1;
 
     /** If I'm playing vs computer just take my choice of side from local storage **/
     if (computer) {
@@ -236,13 +237,18 @@ mainState.prototype = {
     }
     var self = this;
     if (isHome) {
-      socket.emit('ball_position', {
-        id: getParameterByName('game'),
-        x: this.ballSprite.body.x,
-        y: this.ballSprite.body.y,
-        visible: this.ballSprite.visible,
-        time: Date.now()
-      });
+      if (this.cnt === 1) {
+        this.cnt ++;
+        socket.emit('ball_position', {
+          id: getParameterByName('game'),
+          x: this.ballSprite.body.x,
+          y: this.ballSprite.body.y,
+          visible: this.ballSprite.visible,
+          time: Date.now()
+        });
+      } else {
+        this.cnt = 1;
+      }
     } else {
       if (!isBallListenerSet) {
         var localTime = 0;
@@ -250,7 +256,7 @@ mainState.prototype = {
           if (data.time > localTime) {
             self.ballSprite.visible = data.visible;
             /*if (Math.abs(self.ballSprite.body.x - data.x) < 50 && Math.abs(self.ballSprite.body.y - data.y) < 50)*/
-            game.physics.arcade.moveToXY(self.ballSprite, data.x, data.y, 0, 34);
+            game.physics.arcade.moveToXY(self.ballSprite, data.x, data.y, 0, 40);
             localTime = data.time;
           }
         });
