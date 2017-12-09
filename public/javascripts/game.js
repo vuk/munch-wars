@@ -759,24 +759,32 @@ mainState.prototype = {
   fireCount: 0,
 
   fireMagic: function () {
-    if (this.fireCount > 5) {
-      this.fireCount = 0;
-      var side = this.side === 'white' ? 1 : 0;
-      if (this.buttonOne.isDown && this.players[side].magic[0]) {
-        this.processMagic(this.players[side].magic[0], side);
-        this.players[side].magic.splice(0, 1);
+    if (isHome || computer) {
+      if (this.fireCount > 5) {
+        this.fireCount = 0;
+        var side = this.side === 'white' ? 1 : 0;
+        if (this.buttonOne.isDown && this.players[side].magic[0]) {
+          this.processMagic(this.players[side].magic[0], side);
+          this.players[side].magic.splice(0, 1);
+        }
+        if (this.buttonTwo.isDown && this.players[side].magic[1]) {
+          this.processMagic(this.players[side].magic[1], side);
+          this.players[side].magic.splice(1, 1);
+        }
+        if (this.buttonThree.isDown && this.players[side].magic[2]) {
+          this.processMagic(this.players[side].magic[2], side);
+          this.players[side].magic.splice(2, 1);
+        }
+        this.renderPlayerMagic(this.players[side]);
+      } else {
+        this.fireCount ++;
       }
-      if (this.buttonTwo.isDown && this.players[side].magic[1]) {
-        this.processMagic(this.players[side].magic[1], side);
-        this.players[side].magic.splice(1, 1);
+      if (!computer) {
+        socket.emit('magic_sync', {
+          id: getParameterByName('game'),
+          players: this.players
+        });
       }
-      if (this.buttonThree.isDown && this.players[side].magic[2]) {
-        this.processMagic(this.players[side].magic[2], side);
-        this.players[side].magic.splice(2, 1);
-      }
-      this.renderPlayerMagic(this.players[side]);
-    } else {
-      this.fireCount ++;
     }
   },
 
