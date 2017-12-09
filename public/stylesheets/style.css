@@ -751,7 +751,7 @@ img {
     text-align: center;
 }
 .munc-wars-holder img {
-    max-width: 80%;
+    max-width: 75%;
 }
 /* Custom, iPhone Retina */
 @media only screen and (min-width: 320px) {
