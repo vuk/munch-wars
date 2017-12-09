@@ -257,9 +257,11 @@ mainState.prototype = {
   },
 
   shotRight: function () {
+    console.log('hit right');
     this.bulletLeftSprite.kill();
   },
   shotLeft: function () {
+    console.log('hit left');
     this.bulletRightSprite.kill();
   },
   leftOutBounds: function () {
