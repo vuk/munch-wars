@@ -693,6 +693,7 @@ mainState.prototype = {
       this.processMagic(this.players[side].magic[2], side);
       this.players[side].magic.splice(2, 1);
     }
+    this.renderPlayerMagic(this.players[side]);
   },
 
   processMagic: function (magic, side) {
@@ -710,7 +711,6 @@ mainState.prototype = {
         this.processVer(side);
         break;
     }
-    this.renderPlayerMagic(this.players[side]);
   },
 
   processShot: function (side) {},
