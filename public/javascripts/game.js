@@ -127,15 +127,15 @@ var mainState = function (game) {
   this.ballVelocity;
 };
 
-function handleIncorrect(){
-  if(!game.device.desktop){
-    document.getElementById("turn").style.display="flex";
+function handleIncorrect () {
+  if (!game.device.desktop) {
+    document.getElementById('turn').style.display = 'flex';
   }
 }
 
-function handleCorrect(){
-  if(!game.device.desktop){
-    document.getElementById("turn").style.display="none";
+function handleCorrect () {
+  if (!game.device.desktop) {
+    document.getElementById('turn').style.display = 'none';
   }
 }
 
@@ -209,11 +209,11 @@ mainState.prototype = {
     }
 
     socket.on('move', function (data) {
-      if (data.side === 'right' && !isHome) {
+      if (data.side === 'right' && self.side === 'black') {
         game.physics.arcade.moveToXY(self.paddleRightSprite, gameProperties.paddleRight_x, data.y, 0, 100);
         //self.paddleRightSprite.body.velocity.y = data.velocity;
       }
-      if (data.side === 'left' && isHome) {
+      if (data.side === 'left' && self.side === 'white') {
         game.physics.arcade.moveToXY(self.paddleLeftSprite, gameProperties.paddleLeft_x, data.y, 0, 100);
         //self.paddleLeftSprite.body.velocity.y = data.velocity;
       }
@@ -237,18 +237,13 @@ mainState.prototype = {
     }
     var self = this;
     if (isHome) {
-      if (this.cnt === 1) {
-        this.cnt ++;
-        socket.emit('ball_position', {
-          id: getParameterByName('game'),
-          x: this.ballSprite.body.x,
-          y: this.ballSprite.body.y,
-          visible: this.ballSprite.visible,
-          time: Date.now()
-        });
-      } else {
-        this.cnt = 1;
-      }
+      socket.emit('ball_position', {
+        id: getParameterByName('game'),
+        x: this.ballSprite.body.x,
+        y: this.ballSprite.body.y,
+        visible: this.ballSprite.visible,
+        time: Date.now()
+      });
     } else {
       if (!isBallListenerSet) {
         var localTime = 0;
