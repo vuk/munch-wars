@@ -6,9 +6,6 @@ playfabServer.settings.developerSecretKey = 'X6GUF8OHOC8OIXU1W9P3F77SIJW9X5EZESC
 /* GET users listing. */
 router.get('/', function (req, res, next) {
   if (req.session.userId) {
-    if (!localStorage.getItem('side')) {
-      localStorage.setItem('side', 'black');
-    }
     var leaderboardPosition;
     var leaderboardPosition2;
     var leaderboardPosition3;
