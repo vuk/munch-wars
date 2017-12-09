@@ -799,14 +799,14 @@ mainState.prototype = {
     } else {
       this.fireCount ++;
     }
+  },
+
+  processMagic: function (magic, side) {
     socket.emit('magic_sync', {
       id: getParameterByName('game'),
       players: this.players,
       evt: 'fired'
     });
-  },
-
-  processMagic: function (magic, side) {
     switch (magic) {
       case 'shoot':
         this.processShot(side);
