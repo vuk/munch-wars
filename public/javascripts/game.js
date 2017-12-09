@@ -51,10 +51,14 @@ var graphicAssets = {
   ballName: 'ball',
 
   paddleURL: 'assets/left-45.png',
+  paddleDoubleURL: 'assets/left-90.png',
   paddleName: 'paddle_left',
+  paddleDoubleName: 'double_paddle_left',
 
   paddleRightURL: 'assets/right-45.png',
+  paddleRightDoubleUrl: 'assets/right-90.png',
   paddleRightName: 'paddle_right',
+  paddleDoubleRightName: 'double_paddle_right',
 
   yellowBorder: 'assets/yellow-border.png',
   yellowBorderName: 'yellowBorder',
@@ -162,7 +166,9 @@ mainState.prototype = {
 
     game.load.image(graphicAssets.ballName, graphicAssets.ballURL);
     game.load.image(graphicAssets.paddleName, graphicAssets.paddleURL);
+    game.load.image(graphicAssets.paddleDoubleName, graphicAssets.paddleDoubleURL);
     game.load.image(graphicAssets.paddleRightName, graphicAssets.paddleRightURL);
+    game.load.image(graphicAssets.paddleDoubleRightName, graphicAssets.paddleRightDoubleUrl);
     game.load.image(graphicAssets.yellowBorderName, graphicAssets.yellowBorder);
     game.load.image(graphicAssets.redBorderName, graphicAssets.redBorder);
     initializeSound();
@@ -722,7 +728,16 @@ mainState.prototype = {
   },
 
   processShot: function (side) {},
-  processDouble: function (side) {},
+  processDouble: function (side) {
+    if (side === 0) {
+      this.paddleLeftSprite.key = graphicAssets.paddleDoubleName;
+      this.paddleLeftSprite.loadTexture(graphicAssets.paddleDoubleName, 0);
+    }
+    if (side === 1) {
+      this.paddleRightSprite.key = graphicAssets.paddleDoubleRightName;
+      this.paddleRightSprite.loadTexture(graphicAssets.paddleDoubleRightName, 0);
+    }
+  },
   processHor: function (side) {},
   processVer: function (side) {},
 
