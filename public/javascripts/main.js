@@ -55,8 +55,8 @@ socket.on('respond_to_invite', function (data) {
 $('#accept_invite').click(function () {
   $('#accept_modal').modal('hide');
   socket.emit('accept', {
-    guest: userId,
-    host: localStorage.getItem('opponentId'),
+    guest: localStorage.getItem('opponentId'),
+    host: userId,
     guestSide: localStorage.getItem('opponentSide')
   });
   if (window.location.href.indexOf('play?') === -1) {
