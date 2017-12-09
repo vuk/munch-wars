@@ -63,7 +63,12 @@ var graphicAssets = {
   yellowBorder: 'assets/yellow-border.png',
   yellowBorderName: 'yellowBorder',
   redBorder: 'assets/red-border.png',
-  redBorderName: 'redBorder'
+  redBorderName: 'redBorder',
+
+  bulletLeftUrl: '/assets/bullet-left.png',
+  bulletLeftName: 'bulletLeft',
+  bulletRightUrl: '/assets/bullet-right.png',
+  bulletRightName: 'bulletRight'
 };
 
 var soundAssets = {
@@ -171,6 +176,8 @@ mainState.prototype = {
     game.load.image(graphicAssets.paddleDoubleRightName, graphicAssets.paddleRightDoubleUrl);
     game.load.image(graphicAssets.yellowBorderName, graphicAssets.yellowBorder);
     game.load.image(graphicAssets.redBorderName, graphicAssets.redBorder);
+    game.load.image(graphicAssets.bulletLeftName, graphicAssets.bulletLeftUrl);
+    game.load.image(graphicAssets.bulletRightName, graphicAssets.bulletRightUrl);
     initializeSound();
 
     this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -249,7 +256,21 @@ mainState.prototype = {
     });
   },
 
+  shotRight: function () {
+    this.bulletLeftSprite.kill();
+  },
+  shotLeft: function () {
+    this.bulletRightSprite.kill();
+  },
+  leftOutBounds: function () {
+    this.bulletLeftSprite.destroy();
+  },
+  rightOutBounds: function () {
+    this.bulletRightSprite.destroy();
+  },
   update: function () {
+    this.bulletLeftSprite = null;
+    this.bulletRightSprite = null;
     this.moveLeftPaddle();
     this.moveRightPaddle();
     this.fireMagic();
@@ -257,6 +278,15 @@ mainState.prototype = {
     game.physics.arcade.overlap(this.ballSprite, this.paddleGroup, this.collideWithPaddle, null, this);
     game.physics.arcade.overlap(this.ballSprite, this.centerBottomBorder, this.collideWithMagicBounds, null, this);
     game.physics.arcade.overlap(this.ballSprite, this.centerTopBorder, this.collideWithMagicBounds, null, this);
+
+    if(this.bulletRightSprite) {
+      this.bulletRightSprite.events.onOutOfBounds.add(this.rightOutBounds, this);
+      game.physics.arcade.overlap(this.bulletRightSprite, this.paddleLeftSprite, this.shotLeft, null, this);
+    }
+    if(this.bulletLeftSprite) {
+      this.bulletLeftSprite.events.onOutOfBounds.add(this.leftOutBounds, this);
+      game.physics.arcade.overlap(this.bulletLeftSprite, this.paddleRightSprite, this.shotRight, null, this);
+    }
 
     if (this.ballSprite.body.blocked.up || this.ballSprite.body.blocked.down || this.ballSprite.body.blocked.left || this.ballSprite.body.blocked.right) {
       this.sndBallBounce.play();
@@ -726,8 +756,18 @@ mainState.prototype = {
         break;
     }
   },
-
-  processShot: function (side) {},
+  processShot: function (side) {
+    if(side === 0) {
+      this.bulletLeftSprite = game.add.sprite(gameProperties.paddleLeft_x, this.paddleLeftSprite.y, graphicAssets.bulletLeftName);
+      this.bulletLeftSprite.body.velocity.x = 800;
+      this.bulletLeftSprite.body.velocity.y = 0;
+    }
+    if(side === 1) {
+      this.bulletRightSprite = game.add.sprite(gameProperties.paddleRight_x, this.paddleRightSprite.y, graphicAssets.bulletRightName);
+      this.bulletRightSprite.body.velocity.x = 800;
+      this.bulletRightSprite.body.velocity.y = 0;
+    }
+  },
   doubleActive: [],
   originalPaddleHeight: 0,
   processDouble: function (side) {
