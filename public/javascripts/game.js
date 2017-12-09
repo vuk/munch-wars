@@ -732,10 +732,12 @@ mainState.prototype = {
     if (side === 0) {
       this.paddleLeftSprite.key = graphicAssets.paddleDoubleName;
       this.paddleLeftSprite.loadTexture(graphicAssets.paddleDoubleName, 0);
+      this.paddleLeftSprite.height *= 2;
     }
     if (side === 1) {
       this.paddleRightSprite.key = graphicAssets.paddleDoubleRightName;
       this.paddleRightSprite.loadTexture(graphicAssets.paddleDoubleRightName, 0);
+      this.paddleLeftSprite.height *= 2;
     }
   },
   processHor: function (side) {},
