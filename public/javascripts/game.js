@@ -141,6 +141,10 @@ function handleCorrect(){
 
 mainState.prototype = {
   preload: function () {
+    this.side = localStorage.getItem('side');
+    if (!this.side) {
+      this.side = 'black';
+    }
     if (userId === getParameterByName('game')) {
       isHome = true;
     }
@@ -237,16 +241,28 @@ mainState.prototype = {
     }
     if (computer) {
       var y_pos = this.ballSprite.body.y;
-      var diff = -((this.paddleRightSprite.body.y + (this.paddleRightSprite.body.height / 2)) - y_pos);
+      if (this.side === 'black') {
+        var diff = -((this.paddleRightSprite.body.y + (this.paddleRightSprite.body.height / 2)) - y_pos);
+      } else if (this.side === 'white') {
+        var diff = -((this.paddleLeftSprite.body.y + (this.paddleLeftSprite.body.height / 2)) - y_pos);
+      }
       /*if (diff < 0 && diff < -4) { // max speed left
         diff = -5;
       } else if (diff > 0 && diff > 4) { // max speed right
         diff = 5;
       }*/
       if (diff > 10) {
-        this.moveRightPaddle('down');
+        if (this.side === 'black') {
+          this.moveRightPaddle('down');
+        } else if (this.side === 'white') {
+          this.moveLeftPaddle('down');
+        }
       } else if (diff < -10) {
-        this.moveRightPaddle('up');
+        if (this.side === 'black') {
+          this.moveRightPaddle('up');
+        } else if (this.side === 'white') {
+          this.moveLeftPaddle('up');
+        }
       }
       /*if(this.paddle.x < 0) {
         this.paddle.x = 0;
@@ -468,7 +484,8 @@ mainState.prototype = {
   },
 
   moveLeftPaddle: function (direction) {
-    if (!isHome || computer) {
+    var direction = direction || null;
+    if (!isHome || (computer && this.side === 'black')) {
       if (this.paddleRight_up.isDown || this.y > game.input.y) {
         this.paddleLeftSprite.body.velocity.y = -gameProperties.paddleVelocity;
       }
@@ -481,22 +498,38 @@ mainState.prototype = {
       if (this.paddleLeftSprite.body.y < gameProperties.paddleTopGap) {
         this.paddleLeftSprite.body.y = gameProperties.paddleTopGap;
       }
-      socket.emit('move_paddle', {
-        id: getParameterByName('game'),
-        side: 'left',
-        velocity: this.paddleLeftSprite.body.velocity.y,
-        y: this.paddleLeftSprite.body.y + this.paddleLeftSprite.body.height / 2
-      });
+      if (!computer) {
+        socket.emit('move_paddle', {
+          id: getParameterByName('game'),
+          side: 'left',
+          velocity: this.paddleLeftSprite.body.velocity.y,
+          y: this.paddleLeftSprite.body.y + this.paddleLeftSprite.body.height / 2
+        });
+      }
+    }
+    if (computer && this.side === 'white') {
+      if (direction === 'up') {
+        this.paddleLeftSprite.body.velocity.y = -gameProperties.paddleVelocity;
+      }
+      else if (direction === 'down') {
+        this.paddleLeftSprite.body.velocity.y = gameProperties.paddleVelocity;
+      } else {
+        this.paddleLeftSprite.body.velocity.y = 0;
+      }
+
+      if (this.paddleLeftSprite.body.y < gameProperties.paddleTopGap) {
+        this.paddleLeftSprite.body.y = gameProperties.paddleTopGap;
+      }
     }
   },
 
   moveRightPaddle: function (direction) {
     var direction = direction || null;
-    if (isHome) {
-      if (this.paddleRight_up.isDown) {
+    if (isHome || (computer && this.side === 'white')) {
+      if (this.paddleRight_up.isDown || this.y > game.input.y) {
         this.paddleRightSprite.body.velocity.y = -gameProperties.paddleVelocity;
       }
-      else if (this.paddleRight_down.isDown) {
+      else if (this.paddleRight_down.isDown || this.y < game.input.y) {
         this.paddleRightSprite.body.velocity.y = gameProperties.paddleVelocity;
       } else {
         this.paddleRightSprite.body.velocity.y = 0;
@@ -505,14 +538,16 @@ mainState.prototype = {
       if (this.paddleRightSprite.body.y < gameProperties.paddleTopGap) {
         this.paddleRightSprite.body.y = gameProperties.paddleTopGap;
       }
-      socket.emit('move_paddle', {
-        id: getParameterByName('game'),
-        side: 'right',
-        velocity: this.paddleRightSprite.body.velocity.y,
-        y: this.paddleRightSprite.body.y + this.paddleRightSprite.body.height / 2
-      });
+      if (!computer) {
+        socket.emit('move_paddle', {
+          id: getParameterByName('game'),
+          side: 'right',
+          velocity: this.paddleRightSprite.body.velocity.y,
+          y: this.paddleRightSprite.body.y + this.paddleRightSprite.body.height / 2
+        });
+      }
     }
-    if (computer) {
+    if (computer && this.side === 'black') {
       if (direction === 'up') {
         this.paddleRightSprite.body.velocity.y = -gameProperties.paddleVelocity;
       }
