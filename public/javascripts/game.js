@@ -234,7 +234,7 @@ mainState.prototype = {
         } else {
           self.side = data.guestSide;
         }
-        if (data.guestSide === 'white') {
+        if (self.side === 'white') {
           $('#right-name').html(data.player1.profile.DisplayName);
           $('#right-name-go').html(data.player1.profile.DisplayName);
           $('#left-name').html(data.player2.profile.DisplayName);
@@ -898,8 +898,8 @@ mainState.prototype = {
       if (!computer) {
         socket.emit('relevant_score', {
           id: getParameterByName('game'),
-          scoreLeft: this.scoreLeft,
-          scoreRight: this.scoreRight
+          scoreLeft: this.scoreLeft * 3 + this.leftStrikeCount,
+          scoreRight: this.scoreRight * 3 + this.rightStrikeCount
         });
       }
     }
