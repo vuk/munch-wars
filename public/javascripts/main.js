@@ -58,7 +58,7 @@ $('#accept_invite').click(function () {
   socket.emit('accept', {
     guest: userId,
     host: localStorage.getItem('opponentId'),
-    guestSide: localStorage.getItem('side')
+    guestSide: localStorage.getItem('opponentSide')
   });
   if (window.location.href.indexOf('play?') === -1) {
     window.location.href = '/play?game=' + userId + '&noevent=true';
