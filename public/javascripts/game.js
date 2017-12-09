@@ -758,13 +758,13 @@ mainState.prototype = {
     if (this.doubleActive[0]) {
       this.paddleLeftSprite.key = graphicAssets.paddleName;
       this.paddleLeftSprite.loadTexture(graphicAssets.paddleName, 0);
-      //this.paddleLeftSprite.height = this.originalPaddleHeight;
+      this.paddleLeftSprite.height /= 1.5;
       this.doubleActive[0] = false;
     }
     if (this.doubleActive[1]) {
       this.paddleRightSprite.key = graphicAssets.paddleRightName;
       this.paddleRightSprite.loadTexture(graphicAssets.paddleRightName, 0);
-      //this.paddleRightSprite.height = this.originalPaddleHeight;
+      this.paddleRightSprite.height  /= 1.5;
       this.doubleActive[1] = false;
     }
   },
