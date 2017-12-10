@@ -108,7 +108,7 @@
                                         daily = _.find(player.Profile.Statistics, function (obj) {
                                             return obj.Name === 'Points';
                                         });
-                                        daily = daily.Value || 0;
+                                        daily = daily ? daily.Value : 0;
                                     }
                                         while (daily.toString().length < 5) {
                                             daily = '0' + daily;
