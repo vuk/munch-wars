@@ -343,11 +343,11 @@ mainState.prototype = {
     this.lastUpdate = Date.now();
     if (this.syncData) {
       if(this.side === 'white' && this.syncData.paddle && this.syncData.paddle['left']) {
-        this.paddleLeftSprite.body.velocity.y = this.syncData.paddle['left'].velocity;
+        this.paddleLeftSprite.body.velocity.y = this.syncData.paddle['left'].velocity > 0 ? 600 : -600;
         this.paddleLeftSprite.y = this.syncData.paddle['left'].y;
       }
       if(this.side === 'black' && this.syncData.paddle && this.syncData.paddle['right']) {
-        this.paddleRightSprite.body.velocity.y = this.syncData.paddle['right'].velocity;
+        this.paddleRightSprite.body.velocity.y = this.syncData.paddle['right'].velocity > 0 ? 600 : -600;
         this.paddleRightSprite.y = this.syncData.paddle['right'].y;
       }
       if(this.syncData && this.syncData.ball && !isHome) {
