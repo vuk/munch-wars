@@ -378,6 +378,7 @@ mainState.prototype = {
           velocityX: this.ballSprite.body.velocity.x,
           velocityY: this.ballSprite.body.velocity.y,
           visible: this.ballSprite.visible,
+          time: Date.now()
         });
         this.lastBallUpdate = Date.now();
       }
@@ -676,6 +677,7 @@ mainState.prototype = {
             side: 'left',
             velocity: this.paddleLeftSprite.body.velocity.y,
             y: this.paddleLeftSprite.body.y + this.paddleLeftSprite.body.height / 2
+            time: Date.now()
           });
         }
       }
@@ -717,7 +719,8 @@ mainState.prototype = {
             id: getParameterByName('game'),
             side: 'right',
             velocity: this.paddleRightSprite.body.velocity.y,
-            y: this.paddleRightSprite.body.y + this.paddleRightSprite.body.height / 2
+            y: this.paddleRightSprite.body.y + this.paddleRightSprite.body.height / 2,
+            time: Date.now()
           });
         }
       }

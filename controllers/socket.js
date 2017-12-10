@@ -129,7 +129,9 @@ module.exports = {
             ball: {}
           };
         }
-        this.state[data.id]['paddle'][data.side] = data;
+        if(this.state[data.id]['paddle'][data.side].time < data.time) {
+          this.state[data.id]['paddle'][data.side] = data;
+        }
       });
       socket.on('ball_position', (data) => {
         if(!this.state[data.id]) {
@@ -138,7 +140,9 @@ module.exports = {
             ball: {}
           };
         }
-        this.state[data.id]['ball'] = data;
+        if (this.state[data.id]['ball'].time < data.time) {
+          this.state[data.id]['ball'] = data;
+        }
         //this.io.to(data.id).emit('ball', data);
       });
       socket.on('relevant_score', (data) => {
