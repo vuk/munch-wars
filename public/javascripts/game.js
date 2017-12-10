@@ -247,6 +247,7 @@ mainState.prototype = {
           $('#left-name').html(data.player1.profile.DisplayName);
           $('#left-name-go').html(data.player1.profile.DisplayName);
         }
+        self.ballSprite.visible = true;
         self.startCountdown();
       });
     }
@@ -262,7 +263,7 @@ mainState.prototype = {
       }
       if(data.ball && !isHome) {
         console.log(data.ball);
-        self.ballSprite.visible = data.ball.visible;
+        /*self.ballSprite.visible = data.ball.visible;*/
         self.ballSprite.x = data.ball.x + self.ballSprite.width / 2;
         self.ballSprite.y = data.ball.y + self.ballSprite.height / 2;
         self.ballSprite.anchor.setTo(0.5, 0.5);
