@@ -252,9 +252,15 @@ mainState.prototype = {
     }
 
     socket.on('update_state', function (data) {
-      game.physics.arcade.moveToXY(self.paddleLeftSprite, gameProperties.paddleLeft_x, data.paddle['left'].y, 0, 17);
-      game.physics.arcade.moveToXY(self.paddleRightSprite, gameProperties.paddleRight_x, data.paddle['right'].y, 0, 17);
-      game.physics.arcade.moveToXY(self.ballSprite, data.ball.x, data.ball.y, 0, 17);
+      if(data.paddle && data.paddle['left']) {
+        game.physics.arcade.moveToXY(self.paddleLeftSprite, gameProperties.paddleLeft_x, data.paddle['left'].y, 0, 17);
+      }
+      if(data.paddle && data.paddle['right']) {
+        game.physics.arcade.moveToXY(self.paddleRightSprite, gameProperties.paddleRight_x, data.paddle['right'].y, 0, 17);
+      }
+      if(data.paddle && data.ball) {
+        game.physics.arcade.moveToXY(self.ballSprite, data.ball.x, data.ball.y, 0, 17);
+      }
     });
     var self = this;
     socket.on('score', function (data) {
