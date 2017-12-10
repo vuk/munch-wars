@@ -147,10 +147,12 @@ var mainState = function (game) {
   this.players = [
     {
       id: 'left',
+      color: 'black',
       magic: []
     },
     {
       id: 'right',
+      color: 'white',
       magic: []
     }
   ]
@@ -275,8 +277,8 @@ mainState.prototype = {
     socket.on('magic', function (data) {
       console.log(data, 'magic');
       self.players = data.players;
-      self.renderPlayerMagic(self.players[0]);
-      self.renderPlayerMagic(self.players[1]);
+      self.updatePlayerMagicUI(self.players[0]);
+      self.updatePlayerMagicUI(self.players[1]);
     });
 
     socket.on('sync_shot', function (data) {
@@ -786,15 +788,21 @@ mainState.prototype = {
   },
 
   collideWithMagicBounds: function (ball, magicBound) {
-    if (isHome || computer) {
-      if (this.lastHitBy < 0 || this.magicCountdown > 0) {
-        this.magicCountdown--;
-        return;
-      }
-      var player = this.players[this.lastHitBy];
-      if (player.magic.length >= 3) {
-        return;
-      }
+    if (this.lastHitBy < 0 || this.magicCountdown > 0) {
+      this.magicCountdown--;
+      return;
+    }
+    var player = this.players[this.lastHitBy];
+    this.generateMagic(player, ball, magicBound);
+    // Set probability to call spawnMagicByComputerPlayer()
+    if (computer && Math.floor(Math.random() * 4) === 2) {
+        this.fireMagicByComputerPlayer();
+    }
+  },
+
+  generateMagic: function (player, ball, magicBound) {
+    var isPlayerMagicFull = player.magic.length === 3;
+    if (!isPlayerMagicFull && (isHome || computer)) {
       var randomMagic = Math.floor(Math.random() * 4);
       console.log(player.id + ' gets some random WOODOO: ' + randomMagic);
       switch (randomMagic) {
@@ -813,19 +821,27 @@ mainState.prototype = {
       }
       this.getMagic.play();
       this.magicCountdown = 1;
-
-      if (!computer) {
-        socket.emit('magic_sync', {
-          id: getParameterByName('game'),
-          players: this.players,
-          evt: 'earned'
-        });
-      }
-      this.renderPlayerMagic(player);
+      this.updatePlayerMagicUI(player);
+    }
+    if (!isPlayerMagicFull && isHome && !computer) {
+      socket.emit('magic_sync', {
+        id: getParameterByName('game'),
+        players: this.players,
+        evt: 'earned'
+      });
     }
   },
 
-  renderPlayerMagic: function(player) {
+  fireMagicByComputerPlayer: function () {
+    var cpuSide = this.side === 'white' ? 0 : 1;
+    if (this.players[cpuSide].magic.length === 0) {
+      return;
+    }
+    var randomMagicIndex = Math.floor(Math.random() * this.players[cpuSide].magic.length);
+    this.processMagic(this.players[cpuSide].magic[randomMagicIndex], cpuSide);
+  },
+
+  updatePlayerMagicUI: function(player) {
     var allSpriteClassNames = 'sprite-double-size sprite-shoot sprite-hor-position sprite-ver-position sprite-empty';
     jQuery('#' + player.id + '-player-magic-1').removeClass(allSpriteClassNames).addClass((player.magic[0] !== void 0) ? 'sprite-' + player.magic[0] : 'sprite-empty');
     jQuery('#' +player.id + '-player-magic-2').removeClass(allSpriteClassNames).addClass((player.magic[1] !== void 0) ? 'sprite-' + player.magic[1] : 'sprite-empty');
@@ -864,7 +880,7 @@ mainState.prototype = {
           evt: 'fired'
         });
       }
-      this.renderPlayerMagic(this.players[side]);
+      this.updatePlayerMagicUI(this.players[side]);
     } else {
       this.fireCount ++;
     }
