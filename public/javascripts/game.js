@@ -387,7 +387,7 @@ mainState.prototype = {
           self.ballSprite.visible = data.visible;
           self.ballSprite.x = data.x;
           self.ballSprite.y = data.y;
-          self.ballSprite.body.velocity.set(data.velocityX, data.velocityY);
+          //self.ballSprite.body.velocity.set(data.velocityX, data.velocityY);
         });
         isBallListenerSet = true;
       }

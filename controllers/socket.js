@@ -4,6 +4,7 @@ playfabServer.settings.developerSecretKey = 'X6GUF8OHOC8OIXU1W9P3F77SIJW9X5EZESC
 module.exports = {
   sockets: {},
   activeUsers: {},
+  state: null,
   io: null,
   submitScore: (data) => {
     playfabServer.UpdatePlayerStatistics({
