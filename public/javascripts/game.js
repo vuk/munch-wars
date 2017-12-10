@@ -370,18 +370,15 @@ mainState.prototype = {
     }
     var self = this;
     if (isHome || !computer) {
-      if(Date.now() - this.lastBallUpdate > 50) {
-        socket.emit('ball_position', {
-          id: getParameterByName('game'),
-          x: this.ballSprite.body.x,
-          y: this.ballSprite.body.y,
-          velocityX: this.ballSprite.body.velocity.x,
-          velocityY: this.ballSprite.body.velocity.y,
-          visible: this.ballSprite.visible,
-          time: Date.now()
-        });
-        this.lastBallUpdate = Date.now();
-      }
+      socket.emit('ball_position', {
+        id: getParameterByName('game'),
+        x: this.ballSprite.body.x,
+        y: this.ballSprite.body.y,
+        velocityX: this.ballSprite.body.velocity.x,
+        velocityY: this.ballSprite.body.velocity.y,
+        visible: this.ballSprite.visible,
+        time: Date.now()
+      });
     } /*else {
       if (!isBallListenerSet) {
         self.ballSprite.body.allowGravity = false;

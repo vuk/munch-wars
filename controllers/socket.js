@@ -114,9 +114,7 @@ module.exports = {
               guestSide: data.guestSide
             });
             updateInterval = setInterval(() => {
-              if(this.state[data.host] && this.state[data.host].ball.time) {
-                this.io.to(data.host).emit('update_state', this.state[data.host]);
-              }
+              this.io.to(data.host).emit('update_state', this.state[data.host]);
             }, 30);
           }, 5000);
         }
@@ -129,9 +127,7 @@ module.exports = {
             ball: {}
           };
         }
-        if(this.state[data.id]['paddle'][data.side] && (!this.state[data.id]['paddle'][data.side].time || this.state[data.id]['paddle'][data.side].time < data.time)) {
-          this.state[data.id]['paddle'][data.side] = data;
-        }
+        this.state[data.id]['paddle'][data.side] = data;
       });
       socket.on('ball_position', (data) => {
         if(!this.state[data.id]) {
@@ -140,9 +136,7 @@ module.exports = {
             ball: {}
           };
         }
-        if (!this.state[data.id]['ball'].time || this.state[data.id]['ball'].time < data.time) {
-          this.state[data.id]['ball'] = data;
-        }
+        this.state[data.id]['ball'] = data;
         //this.io.to(data.id).emit('ball', data);
       });
       socket.on('relevant_score', (data) => {
