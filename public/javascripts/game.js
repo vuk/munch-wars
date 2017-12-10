@@ -334,7 +334,10 @@ mainState.prototype = {
   },
   lastBallUpdate: 0,
   syncData: {},
+  lastUpdate: 0,
   updateState: function () {
+    console.log(Date.now() - this.lastUpdate);
+    this.lastUpdate = Date.now();
     if (this.syncData) {
       if(this.side === 'white' && this.syncData.paddle && this.syncData.paddle['left']) {
         this.paddleLeftSprite.body.velocity.y = this.syncData.paddle['left'].velocity;
