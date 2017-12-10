@@ -816,14 +816,29 @@ mainState.prototype = {
       if (this.buttonOne.isDown && this.players[side].magic[0]) {
         this.processMagic(this.players[side].magic[0], side);
         this.players[side].magic.splice(0, 1);
+        socket.emit('magic_sync', {
+          id: getParameterByName('game'),
+          players: this.players,
+          evt: 'fired'
+        });
       }
       if (this.buttonTwo.isDown && this.players[side].magic[1]) {
         this.processMagic(this.players[side].magic[1], side);
         this.players[side].magic.splice(1, 1);
+        socket.emit('magic_sync', {
+          id: getParameterByName('game'),
+          players: this.players,
+          evt: 'fired'
+        });
       }
       if (this.buttonThree.isDown && this.players[side].magic[2]) {
         this.processMagic(this.players[side].magic[2], side);
         this.players[side].magic.splice(2, 1);
+        socket.emit('magic_sync', {
+          id: getParameterByName('game'),
+          players: this.players,
+          evt: 'fired'
+        });
       }
       this.renderPlayerMagic(this.players[side]);
     } else {
@@ -832,11 +847,6 @@ mainState.prototype = {
   },
 
   processMagic: function (magic, side) {
-    socket.emit('magic_sync', {
-      id: getParameterByName('game'),
-      players: this.players,
-      evt: 'fired'
-    });
     switch (magic) {
       case 'shoot':
         this.processShot(side);
