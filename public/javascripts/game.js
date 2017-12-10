@@ -252,6 +252,7 @@ mainState.prototype = {
     }
 
     socket.on('update_state', function (data) {
+      console.log(data);
       if(data.paddle && data.paddle['left']) {
         game.physics.arcade.moveToXY(self.paddleLeftSprite, gameProperties.paddleLeft_x, data.paddle['left'].y, 0, 17);
       }
