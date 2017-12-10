@@ -255,7 +255,7 @@ mainState.prototype = {
     socket.on('update_state', function (data) {
       console.log(Date.now() - this.lastUpdate);
       this.lastUpdate = Date.now();
-      if (self.syncData && self.syncData.time <= data.time) {
+      if (self.syncData.time && self.syncData.time <= data.time) {
         self.syncData = data;
       }
     });
