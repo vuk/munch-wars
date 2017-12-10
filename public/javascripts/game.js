@@ -259,10 +259,10 @@ mainState.prototype = {
         game.physics.arcade.moveToXY(self.paddleRightSprite, gameProperties.paddleRight_x, data.paddle['right'].y, 0, 17);
       }
       if(data.paddle && data.ball) {
+        self.ballSprite.visble = data.ball.visible;
         game.physics.arcade.moveToXY(self.ballSprite, data.ball.x, data.ball.y, 0, 17);
       }
     });
-    var self = this;
     socket.on('score', function (data) {
       self.scoreLeft = data.scoreLeft;
       self.scoreRight = data.scoreRight;
@@ -592,6 +592,7 @@ mainState.prototype = {
   gameOver: function () {
     $('#game-over').show();
     this.ballSprite.visible = false;
+    game.sound.mute = true;
     this.enablePaddles(false);
     this.enableBoundaries(true);
     $('.hide-on-go span').hide();
