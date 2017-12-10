@@ -333,23 +333,26 @@ mainState.prototype = {
     this.bulletRightSprite.destroy();
   },
   lastBallUpdate: 0,
+  syncData: {},
   updateState: function () {
-    if(this.side === 'white' && this.syncData.paddle && this.syncData.paddle['left']) {
-      this.paddleLeftSprite.body.velocity.y = this.syncData.paddle['left'].velocity;
-      this.paddleLeftSprite.y = this.syncData.paddle['left'].y;
-    }
-    if(this.side === 'black' && this.syncData.paddle && this.syncData.paddle['right']) {
-      this.paddleRightSprite.body.velocity.y = this.syncData.paddle['right'].velocity;
-      this.paddleRightSprite.y = this.syncData.paddle['right'].y;
-    }
-    if(this.syncData.ball && !isHome) {
-      /*self.ballSprite.visible = data.ball.visible;*/
-      this.ballSprite.x = this.syncData.ball.x + this.ballSprite.width / 2;
-      this.ballSprite.y = this.syncData.ball.y + this.ballSprite.height / 2;
-      /*self.ballSprite.anchor.setTo(0.5, 0.5);*/
-      this.ballSprite.visible = this.syncData.ball.visible;
-      //self.ballSprite.body.velocity.set(data.ball.velocityX, data.ball.velocityY);
-      game.physics.arcade.moveToXY(this.ballSprite, this.syncData.ball.x + this.ballSprite.width / 2, this.ballSprite.y = this.syncData.ball.y + this.ballSprite.height / 2, this.syncData.ball.velocityX, 16);
+    if (this.syncData) {
+      if(this.side === 'white' && this.syncData.paddle && this.syncData.paddle['left']) {
+        this.paddleLeftSprite.body.velocity.y = this.syncData.paddle['left'].velocity;
+        this.paddleLeftSprite.y = this.syncData.paddle['left'].y;
+      }
+      if(this.side === 'black' && this.syncData.paddle && this.syncData.paddle['right']) {
+        this.paddleRightSprite.body.velocity.y = this.syncData.paddle['right'].velocity;
+        this.paddleRightSprite.y = this.syncData.paddle['right'].y;
+      }
+      if(this.syncData && this.syncData.ball && !isHome) {
+        /*self.ballSprite.visible = data.ball.visible;*/
+        this.ballSprite.x = this.syncData.ball.x + this.ballSprite.width / 2;
+        this.ballSprite.y = this.syncData.ball.y + this.ballSprite.height / 2;
+        /*self.ballSprite.anchor.setTo(0.5, 0.5);*/
+        this.ballSprite.visible = this.syncData.ball.visible;
+        //self.ballSprite.body.velocity.set(data.ball.velocityX, data.ball.velocityY);
+        game.physics.arcade.moveToXY(this.ballSprite, this.syncData.ball.x + this.ballSprite.width / 2, this.ballSprite.y = this.syncData.ball.y + this.ballSprite.height / 2, this.syncData.ball.velocityX, 16);
+      }
     }
   },
   update: function () {
