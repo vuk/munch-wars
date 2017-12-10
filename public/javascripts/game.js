@@ -288,7 +288,7 @@ mainState.prototype = {
       self.renderPlayerMagic(self.players[1]);
     });
 
-    socket.on('sync_shot', function (side) {
+    socket.on('sync_shot', function (data) {
       self.handleShot(data.side, data.y);
     });
 
