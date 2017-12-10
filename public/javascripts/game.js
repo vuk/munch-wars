@@ -884,17 +884,17 @@ mainState.prototype = {
     }
   },
 
-  handleShot: function (side) {
+  handleShot: function (side, y) {
     this.shotSound.play();
     if(side === 0) {
-      this.bulletLeftSprite = game.add.sprite(gameProperties.paddleLeft_x, this.paddleLeftSprite.y, graphicAssets.bulletLeftName);
+      this.bulletLeftSprite = game.add.sprite(gameProperties.paddleLeft_x, y || this.paddleLeftSprite.y, graphicAssets.bulletLeftName);
       game.physics.enable(this.bulletLeftSprite, Phaser.Physics.ARCADE);
       this.bulletLeftSprite.enableBody = true;
       this.bulletLeftSprite.body.velocity.x = 800;
       this.bulletLeftSprite.body.velocity.y = 0;
     }
     if(side === 1) {
-      this.bulletRightSprite = game.add.sprite(gameProperties.paddleRight_x, this.paddleRightSprite.y, graphicAssets.bulletRightName);
+      this.bulletRightSprite = game.add.sprite(gameProperties.paddleRight_x, y || this.paddleRightSprite.y, graphicAssets.bulletRightName);
       game.physics.enable(this.bulletRightSprite, Phaser.Physics.ARCADE);
       this.bulletRightSprite.enableBody = true;
       this.bulletRightSprite.body.velocity.x = -800;
@@ -907,7 +907,7 @@ mainState.prototype = {
     socket.emit('shot_sync', {
       id: getParameterByName('game'),
       y: this.paddleLeftSprite.y,
-      side: 0,
+      side: side,
       myId: userId
     });
   },
