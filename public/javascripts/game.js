@@ -594,7 +594,7 @@ mainState.prototype = {
     this.enableBoundaries(true);
     $('.hide-on-go span').hide();
     if (isHome) {
-      socket.emit('gameover', {
+      socket.emit('game_over', {
         id: getParameterByName('game'),
         scoreLeft: this.scoreLeft,
         leftStrikeCount: this.leftStrikeCount,

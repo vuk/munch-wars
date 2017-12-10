@@ -133,6 +133,9 @@ module.exports = {
       socket.on('double_sync', data => {
         this.io.to(data.id).emit('sync_double', data);
       });
+      socket.on('game_over', data => {
+        this.io.to(data.id).emit('gameover', data);
+      });
       socket.on('disconnect', () => {
         console.log('disconnected', socket.id);
       });
