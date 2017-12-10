@@ -50,13 +50,13 @@ var graphicAssets = {
   ballURL: 'assets/ball-15.png',
   ballName: 'ball',
 
-  paddleURL: 'assets/left-45.png',
+  paddleURL: 'assets/left-46.png',
   paddleDoubleURL: 'assets/left-90.png',
   paddleName: 'paddle_left',
   paddleDoubleName: 'double_paddle_left',
 
-  paddleRightURL: 'assets/right-45.png',
-  paddleRightDoubleUrl: 'assets/right-90.png',
+  paddleRightURL: 'assets/right-46.png',
+  paddleRightDoubleUrl: 'assets/right--90.png',
   paddleRightName: 'paddle_right',
   paddleDoubleRightName: 'double_paddle_right',
 
