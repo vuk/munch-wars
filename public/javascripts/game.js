@@ -218,6 +218,18 @@ mainState.prototype = {
     var self = this;
     this.cnt = 1;
 
+    $('#left-player-magic-1, #right-player-magic-1').click(function () {
+      self.fireMagic(1);
+    });
+
+    $('#left-player-magic-2, #right-player-magic-2').click(function () {
+      self.fireMagic(2);
+    });
+
+    $('#left-player-magic-3, #right-player-magic-3').click(function () {
+      self.fireMagic(3);
+    });
+
     /** If I'm playing vs computer just take my choice of side from local storage **/
     if (computer) {
       this.side = localStorage.getItem('side');
@@ -855,11 +867,11 @@ mainState.prototype = {
   },
   fireCount: 0,
 
-  fireMagic: function () {
+  fireMagic: function (magic) {
     if (this.fireCount > 5) {
       this.fireCount = 0;
       var side = this.side === 'white' ? 1 : 0;
-      if (this.buttonOne.isDown && this.players[side].magic[0]) {
+      if (this.buttonOne.isDown && this.players[side].magic[0] || magic === 1) {
         this.processMagic(this.players[side].magic[0], side);
         this.players[side].magic.splice(0, 1);
         socket.emit('magic_sync', {
@@ -868,7 +880,7 @@ mainState.prototype = {
           evt: 'fired'
         });
       }
-      if (this.buttonTwo.isDown && this.players[side].magic[1]) {
+      if (this.buttonTwo.isDown && this.players[side].magic[1] || magic === 2) {
         this.processMagic(this.players[side].magic[1], side);
         this.players[side].magic.splice(1, 1);
         socket.emit('magic_sync', {
@@ -877,7 +889,7 @@ mainState.prototype = {
           evt: 'fired'
         });
       }
-      if (this.buttonThree.isDown && this.players[side].magic[2]) {
+      if (this.buttonThree.isDown && this.players[side].magic[2] || magic === 3) {
         this.processMagic(this.players[side].magic[2], side);
         this.players[side].magic.splice(2, 1);
         socket.emit('magic_sync', {
