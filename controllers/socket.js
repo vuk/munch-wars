@@ -129,7 +129,7 @@ module.exports = {
             ball: {}
           };
         }
-        if(this.state[data.id]['paddle'][data.side] && this.state[data.id]['paddle'][data.side].time < data.time) {
+        if(this.state[data.id]['paddle'][data.side] && (!this.state[data.id]['paddle'][data.side].time || this.state[data.id]['paddle'][data.side].time < data.time)) {
           this.state[data.id]['paddle'][data.side] = data;
         }
       });
@@ -140,7 +140,7 @@ module.exports = {
             ball: {}
           };
         }
-        if (this.state[data.id]['ball'].time < data.time) {
+        if (!this.state[data.id]['ball'].time || this.state[data.id]['ball'].time < data.time) {
           this.state[data.id]['ball'] = data;
         }
         //this.io.to(data.id).emit('ball', data);
