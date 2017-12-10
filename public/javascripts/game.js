@@ -255,7 +255,9 @@ mainState.prototype = {
     socket.on('update_state', function (data) {
       console.log(Date.now() - this.lastUpdate);
       this.lastUpdate = Date.now();
-      self.syncData = data;
+      if (self.syncData.time < data.time) {
+        self.syncData = data;
+      }
     });
     socket.on('score', function (data) {
       self.scoreLeft = data.scoreLeft;
