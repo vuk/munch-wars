@@ -352,8 +352,8 @@ mainState.prototype = {
       }
       if(this.syncData && this.syncData.ball && !isHome) {
         /*self.ballSprite.visible = data.ball.visible;*/
-        this.ballSprite.x = this.syncData.ball.x + this.ballSprite.width / 2;
-        this.ballSprite.y = this.syncData.ball.y + this.ballSprite.height / 2;
+        /*this.ballSprite.x = this.syncData.ball.x + this.ballSprite.width / 2;
+        this.ballSprite.y = this.syncData.ball.y + this.ballSprite.height / 2;*/
         /*self.ballSprite.anchor.setTo(0.5, 0.5);*/
         this.ballSprite.visible = this.syncData.ball.visible;
         //self.ballSprite.body.velocity.set(data.ball.velocityX, data.ball.velocityY);
