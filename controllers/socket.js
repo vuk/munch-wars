@@ -171,8 +171,12 @@ module.exports = {
       });
       socket.on('game_over', data => {
         this.io.to(data.id).emit('gameover', data);
-        this.io.sockets.clients(data.id).forEach(function(s){
-          s.leave(data.id);
+        this.io.in(data.id).clients((err, clients) => {
+          if (clients.length > 0) {
+            clients.forEach((socket_id) => {
+              this.io.sockets.sockets[socket_id].leave(data.id);
+            });
+          }
         });
         clearInterval(updateInterval)
       });
