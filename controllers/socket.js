@@ -135,6 +135,9 @@ module.exports = {
       });
       socket.on('game_over', data => {
         this.io.to(data.id).emit('gameover', data);
+        this.io.sockets.adapter.rooms[data.id].sockets.forEach(socket => {
+          socket.leave(data.id);
+        });
       });
       socket.on('outofbounds', data => {
         this.io.to(data.id).emit('outOfBounds', data);
