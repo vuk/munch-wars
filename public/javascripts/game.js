@@ -289,7 +289,7 @@ mainState.prototype = {
     });
 
     socket.on('sync_shot', function (side) {
-      this.handleShot(data.side, data.y);
+      self.handleShot(data.side, data.y);
     });
 
     if (!isHome) {
