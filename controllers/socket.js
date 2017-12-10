@@ -75,6 +75,11 @@ module.exports = {
        */
       socket.on('invite', (data) => {
         console.log('invite', data);
+        if (this.io.sockets.adapter.rooms[data.host].sockets
+        && this.io.sockets.adapter.rooms[data.host].sockets.length === 2) {
+          socket.emit('busy', { busy: true });
+          return;
+        }
         socket.join(data.host);
         this.sockets[data.host].join(data.host);
         console.log(this.io.sockets.adapter.rooms[data.host].sockets);
