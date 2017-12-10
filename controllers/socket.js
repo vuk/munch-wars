@@ -142,6 +142,7 @@ module.exports = {
             }
           };
         }
+        console.log('ball', this.state[data.id]['ball'].time, data.time);
         if(this.state[data.id]['ball'].time < data.time) {
           this.state[data.id]['ball'] = data;
         }
