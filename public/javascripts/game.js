@@ -50,13 +50,13 @@ var graphicAssets = {
   ballURL: 'assets/ball-15.png',
   ballName: 'ball',
 
-  paddleURL: 'assets/left-45.png',
+  paddleURL: 'assets/left-46.png',
   paddleDoubleURL: 'assets/left-90.png',
   paddleName: 'paddle_left',
   paddleDoubleName: 'double_paddle_left',
 
-  paddleRightURL: 'assets/right-45.png',
-  paddleRightDoubleUrl: 'assets/right-90.png',
+  paddleRightURL: 'assets/right-46.png',
+  paddleRightDoubleUrl: 'assets/right--90.png',
   paddleRightName: 'paddle_right',
   paddleDoubleRightName: 'double_paddle_right',
 
@@ -991,13 +991,13 @@ mainState.prototype = {
     if (this.doubleActive[0]) {
       this.paddleLeftSprite.key = graphicAssets.paddleName;
       this.paddleLeftSprite.loadTexture(graphicAssets.paddleName, 0);
-      this.paddleLeftSprite.height = 45;
+      this.paddleLeftSprite.height /= 1.5;
       this.doubleActive[0] = false;
     }
     if (this.doubleActive[1]) {
       this.paddleRightSprite.key = graphicAssets.paddleRightName;
       this.paddleRightSprite.loadTexture(graphicAssets.paddleRightName, 0);
-      this.paddleRightSprite.height = 45;
+      this.paddleRightSprite.height  /= 1.5;
       this.doubleActive[1] = false;
     }
   },
