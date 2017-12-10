@@ -93,7 +93,8 @@
                                     <% var weekly = 0; if (period === 'weekly') { weekly = player.StatValue } else {
                                         weekly = _.find(player.Profile.Statistics, function (obj) {
                                             return obj.Name === 'Weekly Points';
-                                        }).Value;
+                                        });
+                                        weekly = weekly ? weekly.Value : 0;
                                     }
                                         while (weekly.toString().length < 5) {
                                             weekly = '0' + weekly;
