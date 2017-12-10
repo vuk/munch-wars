@@ -839,6 +839,7 @@ mainState.prototype = {
     }
     var randomMagicIndex = Math.floor(Math.random() * this.players[cpuSide].magic.length);
     this.processMagic(this.players[cpuSide].magic[randomMagicIndex], cpuSide);
+    this.players[cpuSide].magic.splice(randomMagicIndex, 1);
   },
 
   updatePlayerMagicUI: function(player) {
