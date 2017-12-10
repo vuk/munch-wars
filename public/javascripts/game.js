@@ -344,6 +344,7 @@ mainState.prototype = {
   rightOutBounds: function () {
     this.bulletRightSprite.destroy();
   },
+  lastBallUpdate: 0,
   update: function () {
     this.moveLeftPaddle();
     this.moveRightPaddle();
@@ -365,7 +366,7 @@ mainState.prototype = {
       this.sndBallBounce.play();
     }
     var self = this;
-    if (isHome) {
+    if (isHome && Date.now() - this.lastBallUpdate > 50) {
       socket.emit('ball_position', {
         id: getParameterByName('game'),
         x: this.ballSprite.body.x,
@@ -374,6 +375,7 @@ mainState.prototype = {
         velocityY: this.ballSprite.body.velocity.y,
         visible: this.ballSprite.visible,
       });
+      this.lastBallUpdate = Date.now();
     } else {
       if (!isBallListenerSet) {
         self.ballSprite.body.allowGravity = false;
