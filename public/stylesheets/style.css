@@ -756,6 +756,13 @@ img {
 .rank-badge img {
     max-width: 75%;
 }
+.username-rank {
+    text-align: left;
+}
+.username-rank img {
+    max-height: 35px;
+    margin-right: 10px;
+}
 /* Custom, iPhone Retina */
 @media only screen and (min-width: 320px) {
 

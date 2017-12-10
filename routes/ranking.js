@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const playfab = require('playfab-sdk/Scripts/PlayFab/PlayFabServer');
+const _ = require('lodash');
 playfab.settings.titleId = 'F06D';
 playfab.settings.developerSecretKey = 'X6GUF8OHOC8OIXU1W9P3F77SIJW9X5EZESCNTG8J53G97ANDEE';
 
@@ -29,9 +30,11 @@ router.get('/', function(req, res, next) {
     }
     else {
       //console.log(response.data);
-      response.data.Leaderboard.forEach(lb => {
-        //console.log(lb.Profile.Statistics);
+      response.data.Leaderboard.forEach((lb, index) => {
+        let stat = _.find(lb.Profile.Statistics, { Name: "Total Points"});
+        response.data.Leaderboard[index].rankIcon = getRankIcon(stat.Value);
       });
+      console.log(response.data.Leaderboard);
       res.render('pages/ranking', {
         title: 'Rang lista',
         active: 'ranking',
@@ -42,5 +45,30 @@ router.get('/', function(req, res, next) {
     }
   });
 });
+
+function getRankIcon (tp) {
+  if(tp <= 100) {
+    rank = '/assets/ranks/1.png';
+  }
+  if (tp >= 101 && tp <= 200) {
+    rank = '/assets/ranks/2.png';
+  }
+  if (tp >= 201 && tp <= 300) {
+    rank = '/assets/ranks/3.png';
+  }
+  if (tp >= 301 && tp <= 400) {
+    rank = '/assets/ranks/4.png';
+  }
+  if (tp >= 401 && tp <= 500) {
+    rank = '/assets/ranks/5.png';
+  }
+  if (tp >= 501 && tp <= 600) {
+    rank = '/assets/ranks/6.png';
+  }
+  if (tp > 600) {
+    rank = '/assets/ranks/7.png';
+  }
+  return rank;
+}
 
 module.exports = router;

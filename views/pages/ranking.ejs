@@ -70,7 +70,9 @@
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <div class="table-cell username-rank"><%= player.Profile.LinkedAccounts[0].Username %></div>
+                        <div class="table-cell username-rank">
+                            <img src="<%- player.rankIcon %>" alt="">
+                            <%= player.Profile.LinkedAccounts[0].Username %></div>
                     </div>
                     <div class="col-lg-4">
                         <div class="row">
