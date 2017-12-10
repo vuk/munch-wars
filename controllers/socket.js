@@ -117,7 +117,7 @@ module.exports = {
             });
             updateInterval = setInterval(() => {
               this.io.to(data.host).emit('update_state', this.state[data.host]);
-            }, 16);
+            }, 10);
           }, 5000);
         }
       });
