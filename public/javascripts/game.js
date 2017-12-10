@@ -262,7 +262,6 @@ mainState.prototype = {
         self.paddleRightSprite.y = data.paddle['right'].y;
       }
       if(data.ball && !isHome) {
-        console.log(data.ball);
         /*self.ballSprite.visible = data.ball.visible;*/
         self.ballSprite.x = data.ball.x + self.ballSprite.width / 2;
         self.ballSprite.y = data.ball.y + self.ballSprite.height / 2;
@@ -280,7 +279,6 @@ mainState.prototype = {
     });
 
     socket.on('magic', function (data) {
-      console.log(data, 'magic');
       self.players = data.players;
       self.updatePlayerMagicUI(self.players[0]);
       self.updatePlayerMagicUI(self.players[1]);
@@ -797,7 +795,6 @@ mainState.prototype = {
     var isPlayerMagicFull = player.magic.length === 3;
     if (!isPlayerMagicFull && (isHome || computer)) {
       var randomMagic = Math.floor(Math.random() * 4);
-      console.log(player.id + ' gets some random WOODOO: ' + randomMagic);
       switch (randomMagic) {
         case 0:
           player.magic.push('shoot');
