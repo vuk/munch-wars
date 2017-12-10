@@ -366,16 +366,18 @@ mainState.prototype = {
       this.sndBallBounce.play();
     }
     var self = this;
-    if (isHome && Date.now() - this.lastBallUpdate > 50) {
-      socket.emit('ball_position', {
-        id: getParameterByName('game'),
-        x: this.ballSprite.body.x,
-        y: this.ballSprite.body.y,
-        velocityX: this.ballSprite.body.velocity.x,
-        velocityY: this.ballSprite.body.velocity.y,
-        visible: this.ballSprite.visible,
-      });
-      this.lastBallUpdate = Date.now();
+    if (isHome) {
+      if(Date.now() - this.lastBallUpdate > 50) {
+        socket.emit('ball_position', {
+          id: getParameterByName('game'),
+          x: this.ballSprite.body.x,
+          y: this.ballSprite.body.y,
+          velocityX: this.ballSprite.body.velocity.x,
+          velocityY: this.ballSprite.body.velocity.y,
+          visible: this.ballSprite.visible,
+        });
+        this.lastBallUpdate = Date.now();
+      }
     } else {
       if (!isBallListenerSet) {
         self.ballSprite.body.allowGravity = false;
