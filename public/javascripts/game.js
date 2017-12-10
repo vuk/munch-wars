@@ -932,6 +932,7 @@ mainState.prototype = {
   processDouble: function (side) {
     this.handleDouble(side);
     socket.emit('double_sync', {
+      id: getParameterByName('game'),
       side: side,
       myId: userId
     })
