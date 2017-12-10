@@ -265,6 +265,7 @@ mainState.prototype = {
         self.ballSprite.x = data.ball.x;
         self.ballSprite.y = data.ball.y;
         self.ballSprite.body.velocity.set(data.ball.velocityX, data.ball.velocityY);
+        console.log(self.ballSprite);
       }
     });
     socket.on('score', function (data) {
