@@ -136,6 +136,9 @@ module.exports = {
       socket.on('game_over', data => {
         this.io.to(data.id).emit('gameover', data);
       });
+      socket.on('outofbounds', data => {
+        this.io.to(data.id).emit('outOfBounds', data);
+      });
       socket.on('disconnect', () => {
         console.log('disconnected', socket.id);
       });

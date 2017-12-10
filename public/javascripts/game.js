@@ -234,8 +234,6 @@ mainState.prototype = {
         } else {
           self.side = data.guestSide;
         }
-        console.log(self.side);
-        console.log('start game', data);
         if (data.guestSide === 'white') {
           $('#right-name').html(data.player1.profile.DisplayName);
           $('#right-name-go').html(data.player1.profile.DisplayName);
@@ -310,6 +308,11 @@ mainState.prototype = {
         self.enableBoundaries(true);
         $('.hide-on-go span').hide();
       });
+
+      socket.on('outOfBounds', function () {
+        self.ballOutOfBounds();
+      });
+
     }
   },
 
@@ -981,6 +984,11 @@ mainState.prototype = {
     this.lastHitBy = -1;
     this.sndBallMissed.play();
     this.undoMagics();
+    if (isHome) {
+      socket.emit('outofbounds', {
+        id: getParameterByName('game')
+      })
+    }
     if (isHome || computer) {
       if (this.ballSprite.x < 0) {
         this.missedSide = 'left';
