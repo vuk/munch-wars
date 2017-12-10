@@ -465,11 +465,6 @@ mainState.prototype = {
     this.backgroundGraphics = game.add.graphics(0, 0);
     this.backgroundGraphics.lineStyle(2, 0xFFFFFF, 1);
 
-    /*for (var y = 0; y < gameProperties.screenHeight; y += gameProperties.dashSize * 2) {
-      this.backgroundGraphics.moveTo(game.world.centerX, y);
-      this.backgroundGraphics.lineTo(game.world.centerX, y + gameProperties.dashSize);
-    }*/
-
     this.ballSprite = game.add.sprite(game.world.centerX, game.world.centerY, graphicAssets.ballName);
     this.ballSprite.anchor.set(0.5, 0.5);
 
@@ -478,12 +473,6 @@ mainState.prototype = {
 
     this.paddleRightSprite = game.add.sprite(gameProperties.paddleRight_x, game.world.centerY, graphicAssets.paddleRightName);
     this.paddleRightSprite.anchor.set(0.5, 0.5);
-
-    //this.tf_scoreLeft = game.add.text(fontAssets.scoreLeft_x, fontAssets.scoreTop_y, '0', fontAssets.scoreFontStyle);
-    //this.tf_scoreLeft.anchor.set(0.5, 0);
-
-    //this.tf_scoreRight = game.add.text(fontAssets.scoreRight_x, fontAssets.scoreTop_y, '0', fontAssets.scoreFontStyle);
-    //this.tf_scoreRight.anchor.set(0.5, 0);
 
     this.instructions = game.add.text(game.world.centerX, game.world.height - 30, labels.clickToStart, fontAssets.instructionsFontStyle);
     this.instructions.addColor('#FFFFFF', 11);
@@ -497,12 +486,6 @@ mainState.prototype = {
     this.instructions.addColor('#FFFFFF', 50);
     this.instructions.addColor('#FFDF00', 51);
     this.instructions.anchor.set(0.5, 1);
-
-    //this.winnerLeft = game.add.text(gameProperties.screenWidth * 0.25, gameProperties.screenHeight * 0.25, labels.winner, fontAssets.instructionsFontStyle);
-    //this.winnerLeft.anchor.set(0.5, 0.5);
-
-    //this.winnerRight = game.add.text(gameProperties.screenWidth * 0.75, gameProperties.screenHeight * 0.25, labels.winner, fontAssets.instructionsFontStyle);
-    //this.winnerRight.anchor.set(0.5, 0.5);
 
     this.hideTextFields();
   },
