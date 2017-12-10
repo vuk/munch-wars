@@ -108,14 +108,21 @@ module.exports = {
               player2: this.activeUsers[data.host],
               guestSide: data.guestSide
             });
+            setInterval(() => {
+              if(this.state[data.host]) {
+                this.io.to(data.host).emit('update_state', this.state[data.host]);
+              }
+            }, 17);
           }, 5000);
         }
       });
       socket.on('move_paddle', (data) => {
-        this.io.to(data.id).emit('move', data);
+        //this.io.to(data.id).emit('move', data);
+        this.state[data.id]['paddle'][data.side] = data;
       });
       socket.on('ball_position', (data) => {
-        this.io.to(data.id).emit('ball', data);
+        this.state[data.id]['ball'] = data;
+        //this.io.to(data.id).emit('ball', data);
       });
       socket.on('relevant_score', (data) => {
         this.io.to(data.id).emit('score', data);

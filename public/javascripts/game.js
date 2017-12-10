@@ -251,19 +251,10 @@ mainState.prototype = {
       });
     }
 
-    socket.on('move', function (data) {
-      if (data.side === 'right' && self.side === 'black') {
-        self.paddleRightSprite.body.velocity.y = data.velocity;
-        self.paddleRightSprite.y = data.y;
-        //game.physics.arcade.moveToXY(self.paddleRightSprite, gameProperties.paddleRight_x, data.y, 0, 40);
-        //self.paddleRightSprite.body.velocity.y = data.velocity;
-      }
-      if (data.side === 'left' && self.side === 'white') {
-        self.paddleLeftSprite.body.velocity.y = data.velocity;
-        self.paddleLeftSprite.y = data.y;
-        //game.physics.arcade.moveToXY(self.paddleLeftSprite, gameProperties.paddleLeft_x, data.y, 0, 40);
-        //self.paddleLeftSprite.body.velocity.y = data.velocity;
-      }
+    socket.on('update_state', function (data) {
+      game.physics.arcade.moveToXY(self.paddleLeftSprite, gameProperties.paddleLeft_x, data.paddle['left'].y, 0, 17);
+      game.physics.arcade.moveToXY(self.paddleRightSprite, gameProperties.paddleRight_x, data.paddle['right'].y, 0, 17);
+      game.physics.arcade.moveToXY(self.ballSprite, data.ball.x, data.ball.y, 0, 17);
     });
     var self = this;
     socket.on('score', function (data) {
@@ -366,7 +357,7 @@ mainState.prototype = {
       this.sndBallBounce.play();
     }
     var self = this;
-    if (isHome) {
+    if (isHome || !computer) {
       if(Date.now() - this.lastBallUpdate > 50) {
         socket.emit('ball_position', {
           id: getParameterByName('game'),
@@ -378,7 +369,7 @@ mainState.prototype = {
         });
         this.lastBallUpdate = Date.now();
       }
-    } else {
+    } /*else {
       if (!isBallListenerSet) {
         self.ballSprite.body.allowGravity = false;
         self.ballSprite.body.velocity.x = 0;
@@ -387,11 +378,11 @@ mainState.prototype = {
           self.ballSprite.visible = data.visible;
           self.ballSprite.x = data.x;
           self.ballSprite.y = data.y;
-          //self.ballSprite.body.velocity.set(data.velocityX, data.velocityY);
+          self.ballSprite.body.velocity.set(data.velocityX, data.velocityY);
         });
         isBallListenerSet = true;
       }
-    }
+    }*/
     if (computer) {
       var y_pos = this.ballSprite.body.y;
       if (this.side === 'black') {
