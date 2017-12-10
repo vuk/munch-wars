@@ -281,6 +281,17 @@ mainState.prototype = {
       self.renderPlayerMagic(self.players[1]);
     });
 
+    socket.on('shot', function (data) {
+      console.log(data, 'magic');
+      self.players = data.players;
+      self.renderPlayerMagic(self.players[0]);
+      self.renderPlayerMagic(self.players[1]);
+    });
+
+    socket.on('sync_shot', function (side) {
+      this.handleShot(data.side, data.y);
+    });
+
     if (!isHome) {
       socket.on('gameover', function (data) {
         $('#game-over').show();
@@ -862,7 +873,8 @@ mainState.prototype = {
         break;
     }
   },
-  processShot: function (side) {
+
+  handleShot: function (side) {
     this.shotSound.play();
     if(side === 0) {
       this.bulletLeftSprite = game.add.sprite(gameProperties.paddleLeft_x, this.paddleLeftSprite.y, graphicAssets.bulletLeftName);
@@ -878,6 +890,15 @@ mainState.prototype = {
       this.bulletRightSprite.body.velocity.x = -800;
       this.bulletRightSprite.body.velocity.y = 0;
     }
+  },
+
+  processShot: function (side) {
+    this.handleShot(side);
+    socket.emit('shot_sync', {
+      id: getParameterByName('game'),
+      y: this.paddleLeftSprite.y,
+      side: 0
+    });
   },
   doubleActive: [],
   originalPaddleHeight: 0,
