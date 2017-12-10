@@ -172,7 +172,7 @@ module.exports = {
       socket.on('game_over', data => {
         this.io.to(data.id).emit('gameover', data);
         Object.keys(this.io.sockets.adapter.rooms[data.id].sockets).forEach(socket => {
-          this.io.sockets[socket].leave(data.id);
+          this.io.sockets.connected[socket].leave(data.id);
         });
         clearInterval(updateInterval)
       });
