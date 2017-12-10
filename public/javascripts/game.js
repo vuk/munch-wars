@@ -253,6 +253,8 @@ mainState.prototype = {
     }
 
     socket.on('update_state', function (data) {
+      console.log(Date.now() - this.lastUpdate);
+      this.lastUpdate = Date.now();
       self.syncData = data;
     });
     socket.on('score', function (data) {
@@ -336,7 +338,6 @@ mainState.prototype = {
   syncData: {},
   lastUpdate: 0,
   updateState: function () {
-    console.log(Date.now() - this.lastUpdate);
     this.lastUpdate = Date.now();
     if (this.syncData) {
       if(this.side === 'white' && this.syncData.paddle && this.syncData.paddle['left']) {
