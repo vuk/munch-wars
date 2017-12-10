@@ -355,7 +355,10 @@ mainState.prototype = {
         this.ballSprite.y = this.syncData.ball.y + this.ballSprite.height / 2;
         /*self.ballSprite.anchor.setTo(0.5, 0.5);*/
         this.ballSprite.visible = this.syncData.ball.visible;
-        this.ballSprite.body.velocity.set(this.syncData.ball.velocityX, this.syncData.ball.velocityY);
+        //this.ballSprite.body.velocity.set(this.syncData.ball.velocityX, this.syncData.ball.velocityY);
+        this.ballSprite.body.velocity.x = this.syncData.ball.velocityX;
+        this.ballSprite.body.velocity.y = this.syncData.ball.velocityY;
+        //game.physics.arcade.accelerateToXY(this.ballSprite, this.syncData.ball.x + this.ballSprite.width / 2, this.syncData.ball.y + this.ballSprite.height / 2);
       }
     }
   },
