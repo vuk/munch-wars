@@ -381,13 +381,9 @@ mainState.prototype = {
         self.ballSprite.body.velocity.y = 0;
         socket.on('ball', function (data) {
           self.ballSprite.visible = data.visible;
-          /*if (Math.abs(self.ballSprite.body.x - data.x) < 50 && Math.abs(self.ballSprite.body.y - data.y) < 50)*/
-          //game.physics.arcade.moveToXY(self.ballSprite, data.x, data.y, 0, 40);
           /*self.ballSprite.x = data.x;
           self.ballSprite.y = data.y;*/
           self.ballSprite.body.velocity.set(data.velocityX, data.velocityY);
-          /*game.ballSprite.body.velocity.x = data.velocityX;
-          game.ballSprite.body.velocity.y = data.velocityY;*/
         });
         isBallListenerSet = true;
       }
