@@ -735,7 +735,7 @@ img {
 }
 
 .sprite-ver-position .magic-label, .sprite-hor-position .magic-label {
-    color: gold;
+    color: #FFDF00;
 }
 .vs-player img, .vs-computer img {
     max-width: 75%;
@@ -751,6 +751,9 @@ img {
     text-align: center;
 }
 .munc-wars-holder img {
+    max-width: 75%;
+}
+.rank-badge img {
     max-width: 75%;
 }
 /* Custom, iPhone Retina */

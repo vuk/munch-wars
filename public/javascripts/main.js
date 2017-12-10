@@ -121,12 +121,40 @@ if ($('.rank-row').length > 0) {
   while (tr.toString().length < 5) {
     tr = '0' + tr;
   }
+  var rank = getRankIcon(tp);
+
+  $('.rank-badge img').attr('src', rank);
   $('.daily-pts .pts-score').html(dp);
   $('.weekly-pts .pts-score').html(wp);
   $('.total-pts .pts-score').html(tp);
   $('.daily-rank .pts-score').html(dr);
   $('.weekly-rank .pts-score').html(wr);
   $('.total-rank .pts-score').html(tr);
+}
+
+function getRankIcon () {
+  if(tp <= 100) {
+    rank = '/assets/ranks/1.png';
+  }
+  if (tp >= 101 && tp <= 200) {
+    rank = '/assets/ranks/2.png';
+  }
+  if (tp >= 201 && tp <= 300) {
+    rank = '/assets/ranks/3.png';
+  }
+  if (tp >= 301 && tp <= 400) {
+    rank = '/assets/ranks/4.png';
+  }
+  if (tp >= 401 && tp <= 500) {
+    rank = '/assets/ranks/5.png';
+  }
+  if (tp >= 501 && tp <= 600) {
+    rank = '/assets/ranks/6.png';
+  }
+  if (tp > 600) {
+    rank = '/assets/ranks/7.png';
+  }
+  return rank;
 }
 
 // Load opponents

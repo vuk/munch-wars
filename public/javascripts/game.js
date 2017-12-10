@@ -50,13 +50,13 @@ var graphicAssets = {
   ballURL: 'assets/ball-15.png',
   ballName: 'ball',
 
-  paddleURL: 'assets/left-45.png',
+  paddleURL: 'assets/left-46.png',
   paddleDoubleURL: 'assets/left-90.png',
   paddleName: 'paddle_left',
   paddleDoubleName: 'double_paddle_left',
 
-  paddleRightURL: 'assets/right-45.png',
-  paddleRightDoubleUrl: 'assets/right-90.png',
+  paddleRightURL: 'assets/right-46.png',
+  paddleRightDoubleUrl: 'assets/right--90.png',
   paddleRightName: 'paddle_right',
   paddleDoubleRightName: 'double_paddle_right',
 
@@ -459,6 +459,16 @@ mainState.prototype = {
     //this.tf_scoreRight.anchor.set(0.5, 0);
 
     this.instructions = game.add.text(game.world.centerX, game.world.height - 30, labels.clickToStart, fontAssets.instructionsFontStyle);
+    this.instructions.addColor('#FFFFFF', 11);
+    this.instructions.addColor('#FFDF00', 15);
+    this.instructions.addColor('#FFFFFF', 16);
+    this.instructions.addColor('#FFDF00', 20);
+    this.instructions.addColor('#FFFFFF', 46);
+    this.instructions.addColor('#FFDF00', 47);
+    this.instructions.addColor('#FFFFFF', 48);
+    this.instructions.addColor('#FFDF00', 49);
+    this.instructions.addColor('#FFFFFF', 50);
+    this.instructions.addColor('#FFDF00', 51);
     this.instructions.anchor.set(0.5, 1);
 
     //this.winnerLeft = game.add.text(gameProperties.screenWidth * 0.25, gameProperties.screenHeight * 0.25, labels.winner, fontAssets.instructionsFontStyle);
