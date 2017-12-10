@@ -944,7 +944,7 @@ mainState.prototype = {
     this.handleShot(side);
     socket.emit('shot_sync', {
       id: getParameterByName('game'),
-      y: this.paddleLeftSprite.y,
+      y: this.paddleLeftSprite.y + this.paddleLeftSprite.height / 2,
       side: side,
       myId: userId
     });
