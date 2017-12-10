@@ -118,7 +118,7 @@ module.exports = {
             updateInterval = setInterval(() => {
               this.state[data.host].time = Date.now();
               this.io.to(data.host).emit('update_state', this.state[data.host]);
-            }, 17);
+            }, 15);
           }, 5000);
         }
       });
