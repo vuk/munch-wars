@@ -64,7 +64,9 @@ module.exports = {
       socket.on('identify', (data) => {
         this.state[data.id] = {
           paddle: {},
-          ball: {}
+          ball: {
+            time: 0
+          }
         };
         // If I exist in list of active users I join my own room and my timestamp is updated to current one so that
         // I appear in the list of active users
@@ -124,7 +126,9 @@ module.exports = {
         if(!this.state[data.id]) {
           this.state[data.id] = {
             paddle: {},
-            ball: {}
+            ball: {
+              time: 0
+            }
           };
         }
         this.state[data.id]['paddle'][data.side] = data;
@@ -133,10 +137,14 @@ module.exports = {
         if(!this.state[data.id]) {
           this.state[data.id] = {
             paddle: {},
-            ball: {}
+            ball: {
+              time: 0
+            }
           };
         }
-        this.state[data.id]['ball'] = data;
+        if(this.state[data.id]['ball'].time < data.time) {
+          this.state[data.id]['ball'] = data;
+        }
         //this.io.to(data.id).emit('ball', data);
       });
       socket.on('relevant_score', (data) => {
