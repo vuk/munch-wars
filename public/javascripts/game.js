@@ -253,15 +253,19 @@ mainState.prototype = {
 
     socket.on('update_state', function (data) {
       console.log(data);
-      if(data.paddle && data.paddle['left']) {
-        game.physics.arcade.moveToXY(self.paddleLeftSprite, gameProperties.paddleLeft_x, data.paddle['left'].y, 0, 100);
+      if(self.side === 'white' && data.paddle && data.paddle['left']) {
+        self.paddleLeftSprite.body.velocity.y = data.paddle['left'].velocity;
+        self.paddleLeftSprite.y = data.paddle['left'].y;
       }
-      if(data.paddle && data.paddle['right']) {
-        game.physics.arcade.moveToXY(self.paddleRightSprite, gameProperties.paddleRight_x, data.paddle['right'].y, 0, 100);
+      if(self.side === 'black' && data.paddle && data.paddle['right']) {
+        self.paddleRightSprite.body.velocity.y = data.paddle['right'].velocity;
+        self.paddleRightSprite.y = data.paddle['right'].y;
       }
-      if(data.paddle && data.ball) {
-        self.ballSprite.visble = data.ball.visible;
-        game.physics.arcade.moveToXY(self.ballSprite, data.ball.x, data.ball.y, 0, 100);
+      if(data.ball && !isHome) {
+        self.ballSprite.visible = data.visible;
+        self.ballSprite.x = data.x;
+        self.ballSprite.y = data.y;
+        self.ballSprite.body.velocity.set(data.velocityX, data.velocityY);
       }
     });
     socket.on('score', function (data) {
