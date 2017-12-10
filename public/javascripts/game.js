@@ -381,8 +381,8 @@ mainState.prototype = {
         self.ballSprite.body.velocity.y = 0;
         socket.on('ball', function (data) {
           self.ballSprite.visible = data.visible;
-          /*self.ballSprite.x = data.x;
-          self.ballSprite.y = data.y;*/
+          self.ballSprite.x = data.x;
+          self.ballSprite.y = data.y;
           self.ballSprite.body.velocity.set(data.velocityX, data.velocityY);
         });
         isBallListenerSet = true;
