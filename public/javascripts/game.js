@@ -2,7 +2,7 @@
 
 var initializeSound = function () {
   if (localStorage.getItem('muted') === 'true') {
-    game.sound.mute = !game.sound.mute;
+    game.sound.mute = true;
   }
 };
 
@@ -252,7 +252,6 @@ mainState.prototype = {
     }
 
     socket.on('update_state', function (data) {
-      console.log(data);
       if(self.side === 'white' && data.paddle && data.paddle['left']) {
         self.paddleLeftSprite.body.velocity.y = data.paddle['left'].velocity;
         self.paddleLeftSprite.y = data.paddle['left'].y;
@@ -614,7 +613,11 @@ mainState.prototype = {
 
   startGame: function () {
     game.input.onDown.remove(this.startCountdown, this);
-
+    if (localStorage.getItem('muted') === 'true') {
+      game.sound.mute = true;
+    } else {
+      game.sound.mute = false;
+    }
     this.enablePaddles(true);
     this.enableBoundaries(false);
     this.resetBall();

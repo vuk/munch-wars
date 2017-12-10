@@ -57,6 +57,7 @@ module.exports = {
      * So - I connect to game
      */
     this.io.on('connection', (socket) => {
+      var updateInterval;
       /** I receive an event saying that I'm connected properly */
       socket.emit('connected', { status: true });
       /** From the client I identify myself by sending my playfab ID */
@@ -112,7 +113,7 @@ module.exports = {
               player2: this.activeUsers[data.host],
               guestSide: data.guestSide
             });
-            setInterval(() => {
+            updateInterval = setInterval(() => {
               if(this.state[data.host]) {
                 this.io.to(data.host).emit('update_state', this.state[data.host]);
               }
@@ -167,6 +168,7 @@ module.exports = {
         this.io.sockets.adapter.rooms[data.id].sockets.forEach(socket => {
           socket.leave(data.id);
         });
+        clearInterval(updateInterval)
       });
       socket.on('outofbounds', data => {
         this.io.to(data.id).emit('outOfBounds', data);
