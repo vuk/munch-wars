@@ -117,7 +117,7 @@ module.exports = {
               if(this.state[data.host]) {
                 this.io.to(data.host).emit('update_state', this.state[data.host]);
               }
-            }, 50);
+            }, 30);
           }, 5000);
         }
       });
