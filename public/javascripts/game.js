@@ -267,7 +267,7 @@ mainState.prototype = {
         self.ballSprite.y = data.ball.y + self.ballSprite.height / 2*/;
         /*self.ballSprite.anchor.setTo(0.5, 0.5);
         self.ballSprite.body.velocity.set(data.ball.velocityX, data.ball.velocityY);*/
-        game.physics.arcade.moveToXY(self.ballSprite, data.ball.x + self.ballSprite.width / 2, data.ball.y + self.ballSprite.height / 2, data.ball.velocityX, 16);
+        game.physics.arcade.moveToXY(self.ballSprite, data.ball.x + self.ballSprite.width / 2, data.ball.y + self.ballSprite.height / 2, 0, 20);
       }
     });
     socket.on('score', function (data) {
