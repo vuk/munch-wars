@@ -944,13 +944,13 @@ mainState.prototype = {
       this.paddleLeftSprite.key = graphicAssets.paddleDoubleName;
       this.paddleLeftSprite.loadTexture(graphicAssets.paddleDoubleName, 0);
       this.originalPaddleHeight = this.paddleLeftSprite.height;
-      this.paddleLeftSprite.height = 90;
+      this.paddleLeftSprite.scale = 2;
     }
     if (side === 1 && !this.doubleActive[side]) {
       this.paddleRightSprite.key = graphicAssets.paddleDoubleRightName;
       this.paddleRightSprite.loadTexture(graphicAssets.paddleDoubleRightName, 0);
       this.originalPaddleHeight = this.paddleRightSprite.height;
-      this.paddleRightSprite.height = 90;
+      this.paddleRightSprite.scale = 2;
     }
     this.doubleActive[side] = true;
   },
@@ -991,13 +991,13 @@ mainState.prototype = {
     if (this.doubleActive[0]) {
       this.paddleLeftSprite.key = graphicAssets.paddleName;
       this.paddleLeftSprite.loadTexture(graphicAssets.paddleName, 0);
-      this.paddleLeftSprite.height /= 1.5;
+      this.paddleLeftSprite.scale = 1;
       this.doubleActive[0] = false;
     }
     if (this.doubleActive[1]) {
       this.paddleRightSprite.key = graphicAssets.paddleRightName;
       this.paddleRightSprite.loadTexture(graphicAssets.paddleRightName, 0);
-      this.paddleRightSprite.height  /= 1.5;
+      this.paddleRightSprite.scale = 1;
       this.doubleActive[1] = false;
     }
   },
