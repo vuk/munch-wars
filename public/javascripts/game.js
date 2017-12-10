@@ -370,7 +370,7 @@ mainState.prototype = {
       this.sndBallBounce.play();
     }
     var self = this;
-    if (isHome || !computer) {
+    if (isHome && !computer) {
       socket.emit('ball_position', {
         id: getParameterByName('game'),
         x: this.ballSprite.body.x,
