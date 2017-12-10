@@ -980,6 +980,7 @@ mainState.prototype = {
   ballOutOfBounds: function () {
     this.lastHitBy = -1;
     this.sndBallMissed.play();
+    this.undoMagics();
     if (isHome || computer) {
       if (this.ballSprite.x < 0) {
         this.missedSide = 'left';
@@ -990,7 +991,6 @@ mainState.prototype = {
       }
 
       this.updateScoreTextFields();
-      this.undoMagics();
       if (!computer) {
         socket.emit('relevant_score', {
           id: getParameterByName('game'),
