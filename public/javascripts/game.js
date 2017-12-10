@@ -281,15 +281,25 @@ mainState.prototype = {
       self.renderPlayerMagic(self.players[1]);
     });
 
-    socket.on('shot', function (data) {
-      console.log(data, 'magic');
-      self.players = data.players;
-      self.renderPlayerMagic(self.players[0]);
-      self.renderPlayerMagic(self.players[1]);
-    });
-
     socket.on('sync_shot', function (data) {
-      self.handleShot(data.side, data.y);
+      if(data.myId !== userId) {
+        self.handleShot(data.side, data.y);
+      }
+    });
+    socket.on('sync_hor', function (data) {
+      if(data.myId !== userId) {
+        self.handleHor(false);
+      }
+    });
+    socket.on('sync_ver', function (data) {
+      if(data.myId !== userId) {
+        self.handleVer(false);
+      }
+    });
+    socket.on('sync_double', function (data) {
+      if(data.myId !== userId) {
+        self.handleDouble(data.side);
+      }
     });
 
     if (!isHome) {
@@ -897,12 +907,13 @@ mainState.prototype = {
     socket.emit('shot_sync', {
       id: getParameterByName('game'),
       y: this.paddleLeftSprite.y,
-      side: 0
+      side: 0,
+      myId: userId
     });
   },
   doubleActive: [],
   originalPaddleHeight: 0,
-  processDouble: function (side) {
+  handleDouble: function (side) {
     this.useMagic.play();
     if (side === 0 && !this.doubleActive[side]) {
       this.paddleLeftSprite.key = graphicAssets.paddleDoubleName;
@@ -918,13 +929,34 @@ mainState.prototype = {
     }
     this.doubleActive[side] = true;
   },
-  processHor: function (side) {
+  processDouble: function (side) {
+    this.handleDouble(side);
+    socket.emit('double_sync', {
+      side: side,
+      myId: userId
+    })
+  },
+  handleHor: function (side) {
     this.useMagic.play();
     this.ballSprite.body.velocity.set(-1 * this.ballSprite.body.velocity.x, -1 * this.ballSprite.body.velocity.y);
   },
-  processVer: function (side) {
+  processHor: function (side) {
+    this.handleHor(side);
+    socket.emit('hor_sync', {
+      id: getParameterByName('game'),
+      myId: userId
+    });
+  },
+  handleVer: function (side) {
     this.useMagic.play();
     this.ballSprite.body.velocity.set(this.ballSprite.body.velocity.x * 1.25, -1 * this.ballSprite.body.velocity.y);
+  },
+  processVer: function (side) {
+    this.handleVer();
+    socket.emit('ver_sync', {
+      id: getParameterByName('game'),
+      myId: userId
+    });
   },
   undoMagics: function () {
     this.undoDouble();

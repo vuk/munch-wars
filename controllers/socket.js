@@ -124,6 +124,15 @@ module.exports = {
       socket.on('shot_sync', data => {
         this.io.to(data.id).emit('sync_shot', data);
       });
+      socket.on('hor_sync', data => {
+        this.io.to(data.id).emit('sync_hor', data);
+      });
+      socket.on('ver_sync', data => {
+        this.io.to(data.id).emit('sync_ver', data);
+      });
+      socket.on('double_sync', data => {
+        this.io.to(data.id).emit('sync_double', data);
+      });
       socket.on('disconnect', () => {
         console.log('disconnected', socket.id);
       });
