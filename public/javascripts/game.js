@@ -261,6 +261,7 @@ mainState.prototype = {
         self.paddleRightSprite.y = data.paddle['right'].y;
       }
       if(data.ball && !isHome) {
+        console.log(data.ball);
         self.ballSprite.visible = data.ball.visible;
         self.ballSprite.x = data.ball.x + self.ballSprite.width / 2;
         self.ballSprite.y = data.ball.y + self.ballSprite.height / 2;
