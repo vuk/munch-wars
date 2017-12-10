@@ -475,7 +475,7 @@ img {
     display: initial;
 }
 
-.ranking-row {
+.ranking-row, .opponents-row {
     color: #FFDF00;
     text-align: center;
     border-bottom: 2px solid rgba(255, 255, 255, 0.8);
@@ -488,16 +488,23 @@ img {
     color: #fff;
 }
 
-.ranking-row.rank-head-row {
+.opponents-row a {
+    color: #FFDF00;
+}
+
+.ranking-row.rank-head-row, .opponents-row.opponents-head-row {
     color: #fff;
 }
 
-.ranking-row .col-lg-4.borders {
+.ranking-row .borders, .opponents-row .borders {
     border-left: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.ranking-row .borders {
     min-height: 45px;
 }
 
-.ranking-row .col-lg-4.borders:last-child {
+.ranking-row .borders {
     border-right: 2px solid rgba(255, 255, 255, 0.8);
 }
 
