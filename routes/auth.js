@@ -88,6 +88,11 @@ router.get('/social-login', passport.authenticate('facebook'),
           res.redirect('/play');
         }
         else {
+          if (req.user.profile.emails[0]) {
+            playfab.AddOrUpdateContactEmail({
+              EmailAddress: req.user.profile.emails[0].value
+            });
+          }
           playfab.GetPlayerStatistics({}, (err, stats) => {
             req.session.stats = stats;
             delete response.data.PlayerProfile.TitleId;
