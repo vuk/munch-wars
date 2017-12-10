@@ -676,7 +676,7 @@ mainState.prototype = {
             id: getParameterByName('game'),
             side: 'left',
             velocity: this.paddleLeftSprite.body.velocity.y,
-            y: this.paddleLeftSprite.body.y + this.paddleLeftSprite.body.height / 2
+            y: this.paddleLeftSprite.body.y + this.paddleLeftSprite.body.height / 2,
             time: Date.now()
           });
         }
