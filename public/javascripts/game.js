@@ -377,7 +377,7 @@ mainState.prototype = {
         y: this.ballSprite.body.y,
         velocityX: this.ballSprite.body.velocity.x,
         velocityY: this.ballSprite.body.velocity.y,
-        visible: true,
+        visible: this.ballSprite.visible,
         time: Date.now()
       });
     } /*else {
