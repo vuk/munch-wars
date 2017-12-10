@@ -61,6 +61,7 @@ module.exports = {
       socket.emit('connected', { status: true });
       /** From the client I identify myself by sending my playfab ID */
       socket.on('identify', (data) => {
+        this.state[data.id] = {};
         // If I exist in list of active users I join my own room and my timestamp is updated to current one so that
         // I appear in the list of active users
         if (data.id && this.activeUsers[data.id]) {
