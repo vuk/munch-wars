@@ -116,7 +116,7 @@ module.exports = {
               guestSide: data.guestSide
             });
             updateInterval = setInterval(() => {
-              this.state.time = Date.now();
+              this.state[data.host].time = Date.now();
               this.io.to(data.host).emit('update_state', this.state[data.host]);
             }, 17);
           }, 5000);
