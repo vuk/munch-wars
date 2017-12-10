@@ -356,7 +356,7 @@ mainState.prototype = {
         this.ballSprite.y = this.syncData.ball.y + this.ballSprite.height / 2;
         /*self.ballSprite.anchor.setTo(0.5, 0.5);*/
         this.ballSprite.visible = this.syncData.ball.visible;
-        this.ballSprite.body.velocity.set(data.ball.velocityX, data.ball.velocityY);
+        this.ballSprite.body.velocity.set(this.syncData.ball.velocityX, this.syncData.ball.velocityY);
       }
     }
   },
