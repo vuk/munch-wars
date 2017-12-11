@@ -340,15 +340,20 @@ img {
     margin: 2rem auto;
 }
 
-.login-body .form {
+.login-body .form, .form-inline {
     padding: 2rem 10%;
 }
 
-.login-body .form input.error {
+.form-inline label {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.login-body .form input.error, .form-inline input.error {
     border: 2px solid #FF0000;
 }
 
-.login-body .form input {
+.login-body .form input, .form-inline input {
     background: transparent;
     border: 2px solid #FFDF00;
     -webkit-border-radius: 0;
@@ -509,12 +514,26 @@ img {
     color: #FFDF00;
 }
 
+.opponents-row .text-left {
+    vertical-align: middle;
+}
+
+.opponents-row .text-left img {
+    max-height: 20px;
+    padding-right: 6px;
+}
+
+.opponents-row .text-left span {
+    vertical-align: middle;
+}
+
 .ranking-row.rank-head-row, .opponents-row.opponents-head-row {
     color: #fff;
 }
 
 .ranking-row .borders, .opponents-row .borders {
     border-left: 2px solid rgba(255, 255, 255, 0.8);
+    vertical-align: middle;
 }
 
 .ranking-row .borders {
@@ -883,14 +902,13 @@ img {
 
 /* Medium Devices, Desktops */
 @media only screen and (max-width: 992px) {
-
+    .hide-on-mobile {
+        display: none;
+    }
 }
 
 /* Small Devices, Tablets */
 @media only screen and (max-width: 768px) {
-    .hide-on-mobile {
-        display: none;
-    }
     .navbar-default .navbar-collapse, .navbar-default .navbar-form {
         border: none;
         position: absolute;
