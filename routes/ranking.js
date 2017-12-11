@@ -6,7 +6,7 @@ playfab.settings.titleId = 'F06D';
 playfab.settings.developerSecretKey = 'X6GUF8OHOC8OIXU1W9P3F77SIJW9X5EZESCNTG8J53G97ANDEE';
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', async (req, res, next) => {
   let statisticsName = 'Total Points';
   if(req.query.period === 'daily') {
     statisticsName = 'Points';
@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
     statisticsName = 'Weekly Points';
   }
   //console.log(statisticsName);
-  playfab.GetLeaderboard({
+  await playfab.GetLeaderboard({
     StartPosition: 0,
     MaxResultsCount: 20,
     ProfileConstraints: {
@@ -24,7 +24,7 @@ router.get('/', function(req, res, next) {
       ShowStatistics: true
     },
     StatisticName: statisticsName
-  }, (err, response) => {
+  }, async (err, response) => {
     if (err) {
       console.log(err);
     }
@@ -33,9 +33,13 @@ router.get('/', function(req, res, next) {
       response.data.Leaderboard.forEach(async (lb, index) => {
         let stat = _.find(lb.Profile.Statistics, { Name: "Total Points"});
         response.data.Leaderboard[index].rankIcon = getRankIcon(stat.Value);
-        response.data.Leaderboard[index].rnks = await getRankings(req);
+        try {
+          response.data.Leaderboard[index].rnks = console.log(await getRankings(lb.PlayFabId));
+        } catch (e) {
+          console.log(e);
+        }
       });
-      console.log(response.data.Leaderboard);
+      //console.log(response.data.Leaderboard[0].Profile.Statistics);
       res.render('pages/ranking', {
         title: 'Rang lista',
         active: 'ranking',
@@ -48,38 +52,43 @@ router.get('/', function(req, res, next) {
 });
 
 function getRankings (req) {
-  console.log('test');
   var leaderboardPosition;
   var leaderboardPosition2;
   var leaderboardPosition3;
   return new Promise((resolve, reject) => {
     playfab.GetLeaderboardAroundUser({
-      PlayFabId: req.session.userId,
+      PlayFabId: req,
       StatisticName: 'Total Points',
       MaxResultsCount: 1
     }, (err1, res1) => {
       if (err1) {
         reject(err1);
       }
-      leaderboardPosition = res1.data.Leaderboard[0];
+      if (res1) {
+        leaderboardPosition = res1.data.Leaderboard[0] || 0;
+      }
       playfab.GetLeaderboardAroundUser({
-        PlayFabId: req.session.userId,
+        PlayFabId: req,
         StatisticName: 'Weekly Points',
         MaxResultsCount: 1
       }, (err2, res2) => {
         if (err2) {
           reject(err2);
         }
-        leaderboardPosition2 = res2.data.Leaderboard[0];
+        if (res1) {
+          leaderboardPosition2 = res2.data.Leaderboard[0];
+        }
         playfab.GetLeaderboardAroundUser({
-          PlayFabId: req.session.userId,
+          PlayFabId: req,
           StatisticName: 'Points',
           MaxResultsCount: 1
         }, (err3, res3) => {
           if (err3) {
             reject(err3);
           }
-          leaderboardPosition3 = res3.data.Leaderboard[0];
+          if (res1) {
+            leaderboardPosition3 = res3.data.Leaderboard[0];
+          }
           resolve({
             total: leaderboardPosition,
             weekly: leaderboardPosition2,
