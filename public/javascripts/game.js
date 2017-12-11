@@ -735,10 +735,10 @@ mainState.prototype = {
       }
       if (computer && this.side === 'white') {
         if (direction === 'up') {
-          this.paddleLeftSprite.body.velocity.y = -gameProperties.paddleVelocity;
+          this.paddleLeftSprite.body.velocity.y = -gameProperties.paddleVelocity * 0.5;
         }
         else if (direction === 'down') {
-          this.paddleLeftSprite.body.velocity.y = gameProperties.paddleVelocity;
+          this.paddleLeftSprite.body.velocity.y = gameProperties.paddleVelocity * 0.5;
         } else {
           this.paddleLeftSprite.body.velocity.y = 0;
         }
@@ -778,10 +778,10 @@ mainState.prototype = {
       }
       if (computer && this.side === 'black') {
         if (direction === 'up') {
-          this.paddleRightSprite.body.velocity.y = -gameProperties.paddleVelocity;
+          this.paddleRightSprite.body.velocity.y = -gameProperties.paddleVelocity * 0.5;
         }
         else if (direction === 'down') {
-          this.paddleRightSprite.body.velocity.y = gameProperties.paddleVelocity;
+          this.paddleRightSprite.body.velocity.y = gameProperties.paddleVelocity * 0.5;
         } else {
           this.paddleRightSprite.body.velocity.y = 0;
         }
@@ -1085,13 +1085,15 @@ mainState.prototype = {
         socket.emit('winner', {
           id: this.side === 'black' ? userId : opponent,
           points: this.leftStrikeCount + 3 * this.scoreLeft,
-          pointsLoser: this.scoreRight
+          pointsLoser: this.scoreRight,
+          side: 'black'
         });
       } else if (computer && this.side === 'black') {
         socket.emit('winner', {
           id: userId,
           points: this.leftStrikeCount + 3 * this.scoreLeft,
-          pointsLoser: this.scoreRight
+          pointsLoser: this.scoreRight,
+          side: 'black'
         });
       }
       this.gameOver();
@@ -1101,13 +1103,15 @@ mainState.prototype = {
         socket.emit('winner', {
           id: this.side === 'black' ? opponent : userId,
           points: this.rightStrikeCount + 3 * this.scoreRight,
-          pointsLoser: this.scoreLeft
+          pointsLoser: this.scoreLeft,
+          side: 'white'
         });
       } else if (computer && this.side === 'white') {
         socket.emit('winner', {
           id: userId,
           points: this.rightStrikeCount + 3 * this.scoreLeft,
-          pointsLoser: this.scoreRight
+          pointsLoser: this.scoreRight,
+          side: 'white'
         });
       }
       this.gameOver();

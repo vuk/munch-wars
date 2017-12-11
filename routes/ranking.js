@@ -51,6 +51,16 @@ router.get('/', async (req, res, next) => {
   });
 });
 
+router.get('/victories', (req, res, next) => {
+  playfab.GetTitleData({
+    Key: ['Black', 'White']
+  }, (err, resp) => {
+    if (!err) {
+      res.json(resp);
+    }
+  });
+});
+
 function getRankings (req) {
   var leaderboardPosition;
   var leaderboardPosition2;

@@ -8,42 +8,79 @@ module.exports = {
   io: null,
   submitScore: (data) => {
     playfabServer.UpdatePlayerStatistics({
-      "PlayFabId": data.id,
-      "Statistics": [
+      'PlayFabId': data.id,
+      'Statistics': [
         {
-          "StatisticName": "Monthly Points",
-          "Value": data.points
+          'StatisticName': 'Monthly Points',
+          'Value': data.points
         },
         {
-          "StatisticName": "Weekly Points",
-          "Value": data.points
+          'StatisticName': 'Weekly Points',
+          'Value': data.points
         },
         {
-          "StatisticName": "Points",
-          "Value": data.points
+          'StatisticName': 'Points',
+          'Value': data.points
         },
         {
-          "StatisticName": "Total Points",
-          "Value": data.points
+          'StatisticName': 'Total Points',
+          'Value': data.points
         },
         {
-          "StatisticName": "Wins",
-          "Value": 1
+          'StatisticName': 'Wins',
+          'Value': 1
         },
         {
-          "StatisticName": "Weekly Wins",
-          "Value": 1
+          'StatisticName': 'Weekly Wins',
+          'Value': 1
         },
         {
-          "StatisticName": "Monthly Wins",
-          "Value": 1
+          'StatisticName': 'Monthly Wins',
+          'Value': 1
         },
         {
-          "StatisticName": "Total Wins",
-          "Value": 1
+          'StatisticName': 'Total Wins',
+          'Value': 1
         }
       ]
     }, (err, res) => {
+      if (data.side === 'white') {
+        playfabServer.GetTitleData({
+          Keys: ['White']
+        }, (err, result) => {
+          if (!err) {
+            console.log(result, 'white');
+            let white;
+            if (result.data.Data['White']) {
+              white = parseInt(result.data.Data['White'], 10);
+            } else {
+              white = 0;
+            }
+            playfabServer.SetTitleData({
+              Key: 'White',
+              Value: white + 1
+            });
+          }
+        });
+      } else {
+        playfabServer.GetTitleData({
+          Keys: ['Black']
+        }, (err, result) => {
+          if (!err) {
+            console.log(result, 'black');
+            let right;
+            if (result.data.Data['Right']) {
+              right = parseInt(result.data.Data['Right'], 10);
+            } else {
+              right = 0;
+            }
+            playfabServer.SetTitleData({
+              Key: 'Black',
+              Value: right + 1
+            });
+          }
+        });
+      }
       console.log('Submit score', err, res);
     });
   },
@@ -84,7 +121,7 @@ module.exports = {
       socket.on('invite', (data) => {
         console.log('invite', data);
         if (this.io.sockets.adapter.rooms[data.host] && this.io.sockets.adapter.rooms[data.host].sockets
-        && this.io.sockets.adapter.rooms[data.host].sockets.length === 2) {
+          && this.io.sockets.adapter.rooms[data.host].sockets.length === 2) {
           socket.emit('busy', { busy: true });
           return;
         }
@@ -124,7 +161,7 @@ module.exports = {
       });
       socket.on('move_paddle', (data) => {
         //this.io.to(data.id).emit('move', data);
-        if(!this.state[data.id]) {
+        if (!this.state[data.id]) {
           this.state[data.id] = {
             paddle: {},
             ball: {
@@ -135,7 +172,7 @@ module.exports = {
         this.state[data.id]['paddle'][data.side] = data;
       });
       socket.on('ball_position', (data) => {
-        if(!this.state[data.id]) {
+        if (!this.state[data.id]) {
           this.state[data.id] = {
             paddle: {},
             ball: {
@@ -143,7 +180,7 @@ module.exports = {
             }
           };
         }
-        if(this.state[data.id]['ball'].time < data.time) {
+        if (this.state[data.id]['ball'].time < data.time) {
           this.state[data.id]['ball'] = data;
         }
         //this.io.to(data.id).emit('ball', data);
@@ -179,7 +216,7 @@ module.exports = {
             });
           }
         });
-        clearInterval(updateInterval)
+        clearInterval(updateInterval);
       });
       socket.on('outofbounds', data => {
         this.io.to(data.id).emit('outOfBounds', data);
