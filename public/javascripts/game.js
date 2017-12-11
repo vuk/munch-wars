@@ -1109,8 +1109,8 @@ mainState.prototype = {
       } else if (computer && this.side === 'white') {
         socket.emit('winner', {
           id: userId,
-          points: this.rightStrikeCount + 3 * this.scoreLeft,
-          pointsLoser: this.scoreRight,
+          points: this.rightStrikeCount + 3 * this.scoreRight,
+          pointsLoser: this.scoreLeft,
           side: 'white'
         });
       }
