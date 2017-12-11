@@ -25,34 +25,34 @@
                 <div class="row login-body profile-body">
                     <div class="col-md-offset-1 col-md-5">
                         <h1 class="welcome">DOBRODOŠLI!</h1>
-                        <div class="rank-badge"><img src="<%- getRankIcon(totalRank.StatValue) %>" alt=""></div>
+                        <div class="rank-badge"><img src="<%- rankIcon %>" alt=""></div>
                         <h3 class="username"><%- profile.DisplayName %></h3>
                         <div class="row rank-row">
                             <div class="col-xs-4 pts-container daily-pts">
                                 <span class="pts-label">dnevnih<br/>poena</span><br/>
-                                <span class="pts-score"><%- dailyRank.StatValue %></span>
+                                <span class="pts-score"><% while (dailyRank.StatValue.toString().length < 5) { dailyRank.StatValue = '0' + dailyRank.StatValue; } %><%- dailyRank.StatValue %></span>
                             </div>
                             <div class="col-xs-4 pts-container weekly-pts">
                                 <span class="pts-label">nedeljnih<br/>poena</span><br/>
-                                <span class="pts-score"><%- weeklyRank.StatValue %></span>
+                                <span class="pts-score"><% while (weeklyRank.StatValue.toString().length < 5) { weeklyRank.StatValue = '0' + weeklyRank.StatValue; } %><%- weeklyRank.StatValue %></span>
                             </div>
                             <div class="col-xs-4 pts-container total-pts">
                                 <span class="pts-label">ukupno<br/>poena</span><br/>
-                                <span class="pts-score"><%- totalRank.StatValue %></span>
+                                <span class="pts-score"><% while (totalRank.StatValue.toString().length < 5) { totalRank.StatValue = '0' + totalRank.StatValue; } %><%- totalRank.StatValue %></span>
                             </div>
                         </div>
                         <div class="row rank-row">
                             <div class="col-xs-4 pts-container daily-rank">
                                 <span class="pts-label">dnevni<br/>rang</span><br/>
-                                <span class="pts-score"><%- dailyRank.Position %></span>
+                                <span class="pts-score"><% while (dailyRank.Position.toString().length < 5) { dailyRank.Position = '0' + dailyRank.Position; } %><%- dailyRank.Position %></span>
                             </div>
                             <div class="col-xs-4 pts-container weekly-rank">
                                 <span class="pts-label">nedeljni<br/>rang</span><br/>
-                                <span class="pts-score"><%- weeklyRank.Position %></span>
+                                <span class="pts-score"><% while (weeklyRank.Position.toString().length < 5) { weeklyRank.Position = '0' + weeklyRank.Position; } %><%- weeklyRank.Position %></span>
                             </div>
                             <div class="col-xs-4 pts-container total-rank">
                                 <span class="pts-label">ukupni<br/>rang</span><br/>
-                                <span class="pts-score"><%- totalRank.Position %></span>
+                                <span class="pts-score"><% while (totalRank.Position.toString().length < 5) { totalRank.Position = '0' + totalRank.Position; } %><%- totalRank.Position %></span>
                             </div>
                         </div>
                         <span class="logout">

@@ -29,9 +29,7 @@ router.get('/', (req, res, next) => {
       console.log(err);
     }
     else {
-      //console.log(response.data);
       response.data.Leaderboard.forEach((lb, index) => {
-        console.log(lb);
         let stat = _.find(lb.Profile.Statistics, { Name: "Total Points"});
         response.data.Leaderboard[index].rankIcon = getRankIcon(stat.Value);
       });
@@ -114,6 +112,7 @@ function getRankings (req) {
 }
 
 function getRankIcon (tp) {
+  var rank;
   if(tp <= 100) {
     rank = '/assets/ranks/1.png';
   }
