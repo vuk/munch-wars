@@ -34,7 +34,7 @@ router.get('/', async (req, res, next) => {
         let stat = _.find(lb.Profile.Statistics, { Name: "Total Points"});
         response.data.Leaderboard[index].rankIcon = getRankIcon(stat.Value);
         try {
-          response.data.Leaderboard[index].rnks = console.log(await getRankings(lb.PlayFabId));
+          //response.data.Leaderboard[index].rnks = await getRankings(lb.PlayFabId);
         } catch (e) {
           console.log(e);
         }
