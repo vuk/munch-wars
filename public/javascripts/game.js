@@ -66,13 +66,13 @@ var graphicAssets = {
   ballURL: 'assets/ball-15.png',
   ballName: 'ball',
 
-  paddleURL: 'assets/left-46.png',
+  paddleURL: 'assets/left-45.png',
   paddleDoubleURL: 'assets/left-90.png',
   paddleName: 'paddle_left',
   paddleDoubleName: 'double_paddle_left',
 
-  paddleRightURL: 'assets/right-46.png',
-  paddleRightDoubleUrl: 'assets/right--90.png',
+  paddleRightURL: 'assets/right-45.png',
+  paddleRightDoubleUrl: 'assets/right-90.png',
   paddleRightName: 'paddle_right',
   paddleDoubleRightName: 'double_paddle_right',
 
@@ -81,17 +81,17 @@ var graphicAssets = {
   redBorder: 'assets/red-border.png',
   redBorderName: 'redBorder',
 
-  bulletLeftUrl: '/assets/bullet-left.png',
+  bulletLeftUrl: '/assets/bullet-left-50.png',
   bulletLeftName: 'bulletLeft',
-  bulletRightUrl: '/assets/bullet-right.png',
+  bulletRightUrl: '/assets/bullet-right-50.png',
   bulletRightName: 'bulletRight'
 };
 
 var soundAssets = {
-  ballBounceURL: 'assets/ballBounce',
+  ballBounceURL: 'assets/audio/menu',
   ballBounceName: 'ballBounce',
 
-  ballHitURL: 'assets/ballHit',
+  ballHitURL: 'assets/audio/menu',
   ballHitName: 'ballHit',
 
   ballMissedURL: 'assets/ballMissed',
@@ -114,16 +114,17 @@ var fontAssets = {
   scoreTop_y: 10,
 
   scoreFontStyle: {font: '80px orbitron', fill: '#FFFFFF', align: 'center'},
-  instructionsFontStyle: {font: '20px orbitron', fill: '#FFDF00', align: 'center', fontWeight: 600},
-  countdownFontStyle: {font: '64px orbitron', fill: '#FFDF00', align: 'center', fontWeight: 600},
+  instructionsFontStyle: {font: '16px orbitron', fill: '#FFDF00', align: 'center', fontWeight: 500},
+  countdownFontStyle: {font: '72px orbitron', fill: '#FFDF00', align: 'center', fontWeight: 600},
+  getReadyStyle: {font: '28px orbitron', fill: '#FFDF00', align: 'center', fontWeight: 600},
 };
 
 var labels = {
   clickToStart: 'STRELICAMA GORE/DOLE POMERAŠ MUNCH, \nBROJEVIMA 1/2/3 ISPALJUJEŠ MAGIJE \n\n OSTVARI 6 BODOVA ZA POBEDU',
+  getReady: 'PRIPREMI SE!'
 };
 
 var isHome = false;
-var isBallListenerSet = false;
 
 var mainState = function (game) {
   this.backgroundGraphics;
@@ -230,6 +231,7 @@ mainState.prototype = {
     this.initSounds();
     this.startDemo();
     this.drawBorders();
+    this.enablePaddles(true);
     //this.startCountdown();
     var self = this;
     this.cnt = 1;
@@ -267,13 +269,21 @@ mainState.prototype = {
         if (data.guestSide === 'white') {
           $('#right-name').html(data.player1.profile.DisplayName);
           $('#right-name-go').html(data.player1.profile.DisplayName);
+          $('#right-rank').html('<img src="'+ getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}).Value || 0) +'"/>');
+          $('#right-rank-go').html('<img src="'+ getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}).Value || 0) +'"/>');
           $('#left-name').html(data.player2.profile.DisplayName);
           $('#left-name-go').html(data.player2.profile.DisplayName);
+          $('#left-rank').html('<img src="'+ getRankIcon(_.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}).Value || 0) +'"/>');
+          $('#left-rank-go').html('<img src="'+ getRankIcon(_.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}).Value || 0) +'"/>');
         } else {
           $('#right-name').html(data.player2.profile.DisplayName);
           $('#right-name-go').html(data.player2.profile.DisplayName);
+          $('#right-rank').html('<img src="'+ getRankIcon(_.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}).Value || 0) +'"/>');
+          $('#right-rank-go').html('<img src="'+ getRankIcon(_.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}).Value || 0) +'"/>');
           $('#left-name').html(data.player1.profile.DisplayName);
           $('#left-name-go').html(data.player1.profile.DisplayName);
+          $('#left-rank').html('<img src="'+ getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}).Value || 0) +'"/>');
+          $('#left-rank-go').html('<img src="'+ getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}).Value || 0) +'"/>');
         }
         self.ballSprite.visible = true;
         self.startCountdown();
@@ -517,7 +527,7 @@ mainState.prototype = {
     this.paddleRightSprite = game.add.sprite(gameProperties.paddleRight_x, game.world.centerY, graphicAssets.paddleRightName);
     this.paddleRightSprite.anchor.set(0.5, 0.5);
 
-    this.instructions = game.add.text(game.world.centerX, game.world.height - 30, labels.clickToStart, fontAssets.instructionsFontStyle);
+    this.instructions = game.add.text(game.world.centerX, game.world.height - 20, labels.clickToStart, fontAssets.instructionsFontStyle);
     this.instructions.addColor('#FFFFFF', 11);
     this.instructions.addColor('#FFDF00', 15);
     this.instructions.addColor('#FFFFFF', 16);
@@ -536,6 +546,8 @@ mainState.prototype = {
   startCountdown: function () {
     this.timer = game.time.create();
     this.countdownText = game.add.text(game.world.centerX, game.world.centerY, '3', fontAssets.countdownFontStyle);
+    this.getReady = game.add.text(game.world.centerX, 60, labels.getReady, fontAssets.getReadyStyle);
+    this.getReady.anchor.set(0.5, 0.5);
     this.countdownText.anchor.set(0.5, 0.5);
 
     this.timerEvent = this.timer.add(Phaser.Timer.SECOND * 3, this.endTimer, this);
@@ -548,6 +560,7 @@ mainState.prototype = {
     // Stop the timer when the delayed event triggers
     this.timer.stop();
     this.countdownText.destroy();
+    this.getReady.visible = false;
     this.startGame();
   },
 
@@ -621,10 +634,9 @@ mainState.prototype = {
 
   gameOver: function () {
     $('#game-over').show();
+    game.sound.stopAll();
     this.ballSprite.visible = false;
-    game.sound.mute = true;
     this.enablePaddles(false);
-    this.enableBoundaries(true);
     $('.hide-on-go span').hide();
     if (isHome) {
       socket.emit('game_over', {
@@ -973,13 +985,13 @@ mainState.prototype = {
       this.paddleLeftSprite.key = graphicAssets.paddleDoubleName;
       this.paddleLeftSprite.loadTexture(graphicAssets.paddleDoubleName, 0);
       this.originalPaddleHeight = this.paddleLeftSprite.height;
-      this.paddleLeftSprite.height *= 1.5;
+      this.paddleLeftSprite.height = 120;
     }
     if (side === 1 && !this.doubleActive[side]) {
       this.paddleRightSprite.key = graphicAssets.paddleDoubleRightName;
       this.paddleRightSprite.loadTexture(graphicAssets.paddleDoubleRightName, 0);
       this.originalPaddleHeight = this.paddleRightSprite.height;
-      this.paddleRightSprite.height *= 1.5;
+      this.paddleRightSprite.height = 120;
     }
     this.doubleActive[side] = true;
   },
@@ -1020,13 +1032,13 @@ mainState.prototype = {
     if (this.doubleActive[0]) {
       this.paddleLeftSprite.key = graphicAssets.paddleName;
       this.paddleLeftSprite.loadTexture(graphicAssets.paddleName, 0);
-      this.paddleLeftSprite.height /= 1.5;
+      this.paddleLeftSprite.height = 94;
       this.doubleActive[0] = false;
     }
     if (this.doubleActive[1]) {
       this.paddleRightSprite.key = graphicAssets.paddleRightName;
       this.paddleRightSprite.loadTexture(graphicAssets.paddleRightName, 0);
-      this.paddleRightSprite.height  /= 1.5;
+      this.paddleRightSprite.height = 94;
       this.doubleActive[1] = false;
     }
   },
@@ -1111,11 +1123,23 @@ mainState.prototype = {
 
   updateScoreTextFields: function () {
     //this.tf_scoreLeft.text = this.scoreLeft;
-    jQuery('#left-score').html(this.scoreLeft * 3 + this.leftStrikeCount);
-    jQuery('#left-score-go').html(this.scoreLeft * 3 + this.leftStrikeCount);
+    jQuery('#left-score').html(this.scoreLeft);
+    var pts = this.scoreLeft * 3 + this.leftStrikeCount;
+    while (pts.toString().length < 5) {
+      pts = '0' + pts;
+    }
+    jQuery('#left-score-go').html(this.scoreLeft);
+    $('#left-points').html(pts);
+    $('#left-points-go').html(pts);
     //this.tf_scoreRight.text = this.scoreRight;
-    jQuery('#right-score').html(this.scoreRight * 3 + this.rightStrikeCount);
-    jQuery('#right-score-go').html(this.scoreRight * 3 + this.rightStrikeCount);
+    jQuery('#right-score').html(this.scoreRight);
+    var ptsr = this.scoreRight * 3 + this.rightStrikeCount;
+    while (ptsr.toString().length < 5) {
+      ptsr = '0' + ptsr;
+    }
+    jQuery('#right-points').html(ptsr);
+    jQuery('#right-points-go').html(ptsr);
+    jQuery('#right-score-go').html(this.scoreRight);
   },
 
   hideTextFields: function () {

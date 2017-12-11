@@ -106,17 +106,41 @@ a {
 }
 
 .score {
-    font-size: 48px;
+    font-size: 42px;
     color: #fff;
     font-weight: 700;
+    line-height: 48px;
 }
 
 #left-score {
     float: left;
 }
+#left-rank img, #left-rank-go img, #right-rank img, #right-rank-go img {
+    max-height: 50px;
+}
+#left-rank {
+    float: left;
+    margin-left: 20px;
+}
 
 #right-score {
     float: right;
+}
+#right-rank {
+    float: right;
+    margin-right: 20px;
+}
+.info-labels-left {
+    float: left;
+    margin-left: 20px;
+    padding-top: 5px;
+    text-align: left;
+}
+.info-labels-right {
+    float: right;
+    margin-right: 20px;
+    padding-top: 5px;
+    text-align: right;
 }
 
 #munch-pong canvas {
@@ -130,6 +154,7 @@ a {
 
 .points-label {
     color: #fff;
+    font-weight: 600;
 }
 
 img {
@@ -719,10 +744,27 @@ img {
 #left-score-go, #right-score-go {
     padding: 1rem;
 }
+#left-score-go {
+    float: left;
+}
+#right-score-go {
+    float: right;
+}
+#left-rank-go {
+    float: left;
+    margin-top: 10px;
+}
+#right-rank-go {
+    float: right;
+    margin-top: 10px;
+}
 .name-label {
     font-weight: 700;
     color: #FFDF00;
     font-size: 16px;
+}
+.info-lbls-go {
+    margin-top: 10px;
 }
 
 #games {
