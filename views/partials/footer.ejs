@@ -54,6 +54,54 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="invited_modal" tabindex="-1" role="dialog" aria-labelledby="accept_modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="exampleModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="content">
+                    <div>Pozvao si na duel:</div>
+                    <div id="challenger-rank"></div>
+                    <div id="challenger-name"></div>
+                    <div class="row">
+                        <div class="col-sm-offset-1 col-sm-10">
+                            <div class="row rankings-modal-row">
+                                <div class="col-xs-4">
+                                    <span>dnevni<br/>rang</span><br/>
+                                    <span class="gold" id="challenger-daily-rang"></span>
+                                </div>
+                                <div class="col-xs-4">
+                                    <span>nedeljni<br/>rang</span><br/>
+                                    <span class="gold" id="challenger-weekly-rang"></span>
+                                </div>
+                                <div class="col-xs-4">
+                                    <span>ukupni<br/>rang</span><br/>
+                                    <span class="gold" id="challenger-total-rang"></span>
+                                </div>
+                            </div>
+                            <div class="row rankings-modal-row">
+                                <div class="col-xs-12 selected-munch">
+                                    <img src="/assets/beli_manc_glow.png" style="display: none;" class="white" alt="">
+                                    <img src="/assets/crni_manc_glow.png" style="display: none;" class="black" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel_invite" type="button" class="btn munch-btn">
+                    <img src="/assets/buttons/odustani_od_poziva.png" class="regular" alt="">
+                    <img src="/assets/buttons/odustani_od_poziva_glow.png" class="over" alt="">
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <script src='/jquery/jquery.min.js'></script>
 <script src='/phaser/phaser.min.js'></script>
 <script src='/bootstrap/js/bootstrap.min.js'></script>
