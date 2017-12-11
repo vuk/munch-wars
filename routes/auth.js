@@ -269,7 +269,7 @@ router.post('/reset', (req, res, next) => {
       }
     });
   } else {
-    res.redirect('/forgot');
+    res.redirect('/auth/forgot');
   }
 });
 
