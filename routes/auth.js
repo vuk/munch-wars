@@ -118,62 +118,77 @@ router.get('/social-login', passport.authenticate('facebook'),
   });
 
 router.post('/register', function (req, res, next) {
-  playfab.RegisterPlayFabUser({
-    DisplayName: req.body.username.trim(),
-    Username: req.body.username.trim(),
-    Email: req.body.email.trim(),
-    Password: req.body.password.trim(),
-    TitleId: playfab.settings.titleId
-  }, function (err, result) {
-    console.log(err);
-    if (err) {
-      res.render('pages/register', {
-        title: 'Registrujte se',
-        active: 'play',
-        playfabId: req.session.userId || null,
-        errorObject: err,
-        username: req.body.username,
-        email: req.body.email
-      });
-    } else {
-      console.log(result);
-      req.session.userId = result.data.PlayFabId;
-      req.session.sessionTicket = result.data.SessionTicket;
-      playfab.GetPlayerProfile({
-        PlayFabId: result.data.PlayFabId,
-        ProfileConstraints: {
-          ShowDisplayName: true,
-          ShowLinkedAccounts: true
+  if (req.body.password === req.body.password_confirm) {
+    playfab.RegisterPlayFabUser({
+      DisplayName: req.body.username.trim(),
+      Username: req.body.username.trim(),
+      Email: req.body.email.trim(),
+      Password: req.body.password.trim(),
+      TitleId: playfab.settings.titleId
+    }, function (err, result) {
+      console.log(err);
+      if (err) {
+        res.render('pages/register', {
+          title: 'Registrujte se',
+          active: 'play',
+          playfabId: req.session.userId || null,
+          errorObject: err,
+          username: req.body.username,
+          email: req.body.email
+        });
+      } else {
+        console.log(result);
+        req.session.userId = result.data.PlayFabId;
+        req.session.sessionTicket = result.data.SessionTicket;
+        playfab.GetPlayerProfile({
+          PlayFabId: result.data.PlayFabId,
+          ProfileConstraints: {
+            ShowDisplayName: true,
+            ShowLinkedAccounts: true
+          }
+        }, (error, response) => {
+          if (error) {
+            console.log(error);
+            res.redirect('/play');
+          }
+          else {
+            playfab.GetPlayerStatistics({}, (err, stats) => {
+              req.session.stats = stats;
+              delete response.data.PlayerProfile.TitleId;
+              if (response.data.PlayerProfile.LinkedAccounts && response.data.PlayerProfile.LinkedAccounts[0].Username) {
+                response.data.PlayerProfile.DisplayName = response.data.PlayerProfile.LinkedAccounts[0].Username;
+              }
+              req.session.profile = response.data.PlayerProfile;
+              req.session.stats = stats;
+              getRankings(req)
+                .then(ranks => {
+                  req.app.get('socketio').activeUsers[req.session.userId] = {
+                    profile: response.data.PlayerProfile,
+                    time: Date.now(),
+                    stats: stats,
+                    ranks: ranks
+                  };
+                  res.redirect('/profile');
+                });
+            });
+          }
+        });
+      }
+    });
+  } else {
+    res.render('pages/register', {
+      title: 'Registrujte se',
+      active: 'play',
+      playfabId: req.session.userId || null,
+      errorObject: {
+        errorDetails: {
+          ConfirmPassword: 'Obe šifre moraju biti iste' 
         }
-      }, (error, response) => {
-        if (error) {
-          console.log(error);
-          res.redirect('/play');
-        }
-        else {
-          playfab.GetPlayerStatistics({}, (err, stats) => {
-            req.session.stats = stats;
-            delete response.data.PlayerProfile.TitleId;
-            if (response.data.PlayerProfile.LinkedAccounts && response.data.PlayerProfile.LinkedAccounts[0].Username) {
-              response.data.PlayerProfile.DisplayName = response.data.PlayerProfile.LinkedAccounts[0].Username;
-            }
-            req.session.profile = response.data.PlayerProfile;
-            req.session.stats = stats;
-            getRankings(req)
-              .then(ranks => {
-                req.app.get('socketio').activeUsers[req.session.userId] = {
-                  profile: response.data.PlayerProfile,
-                  time: Date.now(),
-                  stats: stats,
-                  ranks: ranks
-                };
-                res.redirect('/profile');
-              });
-          });
-        }
-      });
-    }
-  });
+      },
+      username: req.body.username,
+      email: req.body.email
+    });
+  }
 });
 
 function getRankings (req) {

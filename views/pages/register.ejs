@@ -61,6 +61,15 @@
                                             <% } %> form-control" id="inputPassword" placeholder="">
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <% if (typeof errorObject !== 'undefined'
+                                                    && typeof errorObject.errorDetails !== 'undefined'
+                                                    && errorObject.errorDetails.ConfirmPassword){ %>
+                                        <label class="error">Obe lozinke moraju biti identične</label>
+                                            <% } %>
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <label for="inputPassword2" class="col-sm-12 col-md-4 col-form-label">ukucaj šifru ponovo</label>
                                     <div class="col-sm-12 col-md-8">
