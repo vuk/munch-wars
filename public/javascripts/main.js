@@ -15,11 +15,11 @@ var socket;
     mutedBool = false;
   }
   if (mutedBool) {
-    $('.sound-on-wrapper').addClass('active');
-    $('.sound-off-wrapper').removeClass('active');
-  } else {
     $('.sound-off-wrapper').addClass('active');
     $('.sound-on-wrapper').removeClass('active');
+  } else {
+    $('.sound-on-wrapper').addClass('active');
+    $('.sound-off-wrapper').removeClass('active');
   }
   var soundToggle = document.getElementById('toggle-sound');
   soundToggle.addEventListener('click', function (evt) {

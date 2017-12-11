@@ -29,11 +29,11 @@ var toggleSound = function () {
   }
   localStorage.setItem('muted', (!mutedBool).toString());
   if (mutedBool) {
-    $('.sound-on-wrapper').addClass('active');
-    $('.sound-off-wrapper').removeClass('active');
-  } else {
     $('.sound-off-wrapper').addClass('active');
     $('.sound-on-wrapper').removeClass('active');
+  } else {
+    $('.sound-on-wrapper').addClass('active');
+    $('.sound-off-wrapper').removeClass('active');
   }
 };
 
