@@ -558,7 +558,7 @@ img {
 .modal-content #opponent-rank {
     margin-top: 2rem;
 }
-.modal-content #opponent-name {
+.modal-content #opponent-name, .modal-content #challenger-name {
     color: #FFDF00;
     padding: 1rem;
 }
