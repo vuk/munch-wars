@@ -45,6 +45,7 @@ socket.on('respond_to_invite', function (data) {
   if (data.player1.profile.PlayerId !== userId) {
     localStorage.setItem('opponentId', data.player1.profile.PlayerId);
     $('#accept_modal').modal();
+    $('#opponent-rank').html('<img src="'+ getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}).Value || 0) +'"/>');
     $('#opponent-name').html(data.profile.DisplayName);
     var daily = parseInt(data.ranks.daily.Position, 10) + 1;
     while (daily.toString().length < 5) {
