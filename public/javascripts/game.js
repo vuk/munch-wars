@@ -28,7 +28,7 @@ var toggleSound = function () {
     game.sound.mute = !mutedBool;
   }
   localStorage.setItem('muted', (!mutedBool).toString());
-  if (mutedBool) {
+  if (!mutedBool) {
     $('.sound-off-wrapper').addClass('active');
     $('.sound-on-wrapper').removeClass('active');
   } else {
