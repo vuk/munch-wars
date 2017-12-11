@@ -17,8 +17,24 @@ function getParameterByName(name, url) {
 }
 
 var toggleSound = function () {
-  game.sound.mute = !game.sound.mute;
-  localStorage.setItem('muted', game.sound.mute.toString());
+  var muted = localStorage.getItem('muted');
+  var mutedBool;
+  if (muted === 'true') {
+    mutedBool = true;
+  } else {
+    mutedBool = false;
+  }
+  if (game) {
+    game.sound.mute = !mutedBool;
+  }
+  localStorage.setItem('muted', (!mutedBool).toString());
+  if (mutedBool) {
+    $('.sound-on-wrapper').addClass('active');
+    $('.sound-off-wrapper').removeClass('active');
+  } else {
+    $('.sound-off-wrapper').addClass('active');
+    $('.sound-on-wrapper').removeClass('active');
+  }
 };
 
 var gameProperties = {
