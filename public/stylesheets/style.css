@@ -546,9 +546,26 @@ img {
     border-right: 2px solid rgba(255, 255, 255, 0.8);
 }
 
+.modal-content .selected-munch {
+    margin-top: 2rem;
+}
+.modal-content .selected-munch img {
+    max-width: 100px;
+}
+.modal-content #opponent-rank {
+    max-height: 50px;
+    margin-top: 2rem;
+}
 .modal-content #opponent-name {
     color: #FFDF00;
     padding: 1rem;
+}
+.modal-content .rankings-modal-row .col-xs-4 {
+    border-left: 2px solid rgba(255,255,255,0.8);
+}
+
+.modal-content .rankings-modal-row .col-xs-4:last-child {
+    border-right: 2px solid rgba(255,255,255,0.8);
 }
 
 .btn.munch-button {
@@ -562,7 +579,7 @@ img {
 .modal-footer {
     text-align: center;
     border: none;
-    padding-bottom: 5rem;
+    padding-bottom: 2rem;
 }
 .modal-footer .munch-btn {
     background: transparent;
