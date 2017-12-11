@@ -496,12 +496,26 @@ img {
     color: #FFDF00;
 }
 
+.opponents-row .text-left {
+    vertical-align: middle;
+}
+
+.opponents-row .text-left img {
+    max-height: 20px;
+    padding-right: 6px;
+}
+
+.opponents-row .text-left span {
+    vertical-align: middle;
+}
+
 .ranking-row.rank-head-row, .opponents-row.opponents-head-row {
     color: #fff;
 }
 
 .ranking-row .borders, .opponents-row .borders {
     border-left: 2px solid rgba(255, 255, 255, 0.8);
+    vertical-align: middle;
 }
 
 .ranking-row .borders {
@@ -837,14 +851,13 @@ img {
 
 /* Medium Devices, Desktops */
 @media only screen and (max-width: 992px) {
-
+    .hide-on-mobile {
+        display: none;
+    }
 }
 
 /* Small Devices, Tablets */
 @media only screen and (max-width: 768px) {
-    .hide-on-mobile {
-        display: none;
-    }
     .navbar-default .navbar-collapse, .navbar-default .navbar-form {
         border: none;
         position: absolute;

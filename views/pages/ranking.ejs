@@ -23,31 +23,31 @@
                     </div>
                 </div>
                 <div class="ranking-row rank-head-row row">
-                    <div class="col-lg-4">
+                    <div class="col-md-4 col-xs-3">
                         <div class="row">
-                            <div class="col-lg-4 borders">
+                            <div class="col-md-4 col-xs-12 borders">
                                 <div class="table-cell total-rank"><a href="/ranking?period=total">ukupni<br/>rang</a></div>
                             </div>
-                            <div class="col-lg-4 borders">
+                            <div class="col-md-4 borders hide-on-mobile">
                                 <div class="table-cell weekly-rank"><a href="/ranking?period=weekly">nedeljni<br/>rang</a></div>
                             </div>
-                            <div class="col-lg-4 borders">
+                            <div class="col-md-4 borders hide-on-mobile">
                                 <div class="table-cell daily-rank"><a href="/ranking?period=daily">dnevni<br/>rang</a></div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-md-4 col-xs-6">
                         <div class="table-cell username-rank">nadimak</div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-md-4 col-xs-3">
                         <div class="row">
-                            <div class="col-lg-4 borders">
+                            <div class="col-md-4 col-xs-12 borders">
                                 <div class="table-cell total-points">ukupno<br/>poena</div>
                             </div>
-                            <div class="col-lg-4 borders">
+                            <div class="col-md-4 borders hide-on-mobile">
                                 <div class="table-cell weekly-points">nedeljno<br/>poena</div>
                             </div>
-                            <div class="col-lg-4 borders">
+                            <div class="col-md-4 borders hide-on-mobile">
                                 <div class="table-cell daily-points">dnevnih<br/>poena</div>
                             </div>
                         </div>
@@ -55,28 +55,28 @@
                 </div>
                 <% leaderboard.Leaderboard.forEach(function(player) { %>
                 <div class="ranking-row row">
-                    <div class="col-lg-4">
+                    <div class="col-md-4 col-xs-3">
                         <div class="row">
-                            <div class="col-lg-4 borders">
+                            <div class="col-md-4 col-xs-12 borders">
                                 <% var pos = (parseInt(player.Position, 10) + 1).toString(); while (pos.length < 5) { pos = '0' + pos } %>
                                 <div class="table-cell total-rank"><%= pos %></div>
                             </div>
-                            <div class="col-lg-4 borders">
+                            <div class="col-md-4 borders hide-on-mobile">
                                 <div class="table-cell weekly-rank">nedeljni<br/>rang</div>
                             </div>
-                            <div class="col-lg-4 borders">
+                            <div class="col-md-4 borders hide-on-mobile">
                                 <div class="table-cell daily-rank">dnevni<br/>rang</div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-md-4 col-xs-6">
                         <div class="table-cell username-rank">
                             <img src="<%- player.rankIcon %>" alt="">
                             <%= player.Profile.LinkedAccounts[0].Username %></div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-md-4 col-xs-3">
                         <div class="row">
-                            <div class="col-lg-4 borders">
+                            <div class="col-md-4 col-xs-12 borders">
                                 <div class="table-cell total-points">
                                     <% var totalPoints = 0; if(period === 'total') { totalPoints = player.StatValue; } else { %>
                                     <% totalPoints = _.find(player.Profile.Statistics, function (obj) {
@@ -90,7 +90,7 @@
                                     <%= totalPoints %>
                                 </div>
                             </div>
-                            <div class="col-lg-4 borders">
+                            <div class="col-md-4 borders hide-on-mobile">
                                 <div class="table-cell weekly-points">
                                     <% var weekly = 0; if (period === 'weekly') { weekly = player.StatValue } else {
                                         weekly = _.find(player.Profile.Statistics, function (obj) {
@@ -105,7 +105,7 @@
                                     <%= weekly %>
                                 </div>
                             </div>
-                            <div class="col-lg-4 borders">
+                            <div class="col-md-4 borders hide-on-mobile">
                                 <div class="table-cell daily-points">
                                     <% var daily =  0; if (period === 'daily') { daily = player.StatValue } else {
                                         daily = _.find(player.Profile.Statistics, function (obj) {
