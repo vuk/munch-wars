@@ -27,6 +27,10 @@ body {
     min-height: 100vh;
 }
 
+.nav>li>a {
+    padding: 15px 20px;
+}
+
 a {
     color: #00B7FF;
 }
