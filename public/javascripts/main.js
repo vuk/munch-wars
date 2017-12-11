@@ -149,7 +149,7 @@ if ($('.rank-row').length > 0) {
   $('.total-rank .pts-score').html(tr);
 }
 
-function getRankIcon () {
+function getRankIcon (tp) {
   if(tp <= 100) {
     rank = '/assets/ranks/1.png';
   }
