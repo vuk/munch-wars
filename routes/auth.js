@@ -245,7 +245,7 @@ router.post('/reset', (req, res, next) => {
     }, (err, response) => {
       if (err) {
         console.log(err);
-        res.redirect('/forgot');
+        res.redirect('/auth/forgot');
       } else {
         res.render('pages/reset-confirm', {
           title: 'Zaboravljena šifra',

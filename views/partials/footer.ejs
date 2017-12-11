@@ -116,11 +116,13 @@
 
 <script>
   $('#mainNav a').click(function (evt) {
-    evt.preventDefault();
-    var self = this;
-    document.getElementById("linkAudio").onended = function () {
-      window.location.href = $(self).attr('href');
-    };
-    document.getElementById("linkAudio").play();
+      if(localStorage.getItem('muted') !== 'true') {
+        evt.preventDefault();
+        var self = this;
+        document.getElementById("linkAudio").onended = function () {
+        window.location.href = $(self).attr('href');
+        };
+        document.getElementById("linkAudio").play();
+      }
   });
 </script>
