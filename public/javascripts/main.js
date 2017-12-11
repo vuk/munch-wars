@@ -201,8 +201,10 @@ function getRankIcon (tp) {
 // Load opponents
 if (jQuery('#opponents').length > 0) {
   $.get('/profile/actives', function (data) {
+    var i = 0;
     for (var key in data) {
       if (key !== userId) {
+        i ++;
         $('#opponents').append(
           '<div class="opponents-row opponents-head-row row"><a href="/play?game=' + data[key].profile.PlayerId + '">' +
           '    <div class="col-md-4 text-left">' + data[key].profile.DisplayName + '</div>' +
@@ -220,12 +222,17 @@ if (jQuery('#opponents').length > 0) {
         );
       }
     }
+    if (i === 0) {
+      $('#opponent-search-container').hide();
+      $('#no-opponents').show();
+    }
   });
 }
 
 if (jQuery('.search-users #name').length > 0) {
   jQuery('.search-users #name').on('change paste keyup', function () {
     if ($(this).val().length > 2) {
+      var i = 0;
       $('#opponents').html('<div class="row opponents-row opponents-head-row">' +
         '                       <div class="col-md-4 text-left">nadimak</div>' +
         '                       <div class="col-md-8">' +
@@ -242,6 +249,7 @@ if (jQuery('.search-users #name').length > 0) {
       $.get('/profile/actives?filter=' + $(this).val(), function (data) {
         for (var key in data) {
           if (key !== userId) {
+            i++;
             $('#opponents').append(
               '<div class="row opponents-row"><a href="/play?game=' + data[key].profile.PlayerId + '">' +
               '    <div class="col-md-4 text-left">' + data[key].profile.DisplayName + '</div>' +
@@ -258,6 +266,10 @@ if (jQuery('.search-users #name').length > 0) {
               '</a></div>'
             );
           }
+        }
+        if (i === 0) {
+          $('#opponent-search-container').hide();
+          $('#no-opponents').show();
         }
       });
     }
