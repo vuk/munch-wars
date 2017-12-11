@@ -163,16 +163,16 @@ if (jQuery('#opponents').length > 0) {
     for (var key in data) {
       if (key !== userId) {
         $('#opponents').append(
-          '<div class="row opponent-row"><a href="/play?game=' + data[key].profile.PlayerId + '">' +
-          '    <div class="col-md-4">' + data[key].profile.DisplayName + '</div>' +
+          '<div class="opponents-row opponents-head-row row"><a href="/play?game=' + data[key].profile.PlayerId + '">' +
+          '    <div class="col-md-4 text-left">' + data[key].profile.DisplayName + '</div>' +
           '    <div class="col-md-8">' +
           '        <div class="row">' +
-          '            <div class="col-md-2">0</div>' +
-          '            <div class="col-md-2">0</div>' +
-          '            <div class="col-md-2">0</div>' +
-          '            <div class="col-md-2">0</div>' +
-          '            <div class="col-md-2">0</div>' +
-          '            <div class="col-md-2">0</div>' +
+          '            <div class="col-md-2 borders">' + data[key].ranks.total.Position + '</div>' +
+          '            <div class="col-md-2 borders">' + data[key].ranks.weekly.Position + '</div>' +
+          '            <div class="col-md-2 borders">' + data[key].ranks.daily.Position + '</div>' +
+          '            <div class="col-md-2 borders">' + data[key].ranks.total.StatValue + '</div>' +
+          '            <div class="col-md-2 borders">' + data[key].ranks.weekly.StatValue + '</div>' +
+          '            <div class="col-md-2 borders">' + data[key].ranks.daily.StatValue + '</div>' +
           '        </div>' +
           '    </div>' +
           '</a></div>'
@@ -185,33 +185,33 @@ if (jQuery('#opponents').length > 0) {
 if (jQuery('.search-users #name').length > 0) {
   jQuery('.search-users #name').on('change paste keyup', function () {
     if ($(this).val().length > 2) {
-      $('#opponents').html('<div class="row opponent-row--header">' +
-        '                                <div class="col-md-4">nadimak</div>' +
-        '                                <div class="col-md-8">' +
-        '                                    <div class="row">' +
-        '                                        <div class="col-md-2">ukupni<br/>rang</div>' +
-        '                                        <div class="col-md-2">nedeljni<br/>rang</div>' +
-        '                                        <div class="col-md-2">dnevni<br/>rang</div>' +
-        '                                        <div class="col-md-2">ukupno<br/>poena</div>' +
-        '                                        <div class="col-md-2">nedeljnih<br/>poena</div>' +
-        '                                        <div class="col-md-2">dnevnih<br/>poena</div>' +
-        '                                    </div>' +
-        '                                </div>' +
-        '                            </div>');
+      $('#opponents').html('<div class="row opponents-row opponents-head-row">' +
+        '                       <div class="col-md-4 text-left">nadimak</div>' +
+        '                       <div class="col-md-8">' +
+        '                           <div class="row">' +
+        '                               <div class="col-md-2 borders">ukupni<br/>rang</div>' +
+        '                               <div class="col-md-2 borders">nedeljni<br/>rang</div>' +
+        '                               <div class="col-md-2 borders">dnevni<br/>rang</div>' +
+        '                               <div class="col-md-2 borders">ukupno<br/>poena</div>' +
+        '                               <div class="col-md-2 borders">nedeljnih<br/>poena</div>' +
+        '                               <div class="col-md-2 borders">dnevnih<br/>poena</div>' +
+        '                           </div>' +
+        '                       </div>' +
+        '                   </div>');
       $.get('/profile/actives?filter=' + $(this).val(), function (data) {
         for (var key in data) {
           if (key !== userId) {
             $('#opponents').append(
-              '<div class="row opponent-row"><a href="/play?game=' + data[key].profile.PlayerId + '">' +
-              '    <div class="col-md-4">' + data[key].profile.DisplayName + '</div>' +
+              '<div class="row opponents-row"><a href="/play?game=' + data[key].profile.PlayerId + '">' +
+              '    <div class="col-md-4 text-left">' + data[key].profile.DisplayName + '</div>' +
               '    <div class="col-md-8">' +
               '        <div class="row">' +
-              '            <div class="col-md-2">0</div>' +
-              '            <div class="col-md-2">0</div>' +
-              '            <div class="col-md-2">0</div>' +
-              '            <div class="col-md-2">0</div>' +
-              '            <div class="col-md-2">0</div>' +
-              '            <div class="col-md-2">0</div>' +
+              '            <div class="col-md-2 borders">' + data[key].ranks.total.Position + '</div>' +
+              '            <div class="col-md-2 borders">' + data[key].ranks.weekly.Position + '</div>' +
+              '            <div class="col-md-2 borders">' + data[key].ranks.daily.Position + '</div>' +
+              '            <div class="col-md-2 borders">' + data[key].ranks.total.StatValue + '</div>' +
+              '            <div class="col-md-2 borders">' + data[key].ranks.weekly.StatValue + '</div>' +
+              '            <div class="col-md-2 borders">' + data[key].ranks.daily.StatValue + '</div>' +
               '        </div>' +
               '    </div>' +
               '</a></div>'
