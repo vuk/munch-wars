@@ -4,6 +4,20 @@ var socket;
   if (!localStorage.getItem('side')) {
     localStorage.setItem('side', 'black');
   }
+  var muted = localStorage.getItem('muted');
+  var mutedBool;
+  if (muted === 'true') {
+    mutedBool = true;
+  } else {
+    mutedBool = false;
+  }
+  if (mutedBool) {
+    $('.sound-on-wrapper').addClass('active');
+    $('.sound-off-wrapper').removeClass('active');
+  } else {
+    $('.sound-off-wrapper').addClass('active');
+    $('.sound-on-wrapper').removeClass('active');
+  }
   var soundToggle = document.getElementById('toggle-sound');
   soundToggle.addEventListener('click', function (evt) {
     console.log('toggle sound');
