@@ -399,6 +399,10 @@ img {
     color: #FFDF00;
     font-size: 14px;
 }
+.profile-body .col-md-6 {
+    padding-right: 25px;
+    padding-left: 25px;
+}
 
 .pts-container {
     border-left: 2px solid #fff;
@@ -424,6 +428,7 @@ img {
 
 .logout-link, .logout-link:hover {
     color: #FFF;
+    text-decoration: underline;
 }
 
 .pick-side {
@@ -437,11 +442,20 @@ img {
 }
 
 .vs-player, .vs-computer {
-    margin: 3rem 0;
+    margin: 1rem 0;
 }
 
 .profile-body .welcome, .profile-body .username {
     color: #FFDF00;
+}
+
+.profile-body .username {
+    margin-top: 1rem;
+    font-size: 18px;
+}
+
+.profile-body .welcome {
+    margin-bottom: 4rem;
 }
 
 .rules .title {
@@ -744,7 +758,6 @@ img {
     color: #FFDF00;
 }
 .vs-player img, .vs-computer img {
-    max-width: 75%;
 }
 .munc-box-holder {
     text-align: center;
@@ -760,7 +773,7 @@ img {
     max-width: 90%;
 }
 .rank-badge img {
-    max-width: 75%;
+    max-height: 50px;
 }
 .username-rank {
     text-align: left;
