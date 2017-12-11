@@ -115,7 +115,7 @@ var fontAssets = {
 
   scoreFontStyle: {font: '80px orbitron', fill: '#FFFFFF', align: 'center'},
   instructionsFontStyle: {font: '20px orbitron', fill: '#FFDF00', align: 'center', fontWeight: 600},
-  countdownFontStyle: {font: '48px orbitron', fill: '#FFDF00', align: 'center', fontWeight: 600},
+  countdownFontStyle: {font: '64px orbitron', fill: '#FFDF00', align: 'center', fontWeight: 600},
 };
 
 var labels = {

@@ -718,6 +718,7 @@ img {
     float: left;
     margin-right: 15px;
     position: relative;
+    zoom: 0.7;
 }
 
 .sprite-left.sprite-empty {
@@ -748,6 +749,7 @@ img {
     float: right;
     margin-left: 15px;
     position: relative;
+    zoom: 0.7;
 }
 
 .sprite-right.sprite-empty {
@@ -773,12 +775,19 @@ img {
 .magic-label {
     text-align: center;
     position: absolute;
-    bottom: -60px;
+    bottom: -40px;
     width: 100%;
-    font-size: xx-large;
+    font-size: 24px;
     color: #666666;
 }
-
+.magije-label {
+    color: #fff;
+    font-size: 18px;
+    margin-top: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+    float: left;
+}
 .sprite-double-size .magic-label, .sprite-shoot .magic-label {
     color: #00B7FF;
 }
