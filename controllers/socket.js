@@ -69,8 +69,8 @@ module.exports = {
           if (!err) {
             console.log(result, 'black');
             let right;
-            if (result.data.Data['Right']) {
-              right = parseInt(result.data.Data['Right'], 10);
+            if (result.data.Data['Black']) {
+              right = parseInt(result.data.Data['Black'], 10);
             } else {
               right = 0;
             }
