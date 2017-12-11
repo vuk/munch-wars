@@ -15,7 +15,12 @@ router.post('/login', function (req, res, next) {
     TitleId: playfab.settings.titleId
   }, function (err, result) {
     if (err) {
-      res.redirect('/play');
+      res.render('pages/login', {
+        title: 'Prijavite se',
+        active: 'play',
+        playfabId: req.session.userId || null,
+        error: err
+      });
     } else {
       req.session.userId = result.data.PlayFabId;
       req.session.sessionTicket = result.data.SessionTicket;
