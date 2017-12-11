@@ -4,9 +4,25 @@ var socket;
   if (!localStorage.getItem('side')) {
     localStorage.setItem('side', 'black');
   }
+  if (!localStorage.getItem('muted')) {
+    localStorage.setItem('muted', 'true');
+  }
+  var muted = localStorage.getItem('muted');
+  var mutedBool;
+  if (muted === 'true') {
+    mutedBool = true;
+  } else {
+    mutedBool = false;
+  }
+  if (mutedBool) {
+    $('.sound-off-wrapper').addClass('active');
+    $('.sound-on-wrapper').removeClass('active');
+  } else {
+    $('.sound-on-wrapper').addClass('active');
+    $('.sound-off-wrapper').removeClass('active');
+  }
   var soundToggle = document.getElementById('toggle-sound');
   soundToggle.addEventListener('click', function (evt) {
-    console.log('toggle sound');
     try {
       toggleSound();
     } catch (err) {

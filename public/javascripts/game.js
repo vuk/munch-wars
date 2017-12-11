@@ -17,8 +17,24 @@ function getParameterByName(name, url) {
 }
 
 var toggleSound = function () {
-  game.sound.mute = !game.sound.mute;
-  localStorage.setItem('muted', game.sound.mute.toString());
+  var muted = localStorage.getItem('muted');
+  var mutedBool;
+  if (muted === 'true') {
+    mutedBool = true;
+  } else {
+    mutedBool = false;
+  }
+  if (game) {
+    game.sound.mute = !mutedBool;
+  }
+  localStorage.setItem('muted', (!mutedBool).toString());
+  if (!mutedBool) {
+    $('.sound-off-wrapper').addClass('active');
+    $('.sound-on-wrapper').removeClass('active');
+  } else {
+    $('.sound-on-wrapper').addClass('active');
+    $('.sound-off-wrapper').removeClass('active');
+  }
 };
 
 var gameProperties = {
@@ -218,6 +234,18 @@ mainState.prototype = {
     var self = this;
     this.cnt = 1;
 
+    $('#left-player-magic-1, #right-player-magic-1').click(function () {
+      self.fireMagic(1);
+    });
+
+    $('#left-player-magic-2, #right-player-magic-2').click(function () {
+      self.fireMagic(2);
+    });
+
+    $('#left-player-magic-3, #right-player-magic-3').click(function () {
+      self.fireMagic(3);
+    });
+
     /** If I'm playing vs computer just take my choice of side from local storage **/
     if (computer) {
       this.side = localStorage.getItem('side');
@@ -253,22 +281,9 @@ mainState.prototype = {
     }
 
     socket.on('update_state', function (data) {
-      if(self.side === 'white' && data.paddle && data.paddle['left']) {
-        self.paddleLeftSprite.body.velocity.y = data.paddle['left'].velocity;
-        self.paddleLeftSprite.y = data.paddle['left'].y;
-      }
-      if(self.side === 'black' && data.paddle && data.paddle['right']) {
-        self.paddleRightSprite.body.velocity.y = data.paddle['right'].velocity;
-        self.paddleRightSprite.y = data.paddle['right'].y;
-      }
-      if(data.ball && !isHome) {
-        /*self.ballSprite.visible = data.ball.visible;*/
-        self.ballSprite.x = data.ball.x + self.ballSprite.width / 2;
-        self.ballSprite.y = data.ball.y + self.ballSprite.height / 2;
-        /*self.ballSprite.anchor.setTo(0.5, 0.5);*/
-        self.ballSprite.visible = true;
-        self.ballSprite.body.velocity.set(data.ball.velocityX, data.ball.velocityY);
-        //game.physics.arcade.moveToXY(self.ballSprite, data.ball.x, data.ball.y, data.ball.velocityX, 16);
+      this.lastUpdate = Date.now();
+      if (!self.syncData.time || self.syncData.time <= data.time) {
+        self.syncData = data;
       }
     });
     socket.on('score', function (data) {
@@ -349,7 +364,34 @@ mainState.prototype = {
     this.bulletRightSprite.destroy();
   },
   lastBallUpdate: 0,
+  syncData: {},
+  lastUpdate: 0,
+  updateState: function () {
+    this.lastUpdate = Date.now();
+    if (this.syncData) {
+      if(this.side === 'white' && this.syncData.paddle && this.syncData.paddle['left']) {
+        this.paddleLeftSprite.body.velocity.y = this.syncData.paddle['left'].velocity;
+        this.paddleLeftSprite.y = this.syncData.paddle['left'].y;
+      }
+      if(this.side === 'black' && this.syncData.paddle && this.syncData.paddle['right']) {
+        this.paddleRightSprite.body.velocity.y = this.syncData.paddle['right'].velocity;
+        this.paddleRightSprite.y = this.syncData.paddle['right'].y;
+      }
+      if(this.syncData && this.syncData.ball && !isHome) {
+        /*self.ballSprite.visible = data.ball.visible;*/
+        this.ballSprite.x = this.syncData.ball.x + this.ballSprite.width / 2;
+        this.ballSprite.y = this.syncData.ball.y + this.ballSprite.height / 2;
+        /*self.ballSprite.anchor.setTo(0.5, 0.5);*/
+        this.ballSprite.visible = this.syncData.ball.visible;
+        this.ballSprite.body.velocity.set(this.syncData.ball.velocityX, this.syncData.ball.velocityY);
+        this.ballSprite.body.velocity.x = this.syncData.ball.velocityX;
+        this.ballSprite.body.velocity.y = this.syncData.ball.velocityY;
+        //game.physics.arcade.accelerateToXY(this.ballSprite, this.syncData.ball.x + this.ballSprite.width / 2, this.syncData.ball.y + this.ballSprite.height / 2);
+      }
+    }
+  },
   update: function () {
+    this.updateState();
     this.moveLeftPaddle();
     this.moveRightPaddle();
     this.fireMagic();
@@ -377,7 +419,7 @@ mainState.prototype = {
         y: this.ballSprite.body.y,
         velocityX: this.ballSprite.body.velocity.x,
         velocityY: this.ballSprite.body.velocity.y,
-        visible: true,
+        visible: this.ballSprite.visible,
         time: Date.now()
       });
     } /*else {
@@ -738,16 +780,17 @@ mainState.prototype = {
       }
     }
   },
-
+  tempLeftStrikeCount: 0,
+  tempRightStrikeCount: 0,
   collideWithPaddle: function (ball, paddle) {
     this.sndBallHit.play();
     this.strikeCount++;
 
     this.lastHitBy = (ball.x < gameProperties.screenWidth * 0.5) ? 0 : 1;
     if (this.lastHitBy === 0) {
-      this.leftStrikeCount ++;
+      this.tempLeftStrikeCount ++;
     } else {
-      this.rightStrikeCount ++;
+      this.tempRightStrikeCount ++;
     }
 
     var returnAngle;
@@ -841,11 +884,11 @@ mainState.prototype = {
   },
   fireCount: 0,
 
-  fireMagic: function () {
-    if (this.fireCount > 5) {
+  fireMagic: function (magic) {
+    if (this.fireCount > 5 || magic) {
       this.fireCount = 0;
       var side = this.side === 'white' ? 1 : 0;
-      if (this.buttonOne.isDown && this.players[side].magic[0]) {
+      if (this.buttonOne.isDown && this.players[side].magic[0] || magic === 1) {
         this.processMagic(this.players[side].magic[0], side);
         this.players[side].magic.splice(0, 1);
         socket.emit('magic_sync', {
@@ -854,7 +897,7 @@ mainState.prototype = {
           evt: 'fired'
         });
       }
-      if (this.buttonTwo.isDown && this.players[side].magic[1]) {
+      if (this.buttonTwo.isDown && this.players[side].magic[1] || magic === 2) {
         this.processMagic(this.players[side].magic[1], side);
         this.players[side].magic.splice(1, 1);
         socket.emit('magic_sync', {
@@ -863,7 +906,7 @@ mainState.prototype = {
           evt: 'fired'
         });
       }
-      if (this.buttonThree.isDown && this.players[side].magic[2]) {
+      if (this.buttonThree.isDown && this.players[side].magic[2] || magic === 3) {
         this.processMagic(this.players[side].magic[2], side);
         this.players[side].magic.splice(2, 1);
         socket.emit('magic_sync', {
@@ -917,7 +960,7 @@ mainState.prototype = {
     this.handleShot(side);
     socket.emit('shot_sync', {
       id: getParameterByName('game'),
-      y: this.paddleLeftSprite.y,
+      y: this.paddleLeftSprite.y + this.paddleLeftSprite.height / 2,
       side: side,
       myId: userId
     });
@@ -1001,9 +1044,15 @@ mainState.prototype = {
       if (this.ballSprite.x < 0) {
         this.missedSide = 'left';
         this.scoreRight++;
+        this.rightStrikeCount += this.tempRightStrikeCount;
+        this.tempLeftStrikeCount = 0;
+        this.tempRightStrikeCount = 0;
       } else if (this.ballSprite.x > gameProperties.screenWidth) {
         this.missedSide = 'right';
         this.scoreLeft++;
+        this.leftStrikeCount += this.tempLeftStrikeCount;
+        this.tempLeftStrikeCount = 0;
+        this.tempRightStrikeCount = 0;
       }
 
       this.updateScoreTextFields();

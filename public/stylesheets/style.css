@@ -39,7 +39,7 @@ a {
 
 .navbar-default .navbar-nav > li > a {
     color: #fff;
-    font-weight: 600;
+    font-weight: 500;
     text-transform: uppercase;
 }
 
@@ -49,7 +49,6 @@ a {
 .navbar-default .navbar-nav > li > a:hover {
     color: #fff;
     text-shadow: 2px 0 15px #FFDF00;
-    font-weight: 900;
 }
 
 .sound-wrap {
@@ -763,10 +762,22 @@ img {
     text-align: center;
 }
 .munc-wars-holder img {
-    max-width: 75%;
+    max-width: 90%;
 }
 .rank-badge img {
     max-width: 75%;
+}
+.username-rank {
+    text-align: left;
+}
+.username-rank img {
+    max-height: 35px;
+    margin-right: 10px;
+}
+.sound-on-wrapper.active, .sound-off-wrapper.active {
+    border: 2px solid gold;
+    border-radius: 50%;
+    padding: 2px;
 }
 /* Custom, iPhone Retina */
 @media only screen and (min-width: 320px) {
