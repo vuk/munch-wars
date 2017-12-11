@@ -27,6 +27,10 @@ body {
     min-height: 100vh;
 }
 
+button {
+    outline: 0;
+}
+
 .nav>li>a {
     padding: 15px 20px;
 }
