@@ -6,7 +6,7 @@ playfab.settings.titleId = 'F06D';
 playfab.settings.developerSecretKey = 'X6GUF8OHOC8OIXU1W9P3F77SIJW9X5EZESCNTG8J53G97ANDEE';
 
 /* GET home page. */
-router.get('/', async (req, res, next) => {
+router.get('/', (req, res, next) => {
   let statisticsName = 'Total Points';
   if(req.query.period === 'daily') {
     statisticsName = 'Points';
@@ -15,7 +15,7 @@ router.get('/', async (req, res, next) => {
     statisticsName = 'Weekly Points';
   }
   //console.log(statisticsName);
-  await playfab.GetLeaderboard({
+  playfab.GetLeaderboard({
     StartPosition: 0,
     MaxResultsCount: 20,
     ProfileConstraints: {
@@ -24,20 +24,16 @@ router.get('/', async (req, res, next) => {
       ShowStatistics: true
     },
     StatisticName: statisticsName
-  }, async (err, response) => {
+  }, (err, response) => {
     if (err) {
       console.log(err);
     }
     else {
       //console.log(response.data);
-      response.data.Leaderboard.forEach(async (lb, index) => {
+      response.data.Leaderboard.forEach((lb, index) => {
+        console.log(lb);
         let stat = _.find(lb.Profile.Statistics, { Name: "Total Points"});
         response.data.Leaderboard[index].rankIcon = getRankIcon(stat.Value);
-        try {
-          //response.data.Leaderboard[index].rnks = await getRankings(lb.PlayFabId);
-        } catch (e) {
-          console.log(e);
-        }
       });
       //console.log(response.data.Leaderboard[0].Profile.Statistics);
       res.render('pages/ranking', {
@@ -59,6 +55,13 @@ router.get('/victories', (req, res, next) => {
       res.json(resp);
     }
   });
+});
+
+router.get('/rankings', (req, res, next) => {
+  getRankings(req.query.PlayFabId)
+    .then((resp) => {
+      res.json(resp);
+    });
 });
 
 function getRankings (req) {

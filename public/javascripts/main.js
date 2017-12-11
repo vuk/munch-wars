@@ -317,3 +317,41 @@ if (typeof computer !== 'undefined' && computer && $('#game-over').length > 0) {
     $('#right-name, #right-name-go').html(profile.DisplayName);
   }
 }
+
+if($('.fetch-rank-row').length > 0) {
+  $('.fetch-rank-row').each(function (row) {
+    var id = $(this).data('playerid');
+    var self = this;
+    $.get('/ranking/rankings?PlayFabId=' + id, function (data) {
+      console.log(data);
+      if (data.weekly) {
+        data.weekly.Position = parseInt(data.weekly.Position, 10) + 1;
+        while(data.weekly.Position.toString().length < 5) {
+          data.weekly.Position = '0' + data.weekly.Position;
+        }
+        $(self).children().find('.weekly-rank').html(data.weekly.Position);
+        while(data.weekly.StatValue.toString().length < 5) {
+          data.weekly.StatValue = '0' + data.weekly.StatValue;
+        }
+        $(self).children().find('.weekly-points').html(data.weekly.StatValue);
+      } else {
+        $(self).children().find('.weekly-rank').html('00000');
+        $(self).children().find('.weekly-points').html('00000');
+      }
+      if (data.daily) {
+        data.daily.Position = parseInt(data.daily.Position, 10) + 1;
+        while(data.daily.Position.toString().length < 5) {
+          data.daily.Position = '0' + data.daily.Position;
+        }
+        $(self).children().find('.daily-rank').html(data.daily.Position);
+        while(data.daily.StatValue.toString().length < 5) {
+          data.daily.StatValue = '0' + data.daily.StatValue;
+        }
+        $(self).children().find('.daily-points').html(data.daily.StatValue);
+      } else {
+        $(self).children().find('.daily-rank').html('00000');
+        $(self).children().find('.daily-points').html('00000');
+      }
+    });
+  });
+}
