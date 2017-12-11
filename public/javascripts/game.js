@@ -778,10 +778,10 @@ mainState.prototype = {
       }
       if (computer && this.side === 'black') {
         if (direction === 'up') {
-          this.paddleRightSprite.body.velocity.y = -gameProperties.paddleVelocity * 0.6;
+          this.paddleRightSprite.body.velocity.y = -gameProperties.paddleVelocity * 0.65;
         }
         else if (direction === 'down') {
-          this.paddleRightSprite.body.velocity.y = gameProperties.paddleVelocity * 0.6;
+          this.paddleRightSprite.body.velocity.y = gameProperties.paddleVelocity * 0.65;
         } else {
           this.paddleRightSprite.body.velocity.y = 0;
         }
