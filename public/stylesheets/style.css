@@ -1035,6 +1035,9 @@ img {
     .play-page .magic-label{
         display: none;
     }
+    #right-rank, #left-rank {
+        display: none;
+    }
 }
 
 /* Extra Small Devices, Phones */
