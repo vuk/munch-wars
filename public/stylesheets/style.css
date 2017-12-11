@@ -1038,6 +1038,9 @@ img {
     #right-rank, #left-rank {
         display: none;
     }
+    .play-landscape .col-xs-3 {
+        width: 40%;
+    }
 }
 
 /* Extra Small Devices, Phones */
