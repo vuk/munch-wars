@@ -735,10 +735,10 @@ mainState.prototype = {
       }
       if (computer && this.side === 'white') {
         if (direction === 'up') {
-          this.paddleLeftSprite.body.velocity.y = -gameProperties.paddleVelocity * 0.5;
+          this.paddleLeftSprite.body.velocity.y = -gameProperties.paddleVelocity * 0.6;
         }
         else if (direction === 'down') {
-          this.paddleLeftSprite.body.velocity.y = gameProperties.paddleVelocity * 0.5;
+          this.paddleLeftSprite.body.velocity.y = gameProperties.paddleVelocity * 0.6;
         } else {
           this.paddleLeftSprite.body.velocity.y = 0;
         }
@@ -778,10 +778,10 @@ mainState.prototype = {
       }
       if (computer && this.side === 'black') {
         if (direction === 'up') {
-          this.paddleRightSprite.body.velocity.y = -gameProperties.paddleVelocity * 0.5;
+          this.paddleRightSprite.body.velocity.y = -gameProperties.paddleVelocity * 0.6;
         }
         else if (direction === 'down') {
-          this.paddleRightSprite.body.velocity.y = gameProperties.paddleVelocity * 0.5;
+          this.paddleRightSprite.body.velocity.y = gameProperties.paddleVelocity * 0.6;
         } else {
           this.paddleRightSprite.body.velocity.y = 0;
         }
@@ -839,6 +839,7 @@ mainState.prototype = {
       this.magicCountdown--;
       return;
     }
+    console.log(this.lastHitBy);
     var player = this.players[this.lastHitBy];
     this.generateMagic(player, ball, magicBound);
     // Set probability to call spawnMagicByComputerPlayer()
