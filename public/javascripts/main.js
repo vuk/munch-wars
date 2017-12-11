@@ -4,6 +4,9 @@ var socket;
   if (!localStorage.getItem('side')) {
     localStorage.setItem('side', 'black');
   }
+  if (!localStorage.getItem('muted')) {
+    localStorage.setItem('muted', 'true');
+  }
   var muted = localStorage.getItem('muted');
   var mutedBool;
   if (muted === 'true') {
@@ -20,7 +23,6 @@ var socket;
   }
   var soundToggle = document.getElementById('toggle-sound');
   soundToggle.addEventListener('click', function (evt) {
-    console.log('toggle sound');
     try {
       toggleSound();
     } catch (err) {
