@@ -337,15 +337,20 @@ img {
     margin: 2rem auto;
 }
 
-.login-body .form {
+.login-body .form, .form-inline {
     padding: 2rem 10%;
 }
 
-.login-body .form input.error {
+.form-inline label {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.login-body .form input.error, .form-inline input.error {
     border: 2px solid #FF0000;
 }
 
-.login-body .form input {
+.login-body .form input, .form-inline input {
     background: transparent;
     border: 2px solid #FFDF00;
     -webkit-border-radius: 0;
