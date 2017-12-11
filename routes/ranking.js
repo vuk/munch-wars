@@ -30,9 +30,10 @@ router.get('/', function(req, res, next) {
     }
     else {
       //console.log(response.data);
-      response.data.Leaderboard.forEach((lb, index) => {
+      response.data.Leaderboard.forEach(async (lb, index) => {
         let stat = _.find(lb.Profile.Statistics, { Name: "Total Points"});
         response.data.Leaderboard[index].rankIcon = getRankIcon(stat.Value);
+        response.data.Leaderboard[index].rnks = await getRankings(req);
       });
       console.log(response.data.Leaderboard);
       res.render('pages/ranking', {
@@ -45,6 +46,50 @@ router.get('/', function(req, res, next) {
     }
   });
 });
+
+function getRankings (req) {
+  console.log('test');
+  var leaderboardPosition;
+  var leaderboardPosition2;
+  var leaderboardPosition3;
+  return new Promise((resolve, reject) => {
+    playfab.GetLeaderboardAroundUser({
+      PlayFabId: req.session.userId,
+      StatisticName: 'Total Points',
+      MaxResultsCount: 1
+    }, (err1, res1) => {
+      if (err1) {
+        reject(err1);
+      }
+      leaderboardPosition = res1.data.Leaderboard[0];
+      playfab.GetLeaderboardAroundUser({
+        PlayFabId: req.session.userId,
+        StatisticName: 'Weekly Points',
+        MaxResultsCount: 1
+      }, (err2, res2) => {
+        if (err2) {
+          reject(err2);
+        }
+        leaderboardPosition2 = res2.data.Leaderboard[0];
+        playfab.GetLeaderboardAroundUser({
+          PlayFabId: req.session.userId,
+          StatisticName: 'Points',
+          MaxResultsCount: 1
+        }, (err3, res3) => {
+          if (err3) {
+            reject(err3);
+          }
+          leaderboardPosition3 = res3.data.Leaderboard[0];
+          resolve({
+            total: leaderboardPosition,
+            weekly: leaderboardPosition2,
+            daily: leaderboardPosition3,
+          })
+        });
+      });
+    });
+  });
+}
 
 function getRankIcon (tp) {
   if(tp <= 100) {
