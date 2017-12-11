@@ -1039,7 +1039,9 @@ img {
         display: none;
     }
     .play-landscape .col-xs-3 {
-        width: 40%;
+        width: 45%;
+        padding-left: 5px;
+        padding-right: 5px;
     }
 }
 
