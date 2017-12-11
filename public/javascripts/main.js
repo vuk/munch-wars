@@ -207,15 +207,15 @@ if (jQuery('#opponents').length > 0) {
         i ++;
         $('#opponents').append(
           '<div class="opponents-row opponents-head-row row"><a href="/play?game=' + data[key].profile.PlayerId + '">' +
-          '    <div class="col-md-4 text-left">' + data[key].profile.DisplayName + '</div>' +
-          '    <div class="col-md-8">' +
+          '    <div class="col-md-4 col-xs-8 text-left"><img src="' + getRankIcon(data[key].ranks.total.Position) + '"><span>' + data[key].profile.DisplayName + '</span></div>' +
+          '    <div class="col-md-8 col-xs-4">' +
           '        <div class="row">' +
-          '            <div class="col-md-2 borders">' + data[key].ranks.total.Position + '</div>' +
-          '            <div class="col-md-2 borders">' + data[key].ranks.weekly.Position + '</div>' +
-          '            <div class="col-md-2 borders">' + data[key].ranks.daily.Position + '</div>' +
-          '            <div class="col-md-2 borders">' + data[key].ranks.total.StatValue + '</div>' +
-          '            <div class="col-md-2 borders">' + data[key].ranks.weekly.StatValue + '</div>' +
-          '            <div class="col-md-2 borders">' + data[key].ranks.daily.StatValue + '</div>' +
+          '            <div class="col-md-2 col-xs-12 borders">' + data[key].ranks.total.Position + '</div>' +
+          '            <div class="col-md-2 borders hide-on-mobile">' + data[key].ranks.weekly.Position + '</div>' +
+          '            <div class="col-md-2 borders hide-on-mobile">' + data[key].ranks.daily.Position + '</div>' +
+          '            <div class="col-md-2 borders hide-on-mobile">' + data[key].ranks.total.StatValue + '</div>' +
+          '            <div class="col-md-2 borders hide-on-mobile">' + data[key].ranks.weekly.StatValue + '</div>' +
+          '            <div class="col-md-2 borders hide-on-mobile">' + data[key].ranks.daily.StatValue + '</div>' +
           '        </div>' +
           '    </div>' +
           '</a></div>'
@@ -234,15 +234,15 @@ if (jQuery('.search-users #name').length > 0) {
     if ($(this).val().length > 2) {
       var i = 0;
       $('#opponents').html('<div class="row opponents-row opponents-head-row">' +
-        '                       <div class="col-md-4 text-left">nadimak</div>' +
-        '                       <div class="col-md-8">' +
+        '                       <div class="col-md-4 col-xs-8 text-left">nadimak</div>' +
+        '                       <div class="col-md-8 col-xs-4">' +
         '                           <div class="row">' +
-        '                               <div class="col-md-2 borders">ukupni<br/>rang</div>' +
-        '                               <div class="col-md-2 borders">nedeljni<br/>rang</div>' +
-        '                               <div class="col-md-2 borders">dnevni<br/>rang</div>' +
-        '                               <div class="col-md-2 borders">ukupno<br/>poena</div>' +
-        '                               <div class="col-md-2 borders">nedeljnih<br/>poena</div>' +
-        '                               <div class="col-md-2 borders">dnevnih<br/>poena</div>' +
+        '                               <div class="col-md-2 col-xs-12 borders">ukupni<br/>rang</div>' +
+        '                               <div class="col-md-2 borders hide-on-mobile">nedeljni<br/>rang</div>' +
+        '                               <div class="col-md-2 borders hide-on-mobile">dnevni<br/>rang</div>' +
+        '                               <div class="col-md-2 borders hide-on-mobile">ukupno<br/>poena</div>' +
+        '                               <div class="col-md-2 borders hide-on-mobile">nedeljnih<br/>poena</div>' +
+        '                               <div class="col-md-2 borders hide-on-mobile">dnevnih<br/>poena</div>' +
         '                           </div>' +
         '                       </div>' +
         '                   </div>');
@@ -252,15 +252,15 @@ if (jQuery('.search-users #name').length > 0) {
             i++;
             $('#opponents').append(
               '<div class="row opponents-row"><a href="/play?game=' + data[key].profile.PlayerId + '">' +
-              '    <div class="col-md-4 text-left">' + data[key].profile.DisplayName + '</div>' +
-              '    <div class="col-md-8">' +
+              '    <div class="col-md-4 col-xs-8 text-left"><img src="' + getRankIcon(data[key].ranks.total.Position) + '"><span>' + data[key].profile.DisplayName + '</span></div>' +
+              '    <div class="col-md-8 col-xs-4">' +
               '        <div class="row">' +
-              '            <div class="col-md-2 borders">' + data[key].ranks.total.Position + '</div>' +
-              '            <div class="col-md-2 borders">' + data[key].ranks.weekly.Position + '</div>' +
-              '            <div class="col-md-2 borders">' + data[key].ranks.daily.Position + '</div>' +
-              '            <div class="col-md-2 borders">' + data[key].ranks.total.StatValue + '</div>' +
-              '            <div class="col-md-2 borders">' + data[key].ranks.weekly.StatValue + '</div>' +
-              '            <div class="col-md-2 borders">' + data[key].ranks.daily.StatValue + '</div>' +
+              '            <div class="col-md-2 col-xs-12 borders">' + data[key].ranks.total.Position + '</div>' +
+              '            <div class="col-md-2 borders hide-on-mobile">' + data[key].ranks.weekly.Position + '</div>' +
+              '            <div class="col-md-2 borders hide-on-mobile">' + data[key].ranks.daily.Position + '</div>' +
+              '            <div class="col-md-2 borders hide-on-mobile">' + data[key].ranks.total.StatValue + '</div>' +
+              '            <div class="col-md-2 borders hide-on-mobile">' + data[key].ranks.weekly.StatValue + '</div>' +
+              '            <div class="col-md-2 borders hide-on-mobile">' + data[key].ranks.daily.StatValue + '</div>' +
               '        </div>' +
               '    </div>' +
               '</a></div>'
