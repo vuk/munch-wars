@@ -552,10 +552,10 @@ img {
 .modal-content .selected-munch img {
     max-width: 100px;
 }
-.modal-content #opponent-rank img{
+.modal-content #opponent-rank img, .modal-content #challenger-rank img{
     max-height: 50px;
 }
-.modal-content #opponent-rank {
+.modal-content #opponent-rank, .modal-content #challenger-rank {
     margin-top: 2rem;
 }
 .modal-content #opponent-name, .modal-content #challenger-name {
