@@ -45,7 +45,7 @@ socket.on('respond_to_invite', function (data) {
   if (data.player1.profile.PlayerId !== userId) {
     localStorage.setItem('opponentId', data.player1.profile.PlayerId);
     $('#accept_modal').modal();
-    $('#opponent-rank').html('<img src="'+ getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}).Value || 0) +'"/>');
+    $('#opponent-rank').html('<img src="'+ getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}) ? _.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}).Value : 0) +'"/>');
     $('#opponent-name').html(data.profile.DisplayName);
     var daily = parseInt(data.ranks.daily.Position, 10) + 1;
     while (daily.toString().length < 5) {
@@ -65,7 +65,7 @@ socket.on('respond_to_invite', function (data) {
     $('.' + data.guestSide).show();
   } else {
     $('#invited_modal').modal();
-    $('#challenger-rank').html('<img src="'+ getRankIcon(_.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}).Value || 0) +'"/>');
+    $('#challenger-rank').html('<img src="'+ getRankIcon(_.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}) ? _.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}).Value : 0) +'"/>');
     $('#challenger-name').html(data.player2.profile.DisplayName);
     var daily = parseInt(data.ranks.daily.Position, 10) + 1;
     while (daily.toString().length < 5) {
