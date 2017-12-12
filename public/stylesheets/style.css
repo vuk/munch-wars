@@ -620,6 +620,9 @@ img {
 .modal-content .rankings-modal-row .col-xs-4:last-child {
     border-right: 2px solid rgba(255,255,255,0.8);
 }
+#no-opponents {
+    display: none;
+}
 #no-opponents h1 {
     color: #FFDF00;
 }
