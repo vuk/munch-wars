@@ -269,21 +269,21 @@ mainState.prototype = {
         if (data.guestSide === 'white') {
           $('#right-name').html(data.player1.profile.DisplayName);
           $('#right-name-go').html(data.player1.profile.DisplayName);
-          $('#right-rank').html('<img src="'+ getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}).Value || 0) +'"/>');
-          $('#right-rank-go').html('<img src="'+ getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}).Value || 0) +'"/>');
+          $('#right-rank').html('<img src="'+ getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}) ? _.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}).Value : 0) +'"/>');
+          $('#right-rank-go').html('<img src="'+ getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}) ? _.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}).Value : 0) +'"/>');
           $('#left-name').html(data.player2.profile.DisplayName);
           $('#left-name-go').html(data.player2.profile.DisplayName);
-          $('#left-rank').html('<img src="'+ getRankIcon(_.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}).Value || 0) +'"/>');
-          $('#left-rank-go').html('<img src="'+ getRankIcon(_.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}).Value || 0) +'"/>');
+          $('#left-rank').html('<img src="'+ getRankIcon(_.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}) ? _.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}).Value : 0) +'"/>');
+          $('#left-rank-go').html('<img src="'+ getRankIcon(_.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}) ? _.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}).Value : 0) +'"/>');
         } else {
           $('#right-name').html(data.player2.profile.DisplayName);
           $('#right-name-go').html(data.player2.profile.DisplayName);
-          $('#right-rank').html('<img src="'+ getRankIcon(_.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}).Value || 0) +'"/>');
-          $('#right-rank-go').html('<img src="'+ getRankIcon(_.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}).Value || 0) +'"/>');
+          $('#right-rank').html('<img src="'+ getRankIcon(_.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}) ? _.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}).Value : 0) +'"/>');
+          $('#right-rank-go').html('<img src="'+ getRankIcon(_.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}) ? _.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}).Value : 0) +'"/>');
           $('#left-name').html(data.player1.profile.DisplayName);
           $('#left-name-go').html(data.player1.profile.DisplayName);
-          $('#left-rank').html('<img src="'+ getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}).Value || 0) +'"/>');
-          $('#left-rank-go').html('<img src="'+ getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}).Value || 0) +'"/>');
+          $('#left-rank').html('<img src="'+ getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}) ? _.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}).Value : 0) +'"/>');
+          $('#left-rank-go').html('<img src="'+ getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}) ? _.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}).Value : 0) +'"/>');
         }
         self.ballSprite.visible = true;
         self.startCountdown();
