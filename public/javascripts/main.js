@@ -260,7 +260,7 @@ if (typeof computer !== 'undefined' && computer && $('#game-over').length > 0) {
   if (localStorage.getItem('side') === 'white') {
     $('#left-name, #left-name-go').html('Computer');
     $('#left-rank, #left-rank-go').html('<img src="/assets/ranks/8.png"/>');
-    $('#right-rank, #right-rank-go').html('<img src="'+ getRankIcon(_.find(stats.data.Statistics, { StatisticName: "Total Points"}).Value || 0) +'"/>');
+    $('#right-rank, #right-rank-go').html('<img src="'+ getRankIcon(_.find(stats.data.Statistics, { StatisticName: "Total Points"}) ? _.find(stats.data.Statistics, { StatisticName: "Total Points"}).Value : 0) +'"/>');
     $('#right-name, #right-name-go').html(profile.DisplayName);
   }
 }
