@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const playfab = require('playfab-sdk/Scripts/PlayFab/PlayFabServer');
 const _ = require('lodash');
-playfab.settings.titleId = 'F06D';
-playfab.settings.developerSecretKey = 'X6GUF8OHOC8OIXU1W9P3F77SIJW9X5EZESCNTG8J53G97ANDEE';
+const config = require('../config');
+playfab.settings.titleId = config.playfab.title;
+playfab.settings.developerSecretKey = config.playfab.secret;
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
