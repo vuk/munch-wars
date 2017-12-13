@@ -707,9 +707,6 @@ img {
 .home .navbar-default .navbar-brand {
     display: none;
 }
-.home .navbar-default {
-    border: none;
-}
 .navbar-default .navbar-toggle {
     border: 1px solid #FFDF00;
     border-radius: 0;
@@ -986,6 +983,9 @@ img {
 
 /* Small Devices, Tablets */
 @media only screen and (max-width: 768px) {
+    .home .navbar-default {
+        border: none;
+    }
     .munch-row-two .col-md-6:first-child .award-holder {
         flex-direction: column-reverse;
         margin-bottom: 2rem;
