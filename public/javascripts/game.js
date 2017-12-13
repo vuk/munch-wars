@@ -261,6 +261,7 @@ mainState.prototype = {
         isHome = true;
       }
       socket.on('start_game', function (data) {
+        $('#invited_modal').modal('hide');
         if (isHome) {
           self.side = data.guestSide === 'white' ? 'black' : 'white';
         } else {

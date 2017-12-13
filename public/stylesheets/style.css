@@ -368,6 +368,9 @@ img {
     max-width: 300px;
     margin: 2rem auto;
 }
+.btn-new-account {
+    height: 80px;
+}
 
 .login-body .form, .form-inline {
     padding: 2rem 10%;
@@ -417,12 +420,16 @@ img {
     background: transparent;
     border: none;
     max-width: 150px;
+    outline: none;
+}
+.login-body .form button:hover {
+    border: none;
+    outline: none;
 }
 
 .login-body .form button.register-btn {
     max-width: 300px;
     margin-top: 2rem;
-    max-height: 40px;
 }
 
 .pts-score {
@@ -695,6 +702,13 @@ img {
 .navbar-toggle {
     float: left;
     margin-top: 15px;
+}
+
+.home .navbar-default .navbar-brand {
+    display: none;
+}
+.home .navbar-default {
+    border: none;
 }
 .navbar-default .navbar-toggle {
     border: 1px solid #FFDF00;
@@ -972,6 +986,42 @@ img {
 
 /* Small Devices, Tablets */
 @media only screen and (max-width: 768px) {
+    .munch-row-two .col-md-6:first-child .award-holder {
+        flex-direction: column-reverse;
+        margin-bottom: 2rem;
+    }
+    .munch-row-two .col-md-6:last-child .award-holder {
+        flex-direction: column;
+        margin-bottom: 2rem;
+    }
+    .award-desc {
+        color: #fff;
+        width: 100%;
+        font-size: 125%;
+    }
+    .spanner {
+        margin: 3rem 0;
+    }
+    .munch-logo-row {
+        margin-bottom: 3rem;
+    }
+    .intro-text .subtitle {
+        font-size: 17px;
+        text-align: center;
+        margin-top: 2rem;
+    }
+    .btn-holder {
+        padding: 0;
+    }
+    .munch-row-btn a img {
+        max-width: 100%;
+    }
+    .munch-home-mobile .col-md-3 {
+        display: none;
+    }
+    .munc-wars-holder {
+        padding: 0 15%;
+    }
     .navbar-default .navbar-collapse, .navbar-default .navbar-form {
         border: none;
         position: absolute;
