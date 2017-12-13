@@ -1,7 +1,7 @@
 const config = {
     playfab: {
       title: 'BA73',
-      secret: 'X6GUF8OHOC8OIXU1W9P3F77SIJW9X5EZESCNTG8J53G97ANDEE'
+      secret: '5OUS4CNM69F3YZYDM4KHJPFRDO4WRPMWZIUWERDDGYNUIITJ8W'
     }
   };
   
