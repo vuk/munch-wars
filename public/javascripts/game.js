@@ -256,7 +256,7 @@ mainState.prototype = {
       }
       //game.input.onDown.add(this.startCountdown, this);
       this.startCountdown();
-      this.ballSprite.visible = true;
+      //this.ballSprite.visible = true;
     } else {
       if (userId === getParameterByName('game')) {
         isHome = true;
@@ -287,14 +287,14 @@ mainState.prototype = {
           $('#left-rank').html('<img src="'+ getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}) ? _.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}).Value : 0) +'"/>');
           $('#left-rank-go').html('<img src="'+ getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}) ? _.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}).Value : 0) +'"/>');
         }
-        self.ballSprite.visible = true;
+        //self.ballSprite.visible = true;
         self.startCountdown();
       });
     }
 
     socket.on('update_state', function (data) {
       this.lastUpdate = Date.now();
-      if (!self.syncData.time || self.syncData.time <= data.time) {
+      if (!self.syncData.time || self.syncData.time <= data.time && data.ball.visible) {
         self.syncData = data;
       }
     });
@@ -336,7 +336,9 @@ mainState.prototype = {
     if (!isHome) {
       socket.on('gameover', function (data) {
         $('#game-over').show();
-        self.ballSprite.visible = false;
+        self.resetBall();
+        self.ballSprite.body.velocity.x = 0;
+        self.ballSprite.body.velocity.y = 0;
         self.enablePaddles(false);
         self.enableBoundaries(true);
         $('.hide-on-go span').hide();
@@ -398,7 +400,7 @@ mainState.prototype = {
         this.ballSprite.body.velocity.x = this.syncData.ball.velocityX;
         this.ballSprite.body.velocity.y = this.syncData.ball.velocityY;*/
         //game.physics.arcade.moveToXY(this.ballSprite, this.syncData.ball.x + this.ballSprite.width / 2, this.syncData.ball.y + this.ballSprite.height / 2, 0, 20);
-        game.add.tween(this.ballSprite).to({x: this.syncData.ball.x + this.ballSprite.width / 2, y: this.syncData.ball.y + this.ballSprite.height / 2}, 25, Phaser.Easing.Linear.None, true, 0);
+        game.add.tween(this.ballSprite).to({x: this.syncData.ball.x + this.ballSprite.width / 2, y: this.syncData.ball.y + this.ballSprite.height / 2}, 22, Phaser.Easing.Linear.None, true, 0);
       }
     }
   },
@@ -622,10 +624,7 @@ mainState.prototype = {
   },
 
   startDemo: function () {
-    this.ballSprite.visible = false;
-    /*this.ballSprite.velocity.x = 0;
-    this.ballSprite.velocity.y = 0;*/
-    //this.resetBall();
+    this.resetBall();
     this.enablePaddles(false);
     this.enableBoundaries(true);
     /*if (computer) {
@@ -637,7 +636,7 @@ mainState.prototype = {
   gameOver: function () {
     $('#game-over').show();
     game.sound.stopAll();
-    this.ballSprite.visible = false;
+    this.resetBall();
     this.enablePaddles(false);
     $('.hide-on-go span').hide();
     if (isHome) {
@@ -687,6 +686,8 @@ mainState.prototype = {
     if (isHome || computer) {
       this.ballSprite.reset(game.world.centerX, game.rnd.between(0, gameProperties.screenHeight));
       this.ballSprite.visible = false;
+      this.ballSprite.body.velocity.x = 0;
+      this.ballSprite.body.velocity.y = 0;
       game.time.events.add(Phaser.Timer.SECOND * gameProperties.ballStartDelay, this.startBall, this);
     }
   },
@@ -1055,6 +1056,7 @@ mainState.prototype = {
     this.lastHitBy = -1;
     this.sndBallMissed.play();
     this.undoMagics();
+    this.resetBall();
     if (isHome) {
       socket.emit('outofbounds', {
         id: getParameterByName('game')
