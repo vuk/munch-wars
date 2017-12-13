@@ -6,7 +6,7 @@ var initializeSound = function () {
   }
 };
 
-function getParameterByName(name, url) {
+function getParameterByName (name, url) {
   if (!url) url = window.location.href;
   name = name.replace(/[\[\]]/g, '\\$&');
   var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
@@ -113,10 +113,10 @@ var fontAssets = {
   scoreRight_x: gameProperties.screenWidth * 0.75,
   scoreTop_y: 10,
 
-  scoreFontStyle: {font: '80px orbitron', fill: '#FFFFFF', align: 'center'},
-  instructionsFontStyle: {font: '16px orbitron', fill: '#FFDF00', align: 'center', fontWeight: 500},
-  countdownFontStyle: {font: '72px orbitron', fill: '#FFDF00', align: 'center', fontWeight: 600},
-  getReadyStyle: {font: '28px orbitron', fill: '#FFDF00', align: 'center', fontWeight: 600},
+  scoreFontStyle: { font: '80px orbitron', fill: '#FFFFFF', align: 'center' },
+  instructionsFontStyle: { font: '16px orbitron', fill: '#FFDF00', align: 'center', fontWeight: 500 },
+  countdownFontStyle: { font: '72px orbitron', fill: '#FFDF00', align: 'center', fontWeight: 600 },
+  getReadyStyle: { font: '28px orbitron', fill: '#FFDF00', align: 'center', fontWeight: 600 },
 };
 
 var labels = {
@@ -172,18 +172,18 @@ var mainState = function (game) {
       color: 'white',
       magic: []
     }
-  ]
+  ];
 };
 
-function handleIncorrect(){
-  if(!game.device.desktop){
-    document.getElementById('turn').style.display='flex';
+function handleIncorrect () {
+  if (!game.device.desktop) {
+    document.getElementById('turn').style.display = 'flex';
   }
 }
 
-function handleCorrect(){
-  if(!game.device.desktop){
-    document.getElementById('turn').style.display='none';
+function handleCorrect () {
+  if (!game.device.desktop) {
+    document.getElementById('turn').style.display = 'none';
   }
 }
 
@@ -236,6 +236,10 @@ mainState.prototype = {
     var self = this;
     this.cnt = 1;
 
+    $('#accept_invite').click(function () {
+      game.state.start('main', true, false);
+    });
+
     $('#left-player-magic-1, #right-player-magic-1').click(function () {
       self.fireMagic(1);
     });
@@ -271,21 +275,21 @@ mainState.prototype = {
         if (data.guestSide === 'white') {
           $('#right-name').html(data.player1.profile.DisplayName);
           $('#right-name-go').html(data.player1.profile.DisplayName);
-          $('#right-rank').html('<img src="'+ getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}) ? _.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}).Value : 0) +'"/>');
-          $('#right-rank-go').html('<img src="'+ getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}) ? _.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}).Value : 0) +'"/>');
+          $('#right-rank').html('<img src="' + getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: 'Total Points' }) ? _.find(data.player1.stats.data.Statistics, { StatisticName: 'Total Points' }).Value : 0) + '"/>');
+          $('#right-rank-go').html('<img src="' + getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: 'Total Points' }) ? _.find(data.player1.stats.data.Statistics, { StatisticName: 'Total Points' }).Value : 0) + '"/>');
           $('#left-name').html(data.player2.profile.DisplayName);
           $('#left-name-go').html(data.player2.profile.DisplayName);
-          $('#left-rank').html('<img src="'+ getRankIcon(_.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}) ? _.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}).Value : 0) +'"/>');
-          $('#left-rank-go').html('<img src="'+ getRankIcon(_.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}) ? _.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}).Value : 0) +'"/>');
+          $('#left-rank').html('<img src="' + getRankIcon(_.find(data.player2.stats.data.Statistics, { StatisticName: 'Total Points' }) ? _.find(data.player2.stats.data.Statistics, { StatisticName: 'Total Points' }).Value : 0) + '"/>');
+          $('#left-rank-go').html('<img src="' + getRankIcon(_.find(data.player2.stats.data.Statistics, { StatisticName: 'Total Points' }) ? _.find(data.player2.stats.data.Statistics, { StatisticName: 'Total Points' }).Value : 0) + '"/>');
         } else {
           $('#right-name').html(data.player2.profile.DisplayName);
           $('#right-name-go').html(data.player2.profile.DisplayName);
-          $('#right-rank').html('<img src="'+ getRankIcon(_.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}) ? _.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}).Value : 0) +'"/>');
-          $('#right-rank-go').html('<img src="'+ getRankIcon(_.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}) ? _.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}).Value : 0) +'"/>');
+          $('#right-rank').html('<img src="' + getRankIcon(_.find(data.player2.stats.data.Statistics, { StatisticName: 'Total Points' }) ? _.find(data.player2.stats.data.Statistics, { StatisticName: 'Total Points' }).Value : 0) + '"/>');
+          $('#right-rank-go').html('<img src="' + getRankIcon(_.find(data.player2.stats.data.Statistics, { StatisticName: 'Total Points' }) ? _.find(data.player2.stats.data.Statistics, { StatisticName: 'Total Points' }).Value : 0) + '"/>');
           $('#left-name').html(data.player1.profile.DisplayName);
           $('#left-name-go').html(data.player1.profile.DisplayName);
-          $('#left-rank').html('<img src="'+ getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}) ? _.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}).Value : 0) +'"/>');
-          $('#left-rank-go').html('<img src="'+ getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}) ? _.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}).Value : 0) +'"/>');
+          $('#left-rank').html('<img src="' + getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: 'Total Points' }) ? _.find(data.player1.stats.data.Statistics, { StatisticName: 'Total Points' }).Value : 0) + '"/>');
+          $('#left-rank-go').html('<img src="' + getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: 'Total Points' }) ? _.find(data.player1.stats.data.Statistics, { StatisticName: 'Total Points' }).Value : 0) + '"/>');
         }
         //self.ballSprite.visible = true;
         self.startCountdown();
@@ -313,35 +317,36 @@ mainState.prototype = {
     });
 
     socket.on('sync_shot', function (data) {
-      if(data.myId !== userId) {
+      if (data.myId !== userId) {
         self.handleShot(data.side, data.y);
       }
     });
     socket.on('sync_hor', function (data) {
-      if(data.myId !== userId) {
+      if (data.myId !== userId) {
         self.handleHor(false);
       }
     });
     socket.on('sync_ver', function (data) {
-      if(data.myId !== userId) {
+      if (data.myId !== userId) {
         self.handleVer(false);
       }
     });
     socket.on('sync_double', function (data) {
-      if(data.myId !== userId) {
+      if (data.myId !== userId) {
         self.handleDouble(data.side);
       }
     });
 
     if (!isHome) {
       socket.on('gameover', function (data) {
+        self.ballSprite.reset(game.world.centerX, game.world.centerY);
+        self.ballSprite.kill();
         $('#game-over').show();
-        self.resetBall();
-        self.ballSprite.body.velocity.x = 0;
-        self.ballSprite.body.velocity.y = 0;
+        game.sound.stopAll();
         self.enablePaddles(false);
         self.enableBoundaries(true);
         $('.hide-on-go span').hide();
+        self.resetBall();
       });
 
       socket.on('outOfBounds', function () {
@@ -383,15 +388,15 @@ mainState.prototype = {
   updateState: function () {
     this.lastUpdate = Date.now();
     if (this.syncData) {
-      if(this.side === 'white' && this.syncData.paddle && this.syncData.paddle['left'] && this.syncData.paddle['left'].y) {
+      if (this.side === 'white' && this.syncData.paddle && this.syncData.paddle['left'] && this.syncData.paddle['left'].y) {
         this.paddleLeftSprite.body.velocity.y = this.syncData.paddle['left'].velocity;
         this.paddleLeftSprite.y = this.syncData.paddle['left'].y;
       }
-      if(this.side === 'black' && this.syncData.paddle && this.syncData.paddle['right'] && this.syncData.paddle['right'].y) {
+      if (this.side === 'black' && this.syncData.paddle && this.syncData.paddle['right'] && this.syncData.paddle['right'].y) {
         this.paddleRightSprite.body.velocity.y = this.syncData.paddle['right'].velocity;
         this.paddleRightSprite.y = this.syncData.paddle['right'].y;
       }
-      if(this.syncData && this.syncData.ball && !isHome && this.syncData.ball.x) {
+      if (this.syncData && this.syncData.ball && !isHome && this.syncData.ball.x) {
         /*this.ballSprite.x = this.syncData.ball.x + this.ballSprite.width / 2;
         this.ballSprite.y = this.syncData.ball.y + this.ballSprite.height / 2;*/
         /*self.ballSprite.anchor.setTo(0.5, 0.5);*/
@@ -400,7 +405,10 @@ mainState.prototype = {
         this.ballSprite.body.velocity.x = this.syncData.ball.velocityX;
         this.ballSprite.body.velocity.y = this.syncData.ball.velocityY;*/
         //game.physics.arcade.moveToXY(this.ballSprite, this.syncData.ball.x + this.ballSprite.width / 2, this.syncData.ball.y + this.ballSprite.height / 2, 0, 20);
-        game.add.tween(this.ballSprite).to({x: this.syncData.ball.x + this.ballSprite.width / 2, y: this.syncData.ball.y + this.ballSprite.height / 2}, 22, Phaser.Easing.Linear.None, true, 0);
+        game.add.tween(this.ballSprite).to({
+          x: this.syncData.ball.x + this.ballSprite.width / 2,
+          y: this.syncData.ball.y + this.ballSprite.height / 2
+        }, 22, Phaser.Easing.Linear.None, true, 0);
       }
     }
   },
@@ -413,11 +421,11 @@ mainState.prototype = {
     game.physics.arcade.overlap(this.ballSprite, this.paddleGroup, this.collideWithPaddle, null, this);
     game.physics.arcade.overlap(this.ballSprite, this.centerBottomBorder, this.collideWithMagicBounds, null, this);
     game.physics.arcade.overlap(this.ballSprite, this.centerTopBorder, this.collideWithMagicBounds, null, this);
-    if(this.bulletRightSprite) {
+    if (this.bulletRightSprite) {
       this.bulletRightSprite.events.onOutOfBounds.add(this.rightOutBounds, this);
       game.physics.arcade.overlap(this.bulletRightSprite, this.paddleLeftSprite, this.shotLeft, null, this);
     }
-    if(this.bulletLeftSprite) {
+    if (this.bulletLeftSprite) {
       this.bulletLeftSprite.events.onOutOfBounds.add(this.leftOutBounds, this);
       game.physics.arcade.overlap(this.bulletLeftSprite, this.paddleRightSprite, this.shotRight, null, this);
     }
@@ -436,20 +444,21 @@ mainState.prototype = {
         visible: this.ballSprite.visible,
         time: Date.now()
       });
-    } /*else {
-      if (!isBallListenerSet) {
-        self.ballSprite.body.allowGravity = false;
-        self.ballSprite.body.velocity.x = 0;
-        self.ballSprite.body.velocity.y = 0;
-        socket.on('ball', function (data) {
-          self.ballSprite.visible = data.visible;
-          self.ballSprite.x = data.x;
-          self.ballSprite.y = data.y;
-          self.ballSprite.body.velocity.set(data.velocityX, data.velocityY);
-        });
-        isBallListenerSet = true;
-      }
-    }*/
+    }
+    /*else {
+         if (!isBallListenerSet) {
+           self.ballSprite.body.allowGravity = false;
+           self.ballSprite.body.velocity.x = 0;
+           self.ballSprite.body.velocity.y = 0;
+           socket.on('ball', function (data) {
+             self.ballSprite.visible = data.visible;
+             self.ballSprite.x = data.x;
+             self.ballSprite.y = data.y;
+             self.ballSprite.body.velocity.set(data.velocityX, data.velocityY);
+           });
+           isBallListenerSet = true;
+         }
+       }*/
     if (computer) {
       var y_pos = this.ballSprite.body.y;
       if (this.side === 'black') {
@@ -548,6 +557,7 @@ mainState.prototype = {
   },
 
   startCountdown: function () {
+    $('#game-over').hide();
     this.timer = game.time.create();
     this.countdownText = game.add.text(game.world.centerX, game.world.centerY, '3', fontAssets.countdownFontStyle);
     this.getReady = game.add.text(game.world.centerX, 60, labels.getReady, fontAssets.getReadyStyle);
@@ -638,6 +648,7 @@ mainState.prototype = {
     game.sound.stopAll();
     this.resetBall();
     this.enablePaddles(false);
+    this.enableBoundaries(true)
     $('.hide-on-go span').hide();
     if (isHome) {
       socket.emit('game_over', {
@@ -689,6 +700,10 @@ mainState.prototype = {
       this.ballSprite.body.velocity.x = 0;
       this.ballSprite.body.velocity.y = 0;
       game.time.events.add(Phaser.Timer.SECOND * gameProperties.ballStartDelay, this.startBall, this);
+    } else {
+      this.ballSprite.visible = false;
+      this.ballSprite.body.velocity.x = 0;
+      this.ballSprite.body.velocity.y = 0;
     }
   },
 
@@ -809,9 +824,9 @@ mainState.prototype = {
 
     this.lastHitBy = (ball.x < gameProperties.screenWidth * 0.5) ? 0 : 1;
     if (this.lastHitBy === 0) {
-      this.tempLeftStrikeCount ++;
+      this.tempLeftStrikeCount++;
     } else {
-      this.tempRightStrikeCount ++;
+      this.tempRightStrikeCount++;
     }
 
     var returnAngle;
@@ -852,7 +867,7 @@ mainState.prototype = {
     this.generateMagic(player, ball, magicBound);
     // Set probability to call spawnMagicByComputerPlayer()
     if (computer && Math.floor(Math.random() * 4) === 2) {
-        this.fireMagicByComputerPlayer();
+      this.fireMagicByComputerPlayer();
     }
   },
 
@@ -897,11 +912,11 @@ mainState.prototype = {
     this.players[cpuSide].magic.splice(randomMagicIndex, 1);
   },
 
-  updatePlayerMagicUI: function(player) {
+  updatePlayerMagicUI: function (player) {
     var allSpriteClassNames = 'sprite-double-size sprite-shoot sprite-hor-position sprite-ver-position sprite-empty';
     jQuery('#' + player.id + '-player-magic-1').removeClass(allSpriteClassNames).addClass((player.magic[0] !== void 0) ? 'sprite-' + player.magic[0] : 'sprite-empty');
-    jQuery('#' +player.id + '-player-magic-2').removeClass(allSpriteClassNames).addClass((player.magic[1] !== void 0) ? 'sprite-' + player.magic[1] : 'sprite-empty');
-    jQuery('#' +player.id + '-player-magic-3').removeClass(allSpriteClassNames).addClass((player.magic[2] !== void 0) ? 'sprite-' + player.magic[2] : 'sprite-empty');
+    jQuery('#' + player.id + '-player-magic-2').removeClass(allSpriteClassNames).addClass((player.magic[1] !== void 0) ? 'sprite-' + player.magic[1] : 'sprite-empty');
+    jQuery('#' + player.id + '-player-magic-3').removeClass(allSpriteClassNames).addClass((player.magic[2] !== void 0) ? 'sprite-' + player.magic[2] : 'sprite-empty');
   },
   fireCount: 0,
 
@@ -938,7 +953,7 @@ mainState.prototype = {
       }
       this.updatePlayerMagicUI(this.players[side]);
     } else {
-      this.fireCount ++;
+      this.fireCount++;
     }
   },
 
@@ -961,14 +976,14 @@ mainState.prototype = {
 
   handleShot: function (side, y) {
     this.shotSound.play();
-    if(side === 0) {
+    if (side === 0) {
       this.bulletLeftSprite = game.add.sprite(gameProperties.paddleLeft_x, y || this.paddleLeftSprite.y, graphicAssets.bulletLeftName);
       game.physics.enable(this.bulletLeftSprite, Phaser.Physics.ARCADE);
       this.bulletLeftSprite.enableBody = true;
       this.bulletLeftSprite.body.velocity.x = 800;
       this.bulletLeftSprite.body.velocity.y = 0;
     }
-    if(side === 1) {
+    if (side === 1) {
       this.bulletRightSprite = game.add.sprite(gameProperties.paddleRight_x, y || this.paddleRightSprite.y, graphicAssets.bulletRightName);
       game.physics.enable(this.bulletRightSprite, Phaser.Physics.ARCADE);
       this.bulletRightSprite.enableBody = true;
@@ -1010,7 +1025,7 @@ mainState.prototype = {
       id: getParameterByName('game'),
       side: side,
       myId: userId
-    })
+    });
   },
   handleHor: function (side) {
     this.useMagic.play();
@@ -1059,7 +1074,7 @@ mainState.prototype = {
     if (isHome) {
       socket.emit('outofbounds', {
         id: getParameterByName('game')
-      })
+      });
     }
     if (isHome || computer) {
       if (this.ballSprite.x < 0) {
@@ -1092,7 +1107,7 @@ mainState.prototype = {
       // If host is black player means he's won
       if (isHome) {
         socket.emit('winner', {
-          id: this.side === 'black' ? userId : opponent,
+          id: this.side === 'black' ? userId : opponent ? opponent : localStorage.getItem('opponentId'),
           points: this.leftStrikeCount + 3 * this.scoreLeft,
           pointsLoser: this.scoreRight,
           side: 'black'
@@ -1110,7 +1125,7 @@ mainState.prototype = {
       // If host is black player, means guest has won
       if (isHome) {
         socket.emit('winner', {
-          id: this.side === 'black' ? opponent : userId,
+          id: this.side === 'black' ? (opponent ? opponent : localStorage.getItem('opponentId')) : userId,
           points: this.rightStrikeCount + 3 * this.scoreRight,
           pointsLoser: this.scoreLeft,
           side: 'white'

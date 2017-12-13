@@ -3,8 +3,18 @@ const router = express.Router();
 const playfab = require('playfab-sdk/Scripts/PlayFab/PlayFabClient');
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  console.log(req.query.game);
   if(req.session.userId && (req.query.game || req.query.computer)) {
+    let availableOpponent = req.app.get('socketio').activeUsers[req.query.game].available;
+    let opponentsOpponent = req.app.get('socketio').activeUsers[req.query.game].opponent;
+    console.log(opponentsOpponent, req.session.userId);
+    if (availableOpponent || opponentsOpponent === req.session.userId || req.query.game === req.session.userId) {
+      req.app.get('socketio').activeUsers[req.query.game].available = false;
+      req.app.get('socketio').activeUsers[req.query.game].opponent = req.session.userId;
+      req.app.get('socketio').activeUsers[req.session.userId].available = false;
+      req.app.get('socketio').activeUsers[req.session.userId].opponent = req.query.game;
+    } else {
+      res.redirect('/play/opponents');
+    }
     playfab.GetPlayerProfile({
       PlayFabId: req.query.game,
       ProfileConstraints: {

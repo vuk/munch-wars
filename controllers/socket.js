@@ -112,6 +112,7 @@ module.exports = {
           // User joins a room with his own ID
           socket.join(data.id);
           this.activeUsers[data.id].time = Date.now();
+          this.activeUsers[data.id].available = true;
           this.sockets[data.id] = socket;
         }
       });
@@ -144,8 +145,8 @@ module.exports = {
       });
       socket.on('accept', (data) => {
         // Make sure room has exactly two members before starting a game
-        console.log(this.io.sockets.adapter.rooms[data.host].sockets);
-        if (Object.keys(this.io.sockets.adapter.rooms[data.host].sockets).length >= 2) {
+        if (this.io.sockets.adapter.rooms[data.host] &&
+          Object.keys(this.io.sockets.adapter.rooms[data.host].sockets).length >= 2) {
           setTimeout(() => {
             console.log('start_game');
             this.io.to(data.host).emit('start_game', {
@@ -156,7 +157,7 @@ module.exports = {
             updateInterval = setInterval(() => {
               this.state[data.host].time = Date.now();
               this.io.to(data.host).emit('update_state', this.state[data.host]);
-            }, 15);
+            }, 10);
           }, 5000);
         }
       });
