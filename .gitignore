@@ -31,3 +31,5 @@ benchmarks/graphs
 yarn.lock
 
 dist
+
+config.js
