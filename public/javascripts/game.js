@@ -381,24 +381,24 @@ mainState.prototype = {
   updateState: function () {
     this.lastUpdate = Date.now();
     if (this.syncData) {
-      if(this.side === 'white' && this.syncData.paddle && this.syncData.paddle['left']) {
+      if(this.side === 'white' && this.syncData.paddle && this.syncData.paddle['left'] && this.syncData.paddle['left'].y) {
         this.paddleLeftSprite.body.velocity.y = this.syncData.paddle['left'].velocity;
         this.paddleLeftSprite.y = this.syncData.paddle['left'].y;
       }
-      if(this.side === 'black' && this.syncData.paddle && this.syncData.paddle['right']) {
+      if(this.side === 'black' && this.syncData.paddle && this.syncData.paddle['right'] && this.syncData.paddle['right'].y) {
         this.paddleRightSprite.body.velocity.y = this.syncData.paddle['right'].velocity;
         this.paddleRightSprite.y = this.syncData.paddle['right'].y;
       }
-      if(this.syncData && this.syncData.ball && !isHome) {
-        /*self.ballSprite.visible = data.ball.visible;*/
-        this.ballSprite.x = this.syncData.ball.x + this.ballSprite.width / 2;
-        this.ballSprite.y = this.syncData.ball.y + this.ballSprite.height / 2;
+      if(this.syncData && this.syncData.ball && !isHome && this.syncData.ball.x) {
+        /*this.ballSprite.x = this.syncData.ball.x + this.ballSprite.width / 2;
+        this.ballSprite.y = this.syncData.ball.y + this.ballSprite.height / 2;*/
         /*self.ballSprite.anchor.setTo(0.5, 0.5);*/
         this.ballSprite.visible = this.syncData.ball.visible;
-        this.ballSprite.body.velocity.set(this.syncData.ball.velocityX, this.syncData.ball.velocityY);
+        /*this.ballSprite.body.velocity.set(this.syncData.ball.velocityX, this.syncData.ball.velocityY);
         this.ballSprite.body.velocity.x = this.syncData.ball.velocityX;
-        this.ballSprite.body.velocity.y = this.syncData.ball.velocityY;
-        //game.physics.arcade.accelerateToXY(this.ballSprite, this.syncData.ball.x + this.ballSprite.width / 2, this.syncData.ball.y + this.ballSprite.height / 2);
+        this.ballSprite.body.velocity.y = this.syncData.ball.velocityY;*/
+        //game.physics.arcade.moveToXY(this.ballSprite, this.syncData.ball.x + this.ballSprite.width / 2, this.syncData.ball.y + this.ballSprite.height / 2, 0, 20);
+        game.add.tween(this.ballSprite).to({x: this.syncData.ball.x + this.ballSprite.width / 2, y: this.syncData.ball.y + this.ballSprite.height / 2}, 25, Phaser.Easing.Linear.None, true, 0);
       }
     }
   },
@@ -847,7 +847,6 @@ mainState.prototype = {
       this.magicCountdown--;
       return;
     }
-    console.log(this.lastHitBy);
     var player = this.players[this.lastHitBy];
     this.generateMagic(player, ball, magicBound);
     // Set probability to call spawnMagicByComputerPlayer()
