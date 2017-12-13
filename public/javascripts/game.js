@@ -50,7 +50,7 @@ var gameProperties = {
   paddleSegmentsMax: 8,
   paddleSegmentHeight: 2,
   paddleSegmentAngle: 8,
-  paddleTopGap: 2,
+  paddleTopGap: 0,
 
   ballVelocity: 600,
   ballRandomStartingAngleLeft: [-120, 120],
@@ -724,6 +724,9 @@ mainState.prototype = {
         if (this.paddleLeftSprite.body.y < gameProperties.paddleTopGap) {
           this.paddleLeftSprite.body.y = gameProperties.paddleTopGap;
         }
+        if (this.paddleLeftSprite.body.y + this.paddleLeftSprite.height > gameProperties.screenHeight) {
+          this.paddleLeftSprite.body.y = gameProperties.screenHeight - this.paddleLeftSprite.height;
+        }
         if (!computer) {
           socket.emit('move_paddle', {
             id: getParameterByName('game'),
@@ -766,6 +769,9 @@ mainState.prototype = {
 
         if (this.paddleRightSprite.body.y < gameProperties.paddleTopGap) {
           this.paddleRightSprite.body.y = gameProperties.paddleTopGap;
+        }
+        if (this.paddleRightSprite.body.y + this.paddleRightSprite.height > gameProperties.screenHeight) {
+          this.paddleRightSprite.body.y = gameProperties.screenHeight - this.paddleRightSprite.height;
         }
         if (!computer) {
           socket.emit('move_paddle', {
