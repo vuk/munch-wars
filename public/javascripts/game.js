@@ -50,7 +50,7 @@ var gameProperties = {
   paddleSegmentsMax: 8,
   paddleSegmentHeight: 2,
   paddleSegmentAngle: 8,
-  paddleTopGap: 10,
+  paddleTopGap: 2,
 
   ballVelocity: 600,
   ballRandomStartingAngleLeft: [-120, 120],
@@ -491,13 +491,13 @@ mainState.prototype = {
     this.rightTopBorder = game.add.sprite(game.world.width, 0, graphicAssets.yellowBorderName);
     this.rightTopBorder.anchor.set(0, 0);
 
-    this.leftBottomBorder = game.add.sprite(0, 720, graphicAssets.yellowBorderName);
+    this.leftBottomBorder = game.add.sprite(0, 400, graphicAssets.yellowBorderName);
     this.leftBottomBorder.anchor.set(0, 1);
 
-    this.rightBottomBorder = game.add.sprite(game.world.width, 720, graphicAssets.yellowBorderName);
+    this.rightBottomBorder = game.add.sprite(game.world.width, 400, graphicAssets.yellowBorderName);
     this.rightBottomBorder.anchor.set(0, 1);
 
-    this.centerBottomBorder = game.add.sprite(game.world.centerX, 720, graphicAssets.redBorderName);
+    this.centerBottomBorder = game.add.sprite(game.world.centerX, 400, graphicAssets.redBorderName);
     this.centerBottomBorder.anchor.set(0.5, 1);
 
     this.centerTopBorder = game.add.sprite(game.world.centerX, 0, graphicAssets.redBorderName);
