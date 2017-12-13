@@ -1056,7 +1056,6 @@ mainState.prototype = {
     this.lastHitBy = -1;
     this.sndBallMissed.play();
     this.undoMagics();
-    this.resetBall();
     if (isHome) {
       socket.emit('outofbounds', {
         id: getParameterByName('game')
