@@ -270,7 +270,6 @@ if($('.fetch-rank-row').length > 0) {
     var id = $(this).data('playerid');
     var self = this;
     $.get('/ranking/rankings?PlayFabId=' + id, function (data) {
-      console.log(data);
       if (data.weekly) {
         data.weekly.Position = parseInt(data.weekly.Position, 10) + 1;
         while(data.weekly.Position.toString().length < 5) {
