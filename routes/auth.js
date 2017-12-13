@@ -1,12 +1,13 @@
 const express = require('express');
 const playfab = require('playfab-sdk/Scripts/PlayFab/PlayFabClient');
 const playfabServer = require('playfab-sdk/Scripts/PlayFab/PlayFabServer');
-playfabServer.settings.developerSecretKey = 'X6GUF8OHOC8OIXU1W9P3F77SIJW9X5EZESCNTG8J53G97ANDEE';
+const config = require('../config');
+playfabServer.settings.developerSecretKey = config.playfab.secret;
 const router = express.Router();
 const passport = require('passport');
 
-playfab.settings.titleId = 'F06D';
-playfabServer.settings.titleId = 'F06D';
+playfab.settings.titleId = config.playfab.title;
+playfabServer.settings.titleId = config.playfab.title;
 
 router.post('/login', function (req, res, next) {
   playfab.LoginWithEmailAddress({
@@ -261,7 +262,7 @@ router.post('/reset', (req, res, next) => {
   if (req.body.email) {
     playfab.SendAccountRecoveryEmail({
       Email: req.body.email,
-      TitleId: 'F06D'
+      TitleId: config.playfab.title
     }, (err, response) => {
       if (err) {
         console.log(err);

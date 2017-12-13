@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 const playfabServer = require('playfab-sdk/Scripts/PlayFab/PlayFabServer');
-playfabServer.settings.developerSecretKey = 'X6GUF8OHOC8OIXU1W9P3F77SIJW9X5EZESCNTG8J53G97ANDEE';
+const config = require('../config');
+playfabServer.settings.developerSecretKey = config.playfab.secret;
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
