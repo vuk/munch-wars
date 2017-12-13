@@ -256,6 +256,7 @@ mainState.prototype = {
       }
       //game.input.onDown.add(this.startCountdown, this);
       this.startCountdown();
+      this.ballSprite.visible = true;
     } else {
       if (userId === getParameterByName('game')) {
         isHome = true;
