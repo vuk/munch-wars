@@ -95,7 +95,8 @@ router.get('/social-login', passport.authenticate('facebook'),
           res.redirect('/play');
         }
         else {
-          if (req.user.profile.emails[0]) {
+          console.log(response);
+          if (req.user && req.user.profile && req.user.profile.emails && req.user.profile.emails[0]) {
             playfab.AddOrUpdateContactEmail({
               EmailAddress: req.user.profile.emails[0].value
             });
