@@ -47,7 +47,7 @@ playFabServer.GetLeaderboard({
   let oldWinners = getPreviousWinners();
   let i = 0;
 
-  while (newWinners.length < 1) {
+  while (newWinners.length < 1 && i < res.data.Leaderboard.length) {
     try {
       console.log(res.data.Leaderboard[i]);
       oldWinners.forEach((oldWinner) => {

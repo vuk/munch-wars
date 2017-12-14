@@ -10,9 +10,9 @@ playFabAdmin.settings.titleId = config.playfab.title;
 playFabServer.settings.titleId = config.playfab.title;
 const leaderboards = {
   weekly: 'Weekly Points',
-  daily: 'Daily Points',
+  daily: 'Points',
   weeklyWins: 'Weekly Wins',
-  dailyWins: 'Daily Wins'
+  dailyWins: 'Wins'
 };
 
 const currentDate = new Date();
@@ -47,7 +47,7 @@ playFabServer.GetLeaderboard({
   let oldWinners = getPreviousWinners();
   let i = 0;
 
-  while (newWinners.length < 10) {
+  while (newWinners.length < 10 && i < res.data.Leaderboard.length) {
     try {
       console.log(res.data.Leaderboard[i]);
       oldWinners.forEach((oldWinner) => {
