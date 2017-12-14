@@ -235,7 +235,7 @@ mainState.prototype = {
     //this.startCountdown();
     var self = this;
     this.cnt = 1;
-
+    this.submitted = false;
     $('#accept_invite').click(function () {
       game.state.start('main', true, false);
     });
@@ -1072,7 +1072,7 @@ mainState.prototype = {
       this.doubleActive[1] = false;
     }
   },
-
+  submitted: false,
   ballOutOfBounds: function () {
     this.lastHitBy = -1;
     this.sndBallMissed.play();
@@ -1112,19 +1112,25 @@ mainState.prototype = {
     if (this.scoreLeft >= gameProperties.scoreToWin) {
       // If host is black player means he's won
       if (isHome) {
-        socket.emit('winner', {
-          id: this.side === 'black' ? userId : opponent ? opponent : localStorage.getItem('opponentId'),
-          points: this.leftStrikeCount + 3 * this.scoreLeft,
-          pointsLoser: this.scoreRight,
-          side: 'black'
-        });
+        if (!this.submitted) {
+          this.submitted = true;
+          socket.emit('winner', {
+            id: this.side === 'black' ? userId : opponent ? opponent : localStorage.getItem('opponentId'),
+            points: this.leftStrikeCount + 3 * this.scoreLeft,
+            pointsLoser: this.scoreRight,
+            side: 'black'
+          });
+        }
       } else if (computer && this.side === 'black') {
-        socket.emit('winner', {
-          id: userId,
-          points: this.leftStrikeCount + 3 * this.scoreLeft,
-          pointsLoser: this.scoreRight,
-          side: 'black'
-        });
+        if (!this.submitted) {
+          this.submitted = true;
+          socket.emit('winner', {
+            id: userId,
+            points: this.leftStrikeCount + 3 * this.scoreLeft,
+            pointsLoser: this.scoreRight,
+            side: 'black'
+          });
+        }
       }
       this.gameOver();
     } else if (this.scoreRight >= gameProperties.scoreToWin) {
