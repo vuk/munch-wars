@@ -37,6 +37,7 @@ playFabServer.GetLeaderboard({
     ShowLinkedAccounts: true,
     ShowContactEmailAddresses: true
   },
+  Version: 1,
   StartPosition: 0,
   StatisticName: leaderboards.daily
 }, (err, res) => {
@@ -65,6 +66,7 @@ playFabServer.GetLeaderboard({
 });
 
 
+/*
 playFabAdmin.IncrementPlayerStatisticVersion({
   StatisticName: leaderboards.daily
 }, (err, result) => {
@@ -76,6 +78,7 @@ playFabAdmin.IncrementPlayerStatisticVersion({
 }, (err, result) => {
   console.log(err, result);
 });
+*/
 
 function getPreviousWinners () {
   let winners = [];
