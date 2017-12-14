@@ -1114,22 +1114,26 @@ mainState.prototype = {
       if (isHome) {
         if (!this.submitted) {
           this.submitted = true;
-          socket.emit('winner', {
+          var winner = {
             id: this.side === 'black' ? userId : opponent ? opponent : localStorage.getItem('opponentId'),
             points: this.leftStrikeCount + 3 * this.scoreLeft,
             pointsLoser: this.scoreRight,
             side: 'black'
-          });
+          };
+          console.log('winner black ', winner);
+          socket.emit('winner', winner);
         }
       } else if (computer && this.side === 'black') {
         if (!this.submitted) {
           this.submitted = true;
-          socket.emit('winner', {
+          var winnerWhite = {
             id: userId,
             points: this.leftStrikeCount + 3 * this.scoreLeft,
             pointsLoser: this.scoreRight,
             side: 'black'
-          });
+          };
+          console.log('winner white', winnerWhite);
+          socket.emit('winner', winnerWhite);
         }
       }
       this.gameOver();
