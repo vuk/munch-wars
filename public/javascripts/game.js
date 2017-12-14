@@ -1120,7 +1120,6 @@ mainState.prototype = {
             pointsLoser: this.scoreRight,
             side: 'black'
           };
-          console.log('winner black ', winner);
           socket.emit('winner', winner);
         }
       } else if (computer && this.side === 'black') {
@@ -1132,7 +1131,6 @@ mainState.prototype = {
             pointsLoser: this.scoreRight,
             side: 'black'
           };
-          console.log('winner white', winnerWhite);
           socket.emit('winner', winnerWhite);
         }
       }
