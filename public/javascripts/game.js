@@ -634,7 +634,10 @@ mainState.prototype = {
   },
 
   startDemo: function () {
-    this.resetBall();
+    this.ballSprite.reset(game.world.centerX, game.rnd.between(0, gameProperties.screenHeight));
+    this.ballSprite.visible = false;
+    this.ballSprite.body.velocity.x = 0;
+    this.ballSprite.body.velocity.y = 0;
     this.enablePaddles(false);
     this.enableBoundaries(true);
     /*if (computer) {
@@ -646,9 +649,12 @@ mainState.prototype = {
   gameOver: function () {
     $('#game-over').show();
     game.sound.stopAll();
-    this.resetBall();
+    this.ballSprite.reset(game.world.centerX, game.rnd.between(0, gameProperties.screenHeight));
+    this.ballSprite.visible = false;
+    this.ballSprite.body.velocity.x = 0;
+    this.ballSprite.body.velocity.y = 0;
     this.enablePaddles(false);
-    this.enableBoundaries(true)
+    this.enableBoundaries(true);
     $('.hide-on-go span').hide();
     if (isHome) {
       socket.emit('game_over', {
