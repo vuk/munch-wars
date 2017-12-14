@@ -928,23 +928,6 @@ img {
 
 }
 
-/* Small Devices, Tablets */
-@media only screen and (min-width: 768px) {
-    .modal-dialog {
-        margin-top: 120px;
-    }
-    .navbar-brand {
-        display: none;
-    }
-    .navbar-nav {
-        float: left;
-        margin: 0;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-    }
-}
-
 /* Medium Devices, Desktops */
 @media only screen and (min-width: 992px) {
     .pts-container:first-child {
@@ -1114,6 +1097,9 @@ img {
         padding-left: 5px;
         padding-right: 5px;
     }
+    .navbar-nav {
+        display: block !important;
+    }
 }
 
 /* Extra Small Devices, Phones */
@@ -1126,4 +1112,26 @@ img {
 /* Custom, iPhone Retina */
 @media only screen and (max-width: 320px) {
 
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width: 768px) {
+    .modal-dialog {
+        margin-top: 120px;
+    }
+    .navbar-brand {
+        display: none;
+    }
+    .navbar-nav {
+        float: left;
+        margin: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    .navbar-default .navbar-collapse, .navbar-default .navbar-form {
+        height: auto !important;
+        background: transparent;
+        position: relative;
+    }
 }
