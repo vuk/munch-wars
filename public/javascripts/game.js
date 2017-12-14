@@ -830,9 +830,13 @@ mainState.prototype = {
 
     this.lastHitBy = (ball.x < gameProperties.screenWidth * 0.5) ? 0 : 1;
     if (this.lastHitBy === 0) {
-      this.tempLeftStrikeCount++;
+      if (this.tempLeftStrikeCount < 10) {
+        this.tempLeftStrikeCount++;
+      }
     } else {
-      this.tempRightStrikeCount++;
+      if (this.tempRightStrikeCount < 10) {
+        this.tempRightStrikeCount++;
+      }
     }
 
     var returnAngle;
