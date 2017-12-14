@@ -57,6 +57,7 @@ router.get('/actives', function (req, res, next) {
     Object.keys(req.app.get('socketio').activeUsers).map((key) => {
       if (Date.now() - req.app.get('socketio').activeUsers[key].time < 10 * 60 * 1000
         && req.app.get('socketio').activeUsers[key].profile.PlayerId !== req.session.userId
+        && req.app.get('socketio').activeUsers[key].available
         && req.app.get('socketio').activeUsers[key].profile.DisplayName.indexOf(req.query.filter) > -1 && counter <= 50) {
         counter++;
         validUsers[key] = req.app.get('socketio').activeUsers[key];
@@ -64,7 +65,9 @@ router.get('/actives', function (req, res, next) {
     });
   } else {
     Object.keys(req.app.get('socketio').activeUsers).map((key) => {
-      if (Date.now() - req.app.get('socketio').activeUsers[key].time < 10 * 60 * 1000 && req.app.get('socketio').activeUsers[key].profile.PlayerId !== req.session.userId
+      if (Date.now() - req.app.get('socketio').activeUsers[key].time < 10 * 60 * 1000
+        && req.app.get('socketio').activeUsers[key].profile.PlayerId !== req.session.userId
+        && req.app.get('socketio').activeUsers[key].available
         && counter <= 50) {
         counter++;
         validUsers[key] = req.app.get('socketio').activeUsers[key];

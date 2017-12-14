@@ -16,6 +16,7 @@ router.post('/login', function (req, res, next) {
     TitleId: playfab.settings.titleId
   }, function (err, result) {
     if (err) {
+      console.log(err);
       res.render('pages/login', {
         title: 'Prijavite se',
         active: 'play',
@@ -123,7 +124,7 @@ router.get('/social-login', passport.authenticate('facebook'),
     }
   });
 
-router.post('/register', function (req, res, next) {
+router.post('/register', (req, res, next) => {
   if (req.body.password === req.body.password_confirm) {
     playfab.RegisterPlayFabUser({
       DisplayName: req.body.username.trim(),
@@ -131,7 +132,7 @@ router.post('/register', function (req, res, next) {
       Email: req.body.email.trim(),
       Password: req.body.password.trim(),
       TitleId: playfab.settings.titleId
-    }, function (err, result) {
+    }, (err, result) => {
       console.log(err);
       if (err) {
         res.render('pages/register', {
