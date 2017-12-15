@@ -26,7 +26,6 @@ router.post('/login', function (req, res, next) {
     } else {
       req.session.userId = result.data.PlayFabId;
       req.session.sessionTicket = result.data.SessionTicket;
-      playfab._internalSettings.sessionTicket = req.session.sessionTicket;
       playfab.GetPlayerProfile({
         PlayFabId: result.data.PlayFabId,
         ProfileConstraints: {
@@ -39,7 +38,6 @@ router.post('/login', function (req, res, next) {
           res.redirect('/play');
         }
         else {
-          playfab._internalSettings.sessionTicket = req.session.sessionTicket;
           playfab.GetPlayerStatistics({}, (err, stats) => {
             delete response.data.PlayerProfile.TitleId;
             if (response.data.PlayerProfile.LinkedAccounts && response.data.PlayerProfile.LinkedAccounts[0].Username) {
@@ -85,7 +83,6 @@ router.get('/social-login', passport.authenticate('facebook'),
     } else {
       req.session.userId = req.user.result.data.PlayFabId;
       req.session.sessionTicket = req.user.result.data.SessionTicket;
-      playfab._internalSettings.sessionTicket = req.user.result.data.SessionTicket;
       playfab.GetPlayerProfile({
         PlayFabId: req.user.result.data.PlayFabId,
         ProfileConstraints: {
@@ -153,7 +150,6 @@ router.post('/register', (req, res, next) => {
         console.log(result);
         req.session.userId = result.data.PlayFabId;
         req.session.sessionTicket = result.data.SessionTicket;
-        playfab._internalSettings.sessionTicket = req.session.sessionTicket;
         playfab.GetPlayerProfile({
           PlayFabId: result.data.PlayFabId,
           ProfileConstraints: {
