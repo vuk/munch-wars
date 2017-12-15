@@ -71,7 +71,7 @@ playFabServer.GetLeaderboard({
       });
       newWinnersMail.push(res.data.Leaderboard[i]);
       if (newWinners.length < 1) {
-        let email;
+        let email = 'vuks89@gmail.com';
         if(res.data.Leaderboard.Profile.LinkedAccounts && res.data.Leaderboard.Profile.LinkedAccounts[0] && res.data.Leaderboard.Profile.LinkedAccounts[0].Email) {
           email = res.data.Leaderboard.Profile.LinkedAccounts[0].Email;
         } else if (res.data.Leaderboard.Profile.ContactEmailAddresses && res.data.Leaderboard.Profile.ContactEmailAddresses[0]) {
