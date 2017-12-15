@@ -8,6 +8,9 @@ module.exports = {
   state: {},
   io: null,
   submitScore: (data) => {
+    if (data.points > 78) {
+      data.points = 78;
+    }
     playfabServer.UpdatePlayerStatistics({
       'PlayFabId': data.id,
       'Statistics': [
@@ -121,6 +124,8 @@ module.exports = {
        * So basically even though I started a game, I am a guest. Player invited to play will act as host
        */
       socket.on('invite', (data) => {
+        this.activeUsers[data.guest].available = false;
+        this.activeUsers[data.host].available = false;
         console.log('invite', data);
         if (this.io.sockets.adapter.rooms[data.host] && this.io.sockets.adapter.rooms[data.host].sockets
           && this.io.sockets.adapter.rooms[data.host].sockets.length === 2) {
@@ -215,6 +220,7 @@ module.exports = {
           if (clients.length > 0) {
             clients.forEach((socket_id) => {
               this.io.sockets.sockets[socket_id].leave(data.id);
+              this.io.sockets.sockets[socket_id].disconnect();
             });
           }
         });

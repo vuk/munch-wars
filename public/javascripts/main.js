@@ -45,7 +45,7 @@ socket.on('respond_to_invite', function (data) {
   if (data.player1.profile.PlayerId !== userId) {
     localStorage.setItem('opponentId', data.player1.profile.PlayerId);
     $('#accept_modal').modal();
-    $('#opponent-rank').html('<img src="'+ getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}) ? _.find(data.player1.stats.data.Statistics, { StatisticName: "Total Points"}).Value : 0) +'"/>');
+    $('#opponent-rank').html('<img src="' + getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: 'Total Points' }) ? _.find(data.player1.stats.data.Statistics, { StatisticName: 'Total Points' }).Value : 0) + '"/>');
     $('#opponent-name').html(data.profile.DisplayName);
     var daily = parseInt(data.ranks.daily.Position, 10) + 1;
     while (daily.toString().length < 5) {
@@ -65,7 +65,7 @@ socket.on('respond_to_invite', function (data) {
     $('.' + data.guestSide).show();
   } else {
     $('#invited_modal').modal();
-    $('#challenger-rank').html('<img src="'+ getRankIcon(_.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}) ? _.find(data.player2.stats.data.Statistics, { StatisticName: "Total Points"}).Value : 0) +'"/>');
+    $('#challenger-rank').html('<img src="' + getRankIcon(_.find(data.player2.stats.data.Statistics, { StatisticName: 'Total Points' }) ? _.find(data.player2.stats.data.Statistics, { StatisticName: 'Total Points' }).Value : 0) + '"/>');
     $('#challenger-name').html(data.player2.profile.DisplayName);
     var daily = parseInt(data.ranks.daily.Position, 10) + 1;
     while (daily.toString().length < 5) {
@@ -121,7 +121,7 @@ if (jQuery('#games').length > 0 && !noevent) {
 
 function getRankIcon (tp) {
   var rank;
-  if(tp <= 100) {
+  if (tp <= 100) {
     rank = '/assets/ranks/1.png';
   }
   if (tp >= 101 && tp <= 200) {
@@ -151,7 +151,7 @@ if (jQuery('#opponents').length > 0) {
     var i = 0;
     for (var key in data) {
       if (key !== userId) {
-        i ++;
+        i++;
         $('#opponents').append(
           '<div class="opponents-row opponents-head-row row"><a href="/play?game=' + data[key].profile.PlayerId + '">' +
           '    <div class="col-md-4 col-xs-8 text-left"><img src="' + getRankIcon(data[key].ranks.total.Position) + '"><span>' + data[key].profile.DisplayName + '</span></div>' +
@@ -219,12 +219,53 @@ if (jQuery('.search-users #name').length > 0) {
           $('#no-opponents').show();
         }
       });
+    } else if ($(this).val().length === 0) {
+      var i = 0;
+      $('#opponents').html('<div class="row opponents-row opponents-head-row">' +
+        '                       <div class="col-md-4 col-xs-8 text-left">nadimak</div>' +
+        '                       <div class="col-md-8 col-xs-4">' +
+        '                           <div class="row">' +
+        '                               <div class="col-md-2 col-xs-12 borders">ukupni<br/>rang</div>' +
+        '                               <div class="col-md-2 borders hide-on-mobile">nedeljni<br/>rang</div>' +
+        '                               <div class="col-md-2 borders hide-on-mobile">dnevni<br/>rang</div>' +
+        '                               <div class="col-md-2 borders hide-on-mobile">ukupno<br/>poena</div>' +
+        '                               <div class="col-md-2 borders hide-on-mobile">nedeljnih<br/>poena</div>' +
+        '                               <div class="col-md-2 borders hide-on-mobile">dnevnih<br/>poena</div>' +
+        '                           </div>' +
+        '                       </div>' +
+        '                   </div>');
+      $.get('/profile/actives', function (data) {
+        for (var key in data) {
+          if (key !== userId) {
+            i++;
+            $('#opponents').append(
+              '<div class="row opponents-row"><a href="/play?game=' + data[key].profile.PlayerId + '">' +
+              '    <div class="col-md-4 col-xs-8 text-left"><img src="' + getRankIcon(data[key].ranks.total.Position) + '"><span>' + data[key].profile.DisplayName + '</span></div>' +
+              '    <div class="col-md-8 col-xs-4">' +
+              '        <div class="row">' +
+              '            <div class="col-md-2 col-xs-12 borders">' + data[key].ranks.total.Position + '</div>' +
+              '            <div class="col-md-2 borders hide-on-mobile">' + data[key].ranks.weekly.Position + '</div>' +
+              '            <div class="col-md-2 borders hide-on-mobile">' + data[key].ranks.daily.Position + '</div>' +
+              '            <div class="col-md-2 borders hide-on-mobile">' + data[key].ranks.total.StatValue + '</div>' +
+              '            <div class="col-md-2 borders hide-on-mobile">' + data[key].ranks.weekly.StatValue + '</div>' +
+              '            <div class="col-md-2 borders hide-on-mobile">' + data[key].ranks.daily.StatValue + '</div>' +
+              '        </div>' +
+              '    </div>' +
+              '</a></div>'
+            );
+          }
+        }
+        if (i === 0) {
+          $('#opponent-search-container').hide();
+          $('#no-opponents').show();
+        }
+      });
     }
   });
 }
 
 function setSelectedSide (side) {
-  if(side === 'white') {
+  if (side === 'white') {
     $('#pickWhite .active').show();
     $('#pickWhite .inactive').hide();
     $('#pickBlack .inactive').show();
@@ -247,36 +288,36 @@ if ($('#pickWhite').length > 0) {
   $('#pickWhite').click(function () {
     localStorage.setItem('side', 'white');
     setSelectedSide('white');
-  })
+  });
 }
 
 if (typeof computer !== 'undefined' && computer && $('#game-over').length > 0) {
   if (localStorage.getItem('side') === 'black') {
     $('#left-name, #left-name-go').html(profile.DisplayName);
-    $('#left-rank, #left-rank-go').html('<img src="'+ getRankIcon(_.find(stats.data.Statistics, { StatisticName: "Total Points"}) ? _.find(stats.data.Statistics, { StatisticName: "Total Points"}).Value : 0) +'"/>');
+    $('#left-rank, #left-rank-go').html('<img src="' + getRankIcon(_.find(stats.data.Statistics, { StatisticName: 'Total Points' }) ? _.find(stats.data.Statistics, { StatisticName: 'Total Points' }).Value : 0) + '"/>');
     $('#right-name, #right-name-go').html('Computer');
     $('#right-rank, #right-rank-go').html('<img src="/assets/ranks/8.png"/>');
   }
   if (localStorage.getItem('side') === 'white') {
     $('#left-name, #left-name-go').html('Computer');
     $('#left-rank, #left-rank-go').html('<img src="/assets/ranks/8.png"/>');
-    $('#right-rank, #right-rank-go').html('<img src="'+ getRankIcon(_.find(stats.data.Statistics, { StatisticName: "Total Points"}) ? _.find(stats.data.Statistics, { StatisticName: "Total Points"}).Value : 0) +'"/>');
+    $('#right-rank, #right-rank-go').html('<img src="' + getRankIcon(_.find(stats.data.Statistics, { StatisticName: 'Total Points' }) ? _.find(stats.data.Statistics, { StatisticName: 'Total Points' }).Value : 0) + '"/>');
     $('#right-name, #right-name-go').html(profile.DisplayName);
   }
 }
 
-if($('.fetch-rank-row').length > 0) {
+if ($('.fetch-rank-row').length > 0) {
   $('.fetch-rank-row').each(function (row) {
     var id = $(this).data('playerid');
     var self = this;
     $.get('/ranking/rankings?PlayFabId=' + id, function (data) {
       if (data.weekly) {
         data.weekly.Position = parseInt(data.weekly.Position, 10) + 1;
-        while(data.weekly.Position.toString().length < 5) {
+        while (data.weekly.Position.toString().length < 5) {
           data.weekly.Position = '0' + data.weekly.Position;
         }
         $(self).children().find('.weekly-rank').html(data.weekly.Position);
-        while(data.weekly.StatValue.toString().length < 5) {
+        while (data.weekly.StatValue.toString().length < 5) {
           data.weekly.StatValue = '0' + data.weekly.StatValue;
         }
         $(self).children().find('.weekly-points').html(data.weekly.StatValue);
@@ -286,11 +327,11 @@ if($('.fetch-rank-row').length > 0) {
       }
       if (data.daily) {
         data.daily.Position = parseInt(data.daily.Position, 10) + 1;
-        while(data.daily.Position.toString().length < 5) {
+        while (data.daily.Position.toString().length < 5) {
           data.daily.Position = '0' + data.daily.Position;
         }
         $(self).children().find('.daily-rank').html(data.daily.Position);
-        while(data.daily.StatValue.toString().length < 5) {
+        while (data.daily.StatValue.toString().length < 5) {
           data.daily.StatValue = '0' + data.daily.StatValue;
         }
         $(self).children().find('.daily-points').html(data.daily.StatValue);

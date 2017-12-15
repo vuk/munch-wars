@@ -830,9 +830,13 @@ mainState.prototype = {
 
     this.lastHitBy = (ball.x < gameProperties.screenWidth * 0.5) ? 0 : 1;
     if (this.lastHitBy === 0) {
-      this.tempLeftStrikeCount++;
+      if (this.tempLeftStrikeCount < 10) {
+        this.tempLeftStrikeCount++;
+      }
     } else {
-      this.tempRightStrikeCount++;
+      if (this.tempRightStrikeCount < 10) {
+        this.tempRightStrikeCount++;
+      }
     }
 
     var returnAngle;
@@ -924,10 +928,10 @@ mainState.prototype = {
     jQuery('#' + player.id + '-player-magic-2').removeClass(allSpriteClassNames).addClass((player.magic[1] !== void 0) ? 'sprite-' + player.magic[1] : 'sprite-empty');
     jQuery('#' + player.id + '-player-magic-3').removeClass(allSpriteClassNames).addClass((player.magic[2] !== void 0) ? 'sprite-' + player.magic[2] : 'sprite-empty');
   },
-  fireCount: 0,
+  fireCount: 10,
 
   fireMagic: function (magic) {
-    if (this.fireCount > 2 || magic) {
+    if (this.fireCount > 10 || magic) {
       this.fireCount = 0;
       var side = this.side === 'white' ? 1 : 0;
       if (this.buttonOne.isDown && this.players[side].magic[0] || magic === 1) {
@@ -1120,7 +1124,6 @@ mainState.prototype = {
             pointsLoser: this.scoreRight,
             side: 'black'
           };
-          console.log('winner black ', winner);
           socket.emit('winner', winner);
         }
       } else if (computer && this.side === 'black') {
@@ -1132,7 +1135,6 @@ mainState.prototype = {
             pointsLoser: this.scoreRight,
             side: 'black'
           };
-          console.log('winner white', winnerWhite);
           socket.emit('winner', winnerWhite);
         }
       }
