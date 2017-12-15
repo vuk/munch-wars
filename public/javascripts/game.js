@@ -931,7 +931,7 @@ mainState.prototype = {
   fireCount: 0,
 
   fireMagic: function (magic) {
-    if (this.fireCount > 2 || magic) {
+    if (this.fireCount > 10 || magic) {
       this.fireCount = 0;
       var side = this.side === 'white' ? 1 : 0;
       if (this.buttonOne.isDown && this.players[side].magic[0] || magic === 1) {
