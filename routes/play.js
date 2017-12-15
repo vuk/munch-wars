@@ -16,10 +16,12 @@ router.get('/', function(req, res, next) {
         req.app.get('socketio').activeUsers[req.query.game].available = false;
         req.app.get('socketio').activeUsers[req.query.game].opponent = req.session.userId;
         req.app.get('socketio').activeUsers[req.query.game].verificationToken = token;
+        req.app.get('socketio').tokens[req.query.game] = token;
       }
       req.app.get('socketio').activeUsers[req.session.userId].available = false;
       req.app.get('socketio').activeUsers[req.session.userId].opponent = req.query.game ? req.query.game : null;
       req.app.get('socketio').activeUsers[req.session.userId].verificationToken = token;
+      req.app.get('socketio').tokens[req.session.userId] = token;
     } else {
       res.redirect('/play/opponents');
     }

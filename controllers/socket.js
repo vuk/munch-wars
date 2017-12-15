@@ -5,6 +5,7 @@ playfabServer.settings.developerSecretKey = config.playfab.secret;
 module.exports = {
   sockets: {},
   activeUsers: {},
+  tokens: {},
   state: {},
   io: null,
   submitScore: (data) => {
@@ -198,9 +199,10 @@ module.exports = {
       socket.on('winner', (data) => {
         console.log(data, 'winner');
         console.log(this.activeUsers[data.id], 'winner');
-        if(this.activeUsers[data.id] && data.verify === this.activeUsers[data.id].verificationToken && this.activeUsers[data.id].verificationToken) {
+        if(data.verify === this.tokens[data.id]) {
           this.submitScore(data);
           this.activeUsers[data.id].verificationToken = false;
+          this.tokens[data.id] = false;
         } else {
           console.log('Player: ' + data.id + ' tried to hack his way up the leaderboard');
         }
