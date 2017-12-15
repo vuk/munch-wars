@@ -124,6 +124,8 @@ module.exports = {
        * So basically even though I started a game, I am a guest. Player invited to play will act as host
        */
       socket.on('invite', (data) => {
+        this.activeUsers[data.guest].available = false;
+        this.activeUsers[data.host].available = false;
         console.log('invite', data);
         if (this.io.sockets.adapter.rooms[data.host] && this.io.sockets.adapter.rooms[data.host].sockets
           && this.io.sockets.adapter.rooms[data.host].sockets.length === 2) {
@@ -147,8 +149,6 @@ module.exports = {
         }, 2000);
       });
       socket.on('accept', (data) => {
-        this.activeUsers[data.guest].available = false;
-        this.activeUsers[data.host].available = false;
         // Make sure room has exactly two members before starting a game
         if (this.io.sockets.adapter.rooms[data.host] &&
           Object.keys(this.io.sockets.adapter.rooms[data.host].sockets).length >= 2) {
@@ -220,6 +220,7 @@ module.exports = {
           if (clients.length > 0) {
             clients.forEach((socket_id) => {
               this.io.sockets.sockets[socket_id].leave(data.id);
+              this.io.sockets.sockets[socket_id].disconnect();
             });
           }
         });
