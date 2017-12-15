@@ -198,7 +198,7 @@ module.exports = {
       });
       socket.on('winner', (data) => {
         console.log(data, 'winner');
-        console.log(this.activeUsers[data.id], 'winner');
+        console.log(this.tokens[data.id], 'winner');
         if(data.verify === this.tokens[data.id]) {
           this.submitScore(data);
           this.activeUsers[data.id].verificationToken = false;
