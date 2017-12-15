@@ -928,7 +928,7 @@ mainState.prototype = {
     jQuery('#' + player.id + '-player-magic-2').removeClass(allSpriteClassNames).addClass((player.magic[1] !== void 0) ? 'sprite-' + player.magic[1] : 'sprite-empty');
     jQuery('#' + player.id + '-player-magic-3').removeClass(allSpriteClassNames).addClass((player.magic[2] !== void 0) ? 'sprite-' + player.magic[2] : 'sprite-empty');
   },
-  fireCount: 0,
+  fireCount: 10,
 
   fireMagic: function (magic) {
     if (this.fireCount > 10 || magic) {
