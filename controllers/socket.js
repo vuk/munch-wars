@@ -8,6 +8,9 @@ module.exports = {
   state: {},
   io: null,
   submitScore: (data) => {
+    if (data.points > 78) {
+      data.points = 78;
+    }
     playfabServer.UpdatePlayerStatistics({
       'PlayFabId': data.id,
       'Statistics': [
