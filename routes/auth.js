@@ -95,11 +95,12 @@ router.get('/social-login', passport.authenticate('facebook'),
           res.redirect('/play');
         }
         else {
-          console.log(response);
           if (req.user && req.user.profile && req.user.profile.emails && req.user.profile.emails[0]) {
             playfab.AddOrUpdateContactEmail({
               EmailAddress: req.user.profile.emails[0].value
             });
+          } else {
+            console.log(response, 'NO FACEBOOK ADDRESS PROVIDED!!!');
           }
           playfab.GetPlayerStatistics({}, (err, stats) => {
             req.session.stats = stats;
