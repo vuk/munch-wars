@@ -197,7 +197,12 @@ module.exports = {
       });
       socket.on('winner', (data) => {
         console.log(data, 'winner');
-        this.submitScore(data);
+        if(data.verify === this.activeUsers[data.id].verificationToken && this.activeUsers[data.id].verificationToken) {
+          this.submitScore(data);
+          this.activeUsers[data.id].verificationToken = false;
+        } else {
+          console.log('Player: ' + data.id + ' tried to hack his way up the leaderboard');
+        }
       });
       socket.on('magic_sync', data => {
         this.io.to(data.id).emit('magic', data);

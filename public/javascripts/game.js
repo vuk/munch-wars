@@ -1122,7 +1122,8 @@ mainState.prototype = {
             id: this.side === 'black' ? userId : opponent ? opponent : localStorage.getItem('opponentId'),
             points: this.leftStrikeCount + 3 * this.scoreLeft,
             pointsLoser: this.scoreRight,
-            side: 'black'
+            side: 'black',
+            verify: verify
           };
           socket.emit('winner', winner);
         }
@@ -1133,7 +1134,8 @@ mainState.prototype = {
             id: userId,
             points: this.leftStrikeCount + 3 * this.scoreLeft,
             pointsLoser: this.scoreRight,
-            side: 'black'
+            side: 'black',
+            verify: verify
           };
           socket.emit('winner', winnerWhite);
         }
@@ -1146,14 +1148,16 @@ mainState.prototype = {
           id: this.side === 'black' ? (opponent ? opponent : localStorage.getItem('opponentId')) : userId,
           points: this.rightStrikeCount + 3 * this.scoreRight,
           pointsLoser: this.scoreLeft,
-          side: 'white'
+          side: 'white',
+          verify: verify
         });
       } else if (computer && this.side === 'white') {
         socket.emit('winner', {
           id: userId,
           points: this.rightStrikeCount + 3 * this.scoreRight,
           pointsLoser: this.scoreLeft,
-          side: 'white'
+          side: 'white',
+          verify: verify
         });
       }
       this.gameOver();

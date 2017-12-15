@@ -49,7 +49,6 @@ playFabServer.GetLeaderboard({
 
   while (newWinners.length < 1 && i < res.data.Leaderboard.length) {
     try {
-      console.log(res.data.Leaderboard[i]);
       oldWinners.forEach((oldWinner) => {
         if (res.data.Leaderboard[i].PlayFabId === oldWinner.PlayFabId) {
           throw Error('user already won' + oldWinner.PlayFabId);

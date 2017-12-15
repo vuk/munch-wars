@@ -11,12 +11,15 @@ router.get('/', function(req, res, next) {
       opponentsOpponent = req.app.get('socketio').activeUsers[req.query.game].opponent;
     }
     if (req.query.computer || availableOpponent || opponentsOpponent === req.session.userId || req.query.game === req.session.userId) {
+      let token = Date.now();
       if (req.query.game) {
         req.app.get('socketio').activeUsers[req.query.game].available = false;
         req.app.get('socketio').activeUsers[req.query.game].opponent = req.session.userId;
+        req.app.get('socketio').activeUsers[req.query.game].verificationToken = token;
       }
       req.app.get('socketio').activeUsers[req.session.userId].available = false;
       req.app.get('socketio').activeUsers[req.session.userId].opponent = req.query.game ? req.query.game : null;
+      req.app.get('socketio').activeUsers[req.session.userId].verificationToken = token;
     } else {
       res.redirect('/play/opponents');
     }
@@ -36,7 +39,8 @@ router.get('/', function(req, res, next) {
           profile: req.session.profile || null,
           stats: req.session.stats || null,
           computer: req.query.computer || false,
-          noevent: req.query.noevent || false
+          noevent: req.query.noevent || false,
+          verify: req.app.get('socketio').activeUsers[req.session.userId].verificationToken
         });
     });
   } else if (req.session.userId && !req.query.game && !req.query.computer) {
