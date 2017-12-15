@@ -147,6 +147,8 @@ module.exports = {
         }, 2000);
       });
       socket.on('accept', (data) => {
+        this.activeUsers[data.guest].available = false;
+        this.activeUsers[data.host].available = false;
         // Make sure room has exactly two members before starting a game
         if (this.io.sockets.adapter.rooms[data.host] &&
           Object.keys(this.io.sockets.adapter.rooms[data.host].sockets).length >= 2) {
