@@ -120,7 +120,7 @@ playFabServer.GetLeaderboard({
   console.log('Mails of new winners', newWinnersMail);
   console.log('Recipients', recipients);
 
-  sendWinner({
+  /*sendWinner({
     from: 'info@munchwars.com',
     to: email,
     bcc: 'vuks89@gmail.com',
@@ -144,12 +144,12 @@ playFabServer.GetLeaderboard({
     '<li>kontakt telefon</li></ul>' +
     '<p>Hvala na učešću i puno sreće u daljem takmičenju!</p>' +
     '<p>munchwars.com</p>'
-  }, transport);
+  }, transport);*/
 
   fs.writeFileSync(__dirname + '/../winners/winners-daily-' + today + '.json', JSON.stringify(newWinners), 'utf8');
   // send of list winners to administrators
   let date = new Date();
-  /*sendWinner({
+  sendWinner({
     from: 'info@munchwars.com',
     //to: 'vuks89@gmail.com,vuks89@live.com',
     to: 'info@munchwars.com,nevena.vasiljevic@popular.rs',
@@ -163,7 +163,7 @@ playFabServer.GetLeaderboard({
     ],
     text: 'U prilogu se nalaze podaci 20 najboljih ucesnika za ' + date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear(),
     html: '<p>U prilogu se nalaze podaci 20 najboljih ucesnika za ' + date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear() + '</p>'
-  }, transport);*/
+  }, transport);
 });
 
 /*playFabAdmin.IncrementPlayerStatisticVersion({
