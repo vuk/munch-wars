@@ -1,11 +1,4 @@
 /**
- * Za 7. dec
- * Brojanje udaraca i kalkulacija poena (ne vise od 1h)
- * Prikaz rang liste (oko 2h)
- * Debagovanje slanja podataka o pobedniku - u nekim situacijama posalje id gubitnika
- * Dizajn stranica za dobitnike, nagrade, pravila ... (1h po stranici)
- * Mobile layout - 6-8h
- * Ukupno potrebno oko 12h
  * @type {*|createApplication}
  */
 const express = require('express');

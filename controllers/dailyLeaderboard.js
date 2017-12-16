@@ -44,7 +44,9 @@ if (month < 10 && month.toString().length < 2) {
 const today = month + '-' + date + '-' + year;
 
 let newWinners = [];
-let newWinnersMail = [];
+let newWinnersMail = '';
+let count20 = 0;
+let recipients = 'vuks89@gmail.com';
 
 // Fetch potential winners
 playFabServer.GetLeaderboard({
@@ -57,6 +59,18 @@ playFabServer.GetLeaderboard({
   StartPosition: 0,
   StatisticName: leaderboards.daily
 }, (err, res) => {
+  playFabServer.GetLeaderboard({
+    MaxResultsCount: 100,
+    ProfileConstraints: {
+      ShowDisplayName: true,
+      ShowLinkedAccounts: true,
+      ShowContactEmailAddresses: true
+    },
+    StartPosition: 99,
+    StatisticName: leaderboards.daily
+  }, (err2, res2) => {
+    // TO DO BY WEDNESDAY
+  });
   if (err) {
     console.log(err);
     return;
@@ -64,56 +78,72 @@ playFabServer.GetLeaderboard({
   let oldWinners = getPreviousWinners();
   let i = 0;
 
-  while (newWinners.length < 20 && i < res.data.Leaderboard.length) {
+  while (count20 < 20 && i < res.data.Leaderboard.length) {
     try {
-      console.log(res.data.Leaderboard[i]);
       oldWinners.forEach((oldWinner) => {
         if (res.data.Leaderboard[i].PlayFabId === oldWinner.PlayFabId) {
           throw Error('user already won' + oldWinner.PlayFabId);
         }
       });
-      newWinnersMail.push(res.data.Leaderboard[i]);
+      let email = '';
+      if(res.data.Leaderboard.Profile.LinkedAccounts && res.data.Leaderboard.Profile.LinkedAccounts[0] && res.data.Leaderboard.Profile.LinkedAccounts[0].Email) {
+        recipients += ', ' + res.data.Leaderboard.Profile.LinkedAccounts[0].Email;
+        email = res.data.Leaderboard.Profile.LinkedAccounts[0].Email;
+      } else if (res.data.Leaderboard.Profile.LinkedAccounts.Platform === 'Facebook' &&
+        res.data.Leaderboard.Profile.ContactEmailAddresses &&
+        res.data.Leaderboard.Profile.ContactEmailAddresses[0]) {
+        recipients += ', ' + res.data.Leaderboard.Profile.ContactEmailAddresses[0].EmailAddress;
+        email = res.data.Leaderboard.Profile.ContactEmailAddresses[0].EmailAddress;
+      } else {
+        email = 'missing';
+      }
+      newWinnersMail += res.data.Leaderboard[i].DisplayName + ' - ' + email + '\n';
+      count20 ++;
       if (newWinners.length < 10) {
         newWinners.push(res.data.Leaderboard[i]);
         // Send mail to first ten potential winners
-        let email = 'vuks89@gmail.com';
         if(res.data.Leaderboard.Profile.LinkedAccounts && res.data.Leaderboard.Profile.LinkedAccounts[0] && res.data.Leaderboard.Profile.LinkedAccounts[0].Email) {
-          email = res.data.Leaderboard.Profile.LinkedAccounts[0].Email;
-        } else if (res.data.Leaderboard.Profile.ContactEmailAddresses && res.data.Leaderboard.Profile.ContactEmailAddresses[0]) {
-          email = res.data.Leaderboard.Profile.ContactEmailAddresses[0].EmailAddress;
+          recipients += ', ' + res.data.Leaderboard.Profile.LinkedAccounts[0].Email;
+        } else if (res.data.Leaderboard.Profile.LinkedAccounts.Platform &&
+          res.data.Leaderboard.Profile.ContactEmailAddresses &&
+          res.data.Leaderboard.Profile.ContactEmailAddresses[0]) {
+          recipients += ', ' + res.data.Leaderboard.Profile.ContactEmailAddresses[0].EmailAddress;
         }
         console.log(email);
-        sendWinner({
-          from: 'info@munchwars.com',
-          to: email,
-          bcc: 'vuks89@gmail.com',
-          subject: 'Čestitamo osvojili ste nagradu na MunchWars takmičenju!',
-          text: 'Kao jedan od 10 najbolje plasiranih igrača u prethodnom danu, osvojili ste veliku MunchWars kutiju!\n' +
-          '\n' +
-          'Molimo vas da nam u roku od 48 sati pošaljete na mail info@munchwars.com podatke o adresi na koju je potrebno da isporučimo vašu nagradu:\n' +
-          'ime i prezime\n' +
-          'ulicu i broj\n' +
-          'pošanski broj i grad\n' +
-          'kontakt telefon\n' +
-          '\n' +
-          'Hvala na učešću i puno sreće u daljem takmičenju!\n' +
-          '\n' +
-          'munchwars.com',
-          html: '<p>Kao jedan od 10 najbolje plasiranih igrača u prethodnom danu, osvojili ste veliku MunchWars kutiju!</p>' +
-          '<p>Molimo vas da nam u roku od 48 sati pošaljete na mail info@munchwars.com podatke o adresi na koju je potrebno da isporučimo vašu nagradu:</p>' +
-          '<ul><li>ime i prezime</li>' +
-          '<li>ulicu i broj</li>' +
-          '<li>pošanski broj i grad</li>' +
-          '<li>kontakt telefon</li></ul>' +
-          '<p>Hvala na učešću i puno sreće u daljem takmičenju!</p>' +
-          '<p>munchwars.com</p>'
-        }, transport);
       }
     } catch (err) {
       console.log(err.toString());
     }
     i++;
   }
+  console.log('Mails of new winners', newWinnersMail);
+  console.log('Recipients', recipients);
+
+  /*sendWinner({
+    from: 'info@munchwars.com',
+    to: email,
+    bcc: 'vuks89@gmail.com',
+    subject: 'Čestitamo osvojili ste nagradu na MunchWars takmičenju!',
+    text: 'Kao jedan od 10 najbolje plasiranih igrača u prethodnom danu, osvojili ste veliku MunchWars kutiju!\n' +
+    '\n' +
+    'Molimo vas da nam u roku od 48 sati pošaljete na mail info@munchwars.com podatke o adresi na koju je potrebno da isporučimo vašu nagradu:\n' +
+    'ime i prezime\n' +
+    'ulicu i broj\n' +
+    'pošanski broj i grad\n' +
+    'kontakt telefon\n' +
+    '\n' +
+    'Hvala na učešću i puno sreće u daljem takmičenju!\n' +
+    '\n' +
+    'munchwars.com',
+    html: '<p>Kao jedan od 10 najbolje plasiranih igrača u prethodnom danu, osvojili ste veliku MunchWars kutiju!</p>' +
+    '<p>Molimo vas da nam u roku od 48 sati pošaljete na mail info@munchwars.com podatke o adresi na koju je potrebno da isporučimo vašu nagradu:</p>' +
+    '<ul><li>ime i prezime</li>' +
+    '<li>ulicu i broj</li>' +
+    '<li>pošanski broj i grad</li>' +
+    '<li>kontakt telefon</li></ul>' +
+    '<p>Hvala na učešću i puno sreće u daljem takmičenju!</p>' +
+    '<p>munchwars.com</p>'
+  }, transport);*/
 
   fs.writeFileSync(__dirname + '/../winners/winners-daily-' + today + '.json', JSON.stringify(newWinners), 'utf8');
   // send of list winners to administrators
@@ -126,8 +156,8 @@ playFabServer.GetLeaderboard({
     subject: 'Dobitnici za ' + date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear(),
     attachments: [
       {   // utf-8 string as an attachment
-        filename: 'Dobitnici za ' + date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear() + '.json',
-        content: JSON.stringify(newWinnersMail)
+        filename: 'Dobitnici za ' + date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear() + '.txt',
+        content: newWinnersMail
       }
     ],
     text: 'U prilogu se nalaze podaci 20 najboljih ucesnika za ' + date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear(),

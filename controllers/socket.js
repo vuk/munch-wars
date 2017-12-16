@@ -10,7 +10,8 @@ module.exports = {
   io: null,
   submitScore: (data) => {
     if (data.points > 78) {
-      data.points = 78;
+      console.log("user " + data.id + " tried to submit more than max points allowed and should be banned");
+      return;
     }
     playfabServer.UpdatePlayerStatistics({
       'PlayFabId': data.id,
