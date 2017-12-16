@@ -98,9 +98,6 @@ playFabServer.GetLeaderboard({
       } else {
         email = 'missing';
       }
-      if (!res.data.Leaderboard[i].DisplayName) {
-        console.log(res.data.Leaderboard[i]);
-      }
       newWinnersMail += res.data.Leaderboard[i].LinkedAccounts[0].Username + ' - ' + email + '\n';
       count20 ++;
       if (newWinners.length < 10) {
@@ -116,7 +113,7 @@ playFabServer.GetLeaderboard({
         console.log(email);
       }
     } catch (err) {
-      console.log(err.toString());
+      console.log(err);
     }
     i++;
   }
