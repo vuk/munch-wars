@@ -106,7 +106,7 @@ playFabServer.GetLeaderboard({
       if (newWinners.length < 10) {
         newWinners.push(res.data.Leaderboard[i]);
         // Send mail to first ten potential winners
-        if(res.data.Leaderboard[i].Profile.LinkedAccounts && res.data.Leaderboard[i].Profile.LinkedAccounts[0] && res.data.Leaderboard.Profile.LinkedAccounts[0].Email) {
+        if(res.data.Leaderboard[i].Profile.LinkedAccounts && res.data.Leaderboard[i].Profile.LinkedAccounts[0] && res.data.Leaderboard[i].Profile.LinkedAccounts[0].Email) {
           recipients += ', ' + res.data.Leaderboard[i].Profile.LinkedAccounts[0].Email;
         } else if (res.data.Leaderboard[i].Profile.LinkedAccounts.Platform &&
           res.data.Leaderboard[i].Profile.ContactEmailAddresses &&
