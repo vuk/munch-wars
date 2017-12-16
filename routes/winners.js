@@ -26,6 +26,7 @@ function getDailyWinners () {
       let date = file.substr(14, 10);
       date = new Date(date);
       console.log(date);
+      console.log(file);
       let contents = JSON.parse(fs.readFileSync(__dirname + '/../winners/' + file));
       var dayName;
       switch(date.getDay()) {
