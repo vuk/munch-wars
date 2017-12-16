@@ -49,7 +49,7 @@ passport.use(new FacebookStrategy({
     clientID: credentials.facebook.clientID,
     clientSecret: credentials.facebook.clientSecret,
     callbackURL: credentials.facebook.callbackURL,
-    profileFields: ['id', 'displayName', 'emails']
+    profileFields: ['id', 'displayName', 'email']
   }, function (accessToken, refreshToken, profile, done) {
     playfab.LoginWithFacebook({
       AccessToken: accessToken,
