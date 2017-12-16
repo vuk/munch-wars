@@ -201,7 +201,7 @@ module.exports = {
         console.log(this.tokens[data.id], 'winner');
         if(data.verify === this.tokens[data.id]) {
           this.submitScore(data);
-          this.activeUsers[data.id].verificationToken = false;
+          //this.activeUsers[data.id].verificationToken = false;
           this.tokens[data.id] = false;
         } else {
           console.log('Player: ' + data.id + ' tried to hack his way up the leaderboard');
