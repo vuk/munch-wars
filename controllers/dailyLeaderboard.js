@@ -57,6 +57,7 @@ playFabServer.GetLeaderboard({
     ShowContactEmailAddresses: true
   },
   StartPosition: 0,
+  Version: 3,
   StatisticName: leaderboards.daily
 }, (err, res) => {
   playFabServer.GetLeaderboard({
@@ -86,14 +87,14 @@ playFabServer.GetLeaderboard({
         }
       });
       let email = '';
-      if(res.data.Leaderboard.Profile.LinkedAccounts && res.data.Leaderboard.Profile.LinkedAccounts[0] && res.data.Leaderboard.Profile.LinkedAccounts[0].Email) {
-        recipients += ', ' + res.data.Leaderboard.Profile.LinkedAccounts[0].Email;
-        email = res.data.Leaderboard.Profile.LinkedAccounts[0].Email;
-      } else if (res.data.Leaderboard.Profile.LinkedAccounts.Platform === 'Facebook' &&
-        res.data.Leaderboard.Profile.ContactEmailAddresses &&
-        res.data.Leaderboard.Profile.ContactEmailAddresses[0]) {
-        recipients += ', ' + res.data.Leaderboard.Profile.ContactEmailAddresses[0].EmailAddress;
-        email = res.data.Leaderboard.Profile.ContactEmailAddresses[0].EmailAddress;
+      if(res.data.Leaderboard[i].Profile.LinkedAccounts && res.data.Leaderboard[i].Profile.LinkedAccounts[0] && res.data.Leaderboard[i].Profile.LinkedAccounts[0].Email) {
+        recipients += ', ' + res.data.Leaderboard[i].Profile.LinkedAccounts[0].Email;
+        email = res.data.Leaderboard[i].Profile.LinkedAccounts[0].Email;
+      } else if (res.data.Leaderboard[i].Profile.LinkedAccounts.Platform === 'Facebook' &&
+        res.data.Leaderboard[i].Profile.ContactEmailAddresses &&
+        res.data.Leaderboard[i].Profile.ContactEmailAddresses[0]) {
+        recipients += ', ' + res.data.Leaderboard[i].Profile.ContactEmailAddresses[0].EmailAddress;
+        email = res.data.Leaderboard[i].Profile.ContactEmailAddresses[0].EmailAddress;
       } else {
         email = 'missing';
       }
@@ -102,12 +103,12 @@ playFabServer.GetLeaderboard({
       if (newWinners.length < 10) {
         newWinners.push(res.data.Leaderboard[i]);
         // Send mail to first ten potential winners
-        if(res.data.Leaderboard.Profile.LinkedAccounts && res.data.Leaderboard.Profile.LinkedAccounts[0] && res.data.Leaderboard.Profile.LinkedAccounts[0].Email) {
-          recipients += ', ' + res.data.Leaderboard.Profile.LinkedAccounts[0].Email;
-        } else if (res.data.Leaderboard.Profile.LinkedAccounts.Platform &&
-          res.data.Leaderboard.Profile.ContactEmailAddresses &&
-          res.data.Leaderboard.Profile.ContactEmailAddresses[0]) {
-          recipients += ', ' + res.data.Leaderboard.Profile.ContactEmailAddresses[0].EmailAddress;
+        if(res.data.Leaderboard[i].Profile.LinkedAccounts && res.data.Leaderboard[i].Profile.LinkedAccounts[0] && res.data.Leaderboard.Profile.LinkedAccounts[0].Email) {
+          recipients += ', ' + res.data.Leaderboard[i].Profile.LinkedAccounts[0].Email;
+        } else if (res.data.Leaderboard[i].Profile.LinkedAccounts.Platform &&
+          res.data.Leaderboard[i].Profile.ContactEmailAddresses &&
+          res.data.Leaderboard[i].Profile.ContactEmailAddresses[0]) {
+          recipients += ', ' + res.data.Leaderboard[i].Profile.ContactEmailAddresses[0].EmailAddress;
         }
         console.log(email);
       }
@@ -148,7 +149,7 @@ playFabServer.GetLeaderboard({
   fs.writeFileSync(__dirname + '/../winners/winners-daily-' + today + '.json', JSON.stringify(newWinners), 'utf8');
   // send of list winners to administrators
   let date = new Date();
-  sendWinner({
+  /*sendWinner({
     from: 'info@munchwars.com',
     //to: 'vuks89@gmail.com,vuks89@live.com',
     to: 'info@munchwars.com,nevena.vasiljevic@popular.rs',
@@ -162,10 +163,10 @@ playFabServer.GetLeaderboard({
     ],
     text: 'U prilogu se nalaze podaci 20 najboljih ucesnika za ' + date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear(),
     html: '<p>U prilogu se nalaze podaci 20 najboljih ucesnika za ' + date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear() + '</p>'
-  }, transport);
+  }, transport);*/
 });
 
-playFabAdmin.IncrementPlayerStatisticVersion({
+/*playFabAdmin.IncrementPlayerStatisticVersion({
   StatisticName: leaderboards.daily
 }, (err, result) => {
   console.log(err, result);
@@ -175,7 +176,7 @@ playFabAdmin.IncrementPlayerStatisticVersion({
   StatisticName: leaderboards.dailyWins
 }, (err, result) => {
   console.log(err, result);
-});
+});*/
 
 function getPreviousWinners () {
   let winners = [];
