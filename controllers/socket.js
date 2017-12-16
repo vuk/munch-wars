@@ -9,20 +9,21 @@ module.exports = {
   state: {},
   lastSubmit: {},
   io: null,
-  submitScore: (data) => {
+  submitScore: (data, lastSubmit) => {
     if (data.points > 78) {
       console.log("user " + data.id + " tried to submit more than max points allowed and should be banned");
       return;
     }
-    /*if (!this.lastSubmit[data.id]) {
-      this.lastSubmit[data.id] = 0;
+    if (!lastSubmit[data.id]) {
+      lastSubmit[data.id] = 0;
     }
+    console.log(lastSubmit);
     let localTime = Date.now();
-    if (localTime - this.lastSubmit[data.id] < 30000) {
-      console.log('User ' + data.id + ' completed a game in ' + (localTime - this.lastSubmit[data.id]) / 1000 + ' seconds and should be banned');
+    if (localTime - lastSubmit[data.id] < 60000) {
+      console.log('User ' + data.id + ' completed a game in ' + (localTime - lastSubmit[data.id]) / 1000 + ' seconds and should be banned');
       return;
     }
-    this.lastSubmit[data.id] = Date.now();*/
+    lastSubmit[data.id] = Date.now();
 
     playfabServer.UpdatePlayerStatistics({
       'PlayFabId': data.id,
@@ -214,7 +215,7 @@ module.exports = {
         console.log(data, 'winner');
         console.log(this.tokens[data.id], 'winner');
         if(data.verify === this.tokens[data.id]) {
-          this.submitScore(data);
+          this.submitScore(data, this.lastSubmit);
           //this.activeUsers[data.id].verificationToken = false;
           this.tokens[data.id] = false;
         } else {
