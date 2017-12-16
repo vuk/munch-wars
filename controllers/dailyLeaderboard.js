@@ -98,7 +98,7 @@ playFabServer.GetLeaderboard({
       } else {
         email = 'missing';
       }
-      console.log(res.data.Leaderboard[i]);
+      console.log(res.data.Leaderboard[i].LinkedAccounts);
       newWinnersMail += res.data.Leaderboard[i].LinkedAccounts[0].Username + ' - ' + email + '\n';
       count20 ++;
       if (newWinners.length < 10) {
