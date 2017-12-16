@@ -7,12 +7,23 @@ module.exports = {
   activeUsers: {},
   tokens: {},
   state: {},
+  lastSubmit: {},
   io: null,
   submitScore: (data) => {
+    if (!this.lastSubmit[data.id]) {
+      this.lastSubmit[data.id] = 0;
+    }
     if (data.points > 78) {
       console.log("user " + data.id + " tried to submit more than max points allowed and should be banned");
       return;
     }
+    let localTime = Date.now();
+    if (localTime - this.lastSubmit[data.id] < 30000) {
+      console.log('User ' + data.id + ' completed a game in ' + (localTime - this.lastSubmit[data.id]) / 1000 + ' seconds and should be banned');
+      return;
+    }
+
+    this.lastSubmit[data.id] = Date.now();
     playfabServer.UpdatePlayerStatistics({
       'PlayFabId': data.id,
       'Statistics': [
