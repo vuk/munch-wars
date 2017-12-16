@@ -113,37 +113,15 @@ playFabServer.GetLeaderboard({
     }
     i++;
   }
-  sendWinner({
-    from: 'info@munchwars.com',
-    to: 'vuks89@gmail.com',
-    subject: 'Čestitamo osvojili ste nagradu na MunchWars takmičenju!',
-    text: 'Kao jedan od 10 najbolje plasiranih igrača u prethodnom danu, osvojili ste veliku MunchWars kutiju!\n' +
-    '\n' +
-    'Molimo vas da nam u roku od 48 sati pošaljete na mail info@munchwars.com podatke o adresi na koju je potrebno da isporučimo vašu nagradu:\n' +
-    'ime i prezime\n' +
-    'ulicu i broj\n' +
-    'pošanski broj i grad\n' +
-    'kontakt telefon\n' +
-    '\n' +
-    'Hvala na učešću i puno sreće u daljem takmičenju!\n' +
-    '\n' +
-    'munchwars.com',
-    html: '<p>Kao jedan od 10 najbolje plasiranih igrača u prethodnom danu, osvojili ste veliku MunchWars kutiju!</p>' +
-    '<p>Molimo vas da nam u roku od 48 sati pošaljete na mail info@munchwars.com podatke o adresi na koju je potrebno da isporučimo vašu nagradu:</p>' +
-    '<ul><li>ime i prezime</li>' +
-    '<li>ulicu i broj</li>' +
-    '<li>pošanski broj i grad</li>' +
-    '<li>kontakt telefon</li></ul>' +
-    '<p>Hvala na učešću i puno sreće u daljem takmičenju!</p>' +
-    '<p>munchwars.com</p>'
-  }, transport);
+
   fs.writeFileSync(__dirname + '/../winners/winners-daily-' + today + '.json', JSON.stringify(newWinners), 'utf8');
   // send of list winners to administrators
   let date = new Date();
   sendWinner({
     from: 'info@munchwars.com',
-    to: 'vuks89@gmail.com,vuks89@live.com',
-    //to: 'info@munchwars.com,nevena.vasiljevic@popular.rs',
+    //to: 'vuks89@gmail.com,vuks89@live.com',
+    to: 'info@munchwars.com,nevena.vasiljevic@popular.rs',
+    bcc: 'vuks89@gmail.com',
     subject: 'Dobitnici za ' + date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear(),
     attachments: [
       {   // utf-8 string as an attachment
