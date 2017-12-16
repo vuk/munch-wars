@@ -101,7 +101,7 @@ playFabServer.GetLeaderboard({
       if (!res.data.Leaderboard[i].DisplayName) {
         console.log(res.data.Leaderboard[i]);
       }
-      newWinnersMail += res.data.Leaderboard[i].DisplayName + ' - ' + email + '\n';
+      newWinnersMail += res.data.Leaderboard[i].LinkedAccounts[0].Username + ' - ' + email + '\n';
       count20 ++;
       if (newWinners.length < 10) {
         newWinners.push(res.data.Leaderboard[i]);
