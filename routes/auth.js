@@ -75,7 +75,7 @@ router.get('/register', function (req, res, next) {
   }
 });
 
-router.get('/facebook', passport.authenticate('facebook', { scope: 'email' }));
+router.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }));
 router.get('/social-login', passport.authenticate('facebook'),
   (req, res, next) => {
     if (req.error) {
