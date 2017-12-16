@@ -19,7 +19,7 @@ module.exports = {
     }
     console.log(lastSubmit);
     let localTime = Date.now();
-    if (localTime - lastSubmit[data.id] < 60000) {
+    if (localTime - lastSubmit[data.id] < 30000) {
       console.log('User ' + data.id + ' completed a game in ' + (localTime - lastSubmit[data.id]) / 1000 + ' seconds and should be banned');
       return;
     }
