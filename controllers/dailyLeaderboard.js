@@ -73,7 +73,7 @@ playFabServer.GetLeaderboard({
         }
       });
       newWinnersMail.push(res.data.Leaderboard[i]);
-      if (newWinners.length <= 10) {
+      if (newWinners.length < 10) {
         newWinners.push(res.data.Leaderboard[i]);
         // Send mail to first ten potential winners
         let email = 'vuks89@gmail.com';
