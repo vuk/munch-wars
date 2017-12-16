@@ -49,7 +49,8 @@ passport.use(new FacebookStrategy({
     clientID: credentials.facebook.clientID,
     clientSecret: credentials.facebook.clientSecret,
     callbackURL: credentials.facebook.callbackURL,
-    profileFields: ['id', 'displayName', 'email']
+    profileFields: ['email'],
+    enableProof: true
   }, function (accessToken, refreshToken, profile, done) {
     playfab.LoginWithFacebook({
       AccessToken: accessToken,
