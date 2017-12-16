@@ -90,7 +90,7 @@ playFabServer.GetLeaderboard({
       if(res.data.Leaderboard[i].Profile.LinkedAccounts && res.data.Leaderboard[i].Profile.LinkedAccounts[0] && res.data.Leaderboard[i].Profile.LinkedAccounts[0].Email) {
         recipients += ', ' + res.data.Leaderboard[i].Profile.LinkedAccounts[0].Email;
         email = res.data.Leaderboard[i].Profile.LinkedAccounts[0].Email;
-      } else if (res.data.Leaderboard[i].Profile.LinkedAccounts.Platform === 'Facebook' &&
+      } else if (res.data.Leaderboard[i].Profile.LinkedAccounts[0].Platform === 'Facebook' &&
         res.data.Leaderboard[i].Profile.ContactEmailAddresses &&
         res.data.Leaderboard[i].Profile.ContactEmailAddresses[0]) {
         recipients += ', ' + res.data.Leaderboard[i].Profile.ContactEmailAddresses[0].EmailAddress;
@@ -108,7 +108,7 @@ playFabServer.GetLeaderboard({
         // Send mail to first ten potential winners
         if(res.data.Leaderboard[i].Profile.LinkedAccounts && res.data.Leaderboard[i].Profile.LinkedAccounts[0] && res.data.Leaderboard[i].Profile.LinkedAccounts[0].Email) {
           recipients += ', ' + res.data.Leaderboard[i].Profile.LinkedAccounts[0].Email;
-        } else if (res.data.Leaderboard[i].Profile.LinkedAccounts.Platform &&
+        } else if (res.data.Leaderboard[i].Profile.LinkedAccounts[0].Platform &&
           res.data.Leaderboard[i].Profile.ContactEmailAddresses &&
           res.data.Leaderboard[i].Profile.ContactEmailAddresses[0]) {
           recipients += ', ' + res.data.Leaderboard[i].Profile.ContactEmailAddresses[0].EmailAddress;
