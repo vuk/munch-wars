@@ -82,6 +82,7 @@ playFabServer.GetLeaderboard({
         } else if (res.data.Leaderboard.Profile.ContactEmailAddresses && res.data.Leaderboard.Profile.ContactEmailAddresses[0]) {
           email = res.data.Leaderboard.Profile.ContactEmailAddresses[0].EmailAddress;
         }
+        console.log(email);
         sendWinner({
           from: 'info@munchwars.com',
           to: email,
