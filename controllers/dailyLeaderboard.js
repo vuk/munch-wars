@@ -120,7 +120,7 @@ playFabServer.GetLeaderboard({
   console.log('Mails of new winners', newWinnersMail);
   console.log('Recipients', recipients);
 
-  /*sendWinner({
+  sendWinner({
     from: 'info@munchwars.com',
     to: email,
     bcc: 'vuks89@gmail.com',
@@ -144,7 +144,7 @@ playFabServer.GetLeaderboard({
     '<li>kontakt telefon</li></ul>' +
     '<p>Hvala na učešću i puno sreće u daljem takmičenju!</p>' +
     '<p>munchwars.com</p>'
-  }, transport);*/
+  }, transport);
 
   fs.writeFileSync(__dirname + '/../winners/winners-daily-' + today + '.json', JSON.stringify(newWinners), 'utf8');
   // send of list winners to administrators
