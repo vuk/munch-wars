@@ -146,7 +146,9 @@ module.exports = {
           socket.emit('busy', { busy: true });
           return;
         }
-        this.activeUsers[data.host].available = false;
+        if (this.activeUsers[data.host]) {
+          this.activeUsers[data.host].available = false;
+        }
         console.log('invite', data);
         socket.join(data.host);
         this.sockets[data.host].join(data.host);
