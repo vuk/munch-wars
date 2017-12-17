@@ -1122,6 +1122,7 @@ mainState.prototype = {
             id: this.side === 'black' ? userId : opponent ? opponent : localStorage.getItem('opponentId'),
             points: this.leftStrikeCount + 3 * this.scoreLeft,
             pointsLoser: this.scoreRight,
+            loserId: this.side === 'black' ? (opponent ? opponent : localStorage.getItem('opponentId')) : userId,
             side: 'black',
             verify: verify
           };
@@ -1134,6 +1135,7 @@ mainState.prototype = {
             id: userId,
             points: this.leftStrikeCount + 3 * this.scoreLeft,
             pointsLoser: this.scoreRight,
+            loserId: 'computer',
             side: 'black',
             verify: verify
           };
@@ -1148,6 +1150,7 @@ mainState.prototype = {
           id: this.side === 'black' ? (opponent ? opponent : localStorage.getItem('opponentId')) : userId,
           points: this.rightStrikeCount + 3 * this.scoreRight,
           pointsLoser: this.scoreLeft,
+          loserId: this.side === 'black' ? userId : (opponent ? opponent : localStorage.getItem('opponentId')),
           side: 'white',
           verify: verify
         });
@@ -1156,6 +1159,7 @@ mainState.prototype = {
           id: userId,
           points: this.rightStrikeCount + 3 * this.scoreRight,
           pointsLoser: this.scoreLeft,
+          loserId: 'computer',
           side: 'white',
           verify: verify
         });

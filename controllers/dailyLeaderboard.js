@@ -57,7 +57,6 @@ playFabServer.GetLeaderboard({
     ShowContactEmailAddresses: true
   },
   StartPosition: 0,
-  Version: 3,
   StatisticName: leaderboards.daily
 }, (err, res) => {
   playFabServer.GetLeaderboard({
@@ -166,7 +165,7 @@ playFabServer.GetLeaderboard({
   }, transport);
 });
 
-/*playFabAdmin.IncrementPlayerStatisticVersion({
+playFabAdmin.IncrementPlayerStatisticVersion({
   StatisticName: leaderboards.daily
 }, (err, result) => {
   console.log(err, result);
@@ -176,7 +175,7 @@ playFabAdmin.IncrementPlayerStatisticVersion({
   StatisticName: leaderboards.dailyWins
 }, (err, result) => {
   console.log(err, result);
-});*/
+});
 
 function getPreviousWinners () {
   let winners = [];
