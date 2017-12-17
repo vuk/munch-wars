@@ -149,22 +149,24 @@ module.exports = {
         if (this.activeUsers[data.host]) {
           this.activeUsers[data.host].available = false;
         }
-        console.log('invite', data);
-        socket.join(data.host);
-        this.sockets[data.host].join(data.host);
-        console.log(this.io.sockets.adapter.rooms[data.host].sockets);
-        setTimeout(() => {
-          console.log('accept_invite');
-          // So I as a guest will be a player 1
-          // And opponent as a host will be a player 2
-          this.io.to(data.host).emit('respond_to_invite', {
-            player1: this.activeUsers[data.guest],
-            player2: this.activeUsers[data.host],
-            profile: this.activeUsers[data.guest].profile,
-            ranks: this.activeUsers[data.guest].ranks,
-            guestSide: data.guestSide
-          });
-        }, 2000);
+        if (this.sockets[data.host]){
+          console.log('invite', data);
+          console.log(this.io.sockets.adapter.rooms[data.host].sockets);
+          setTimeout(() => {
+            console.log('accept_invite');
+            socket.join(data.host);
+            this.sockets[data.host].join(data.host);
+            // So I as a guest will be a player 1
+            // And opponent as a host will be a player 2
+            this.io.to(data.host).emit('respond_to_invite', {
+              player1: this.activeUsers[data.guest],
+              player2: this.activeUsers[data.host],
+              profile: this.activeUsers[data.guest].profile,
+              ranks: this.activeUsers[data.guest].ranks,
+              guestSide: data.guestSide
+            });
+          }, 2000);
+        }
       });
       socket.on('accept', (data) => {
         // Make sure room has exactly two members before starting a game
