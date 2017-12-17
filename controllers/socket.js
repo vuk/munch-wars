@@ -151,7 +151,6 @@ module.exports = {
         }
         if (this.sockets[data.host]){
           console.log('invite', data);
-          console.log(this.io.sockets.adapter.rooms[data.host].sockets);
           setTimeout(() => {
             console.log('accept_invite');
             socket.join(data.host);
