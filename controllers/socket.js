@@ -221,7 +221,7 @@ module.exports = {
         this.io.to(data.id).emit('score', data);
       });
       socket.on('winner', (data) => {
-        if(Math.abs(data.verify - this.tokens[data.id]) < 600000) {
+        if(Math.abs(data.verify - this.tokens[data.id]) < 1200000) {
           this.submitScore(data, this.lastSubmit);
           //this.activeUsers[data.id].verificationToken = false;
           this.tokens[data.id] = false;
