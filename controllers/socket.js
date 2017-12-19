@@ -154,16 +154,18 @@ module.exports = {
           setTimeout(() => {
             console.log('accept_invite');
             socket.join(data.host);
-            this.sockets[data.host].join(data.host);
-            // So I as a guest will be a player 1
-            // And opponent as a host will be a player 2
-            this.io.to(data.host).emit('respond_to_invite', {
-              player1: this.activeUsers[data.guest],
-              player2: this.activeUsers[data.host],
-              profile: this.activeUsers[data.guest].profile,
-              ranks: this.activeUsers[data.guest].ranks,
-              guestSide: data.guestSide
-            });
+            if (this.activeUsers[data.host] && this.activeUsers[data.guest]){
+              this.sockets[data.host].join(data.host);
+              // So I as a guest will be a player 1
+              // And opponent as a host will be a player 2
+              this.io.to(data.host).emit('respond_to_invite', {
+                player1: this.activeUsers[data.guest],
+                player2: this.activeUsers[data.host],
+                profile: this.activeUsers[data.guest].profile,
+                ranks: this.activeUsers[data.guest].ranks,
+                guestSide: data.guestSide
+              });
+            }
           }, 2000);
         }
       });
