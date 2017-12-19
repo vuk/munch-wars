@@ -11,7 +11,11 @@ module.exports = {
   io: null,
   submitScore: (data, lastSubmit) => {
     if (data.points > 78) {
-      console.log("user " + data.id + " tried to submit more than max points allowed and should be banned");
+      console.log("[" + Date.now().toLocaleString() + "] user " + data.id + " tried to submit more than max points allowed and should be banned " + data.points);
+      return;
+    }
+    if (data.points < 18) {
+      console.log("[" + Date.now().toLocaleString() + "] user " + data.id + " tried to submit less than min points allowed and should be banned " + data.points);
       return;
     }
     if (!lastSubmit[data.id]) {
@@ -20,7 +24,7 @@ module.exports = {
     console.log(lastSubmit);
     let localTime = Date.now();
     if (localTime - lastSubmit[data.id] < 30000) {
-      console.log('User ' + data.id + ' completed a game in ' + (localTime - lastSubmit[data.id]) / 1000 + ' seconds and should be banned');
+      console.log('[' + Date.now().toLocaleString() + '] User ' + data.id + ' completed a game in ' + (localTime - lastSubmit[data.id]) / 1000 + ' seconds and should be banned');
       return;
     }
     lastSubmit[data.id] = Date.now();
@@ -224,7 +228,7 @@ module.exports = {
           //this.activeUsers[data.id].verificationToken = false;
           this.tokens[data.id] = false;
         } else {
-          console.log('Player: ' + data.id + ' tried to hack his way up the leaderboard');
+          console.log('[' + Date.now().toLocaleString() + '] Player: ' + data.id + ' tried to hack his way up the leaderboard');
         }
       });
       socket.on('magic_sync', data => {
