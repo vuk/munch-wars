@@ -221,12 +221,12 @@ module.exports = {
         this.io.to(data.id).emit('score', data);
       });
       socket.on('winner', (data) => {
-        console.log(data, 'winner');
-        console.log(this.tokens[data.id], 'winner');
-        if(Math.abs(data.verify - this.tokens[data.id]) < 120000) {
+        if(Math.abs(data.verify - this.tokens[data.id]) < 600000) {
           this.submitScore(data, this.lastSubmit);
           //this.activeUsers[data.id].verificationToken = false;
           this.tokens[data.id] = false;
+          console.log(data, 'winner');
+          console.log(this.tokens[data.id], 'winner');
         } else {
           console.log('[' + new Date().toLocaleString() + '] Player: ' + data.id + ' tried to hack his way up the leaderboard');
         }
