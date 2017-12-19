@@ -98,7 +98,7 @@ router.get('/social-login', passport.authenticate('facebook'),
         else {
           if (req.user && req.user.profile && req.user.profile.emails && req.user.profile.emails[0]) {
             console.log('Contact email: ', req.user.profile.emails[0].value);
-            pf._innerSettings.sessionTicket = req.session.sessionTicket;
+            //pf._innerSettings.sessionTicket = req.session.sessionTicket;
             playfab.AddOrUpdateContactEmail({
               EmailAddress: req.user.profile.emails[0].value
             });
