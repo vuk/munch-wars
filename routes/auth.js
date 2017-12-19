@@ -1,6 +1,7 @@
 const express = require('express');
 const playfab = require('playfab-sdk/Scripts/PlayFab/PlayFabClient');
 const playfabServer = require('playfab-sdk/Scripts/PlayFab/PlayFabServer');
+const pf = require('playfab-sdk/Scripts/PlayFab/PlayFab');
 const config = require('../config');
 playfabServer.settings.developerSecretKey = config.playfab.secret;
 const router = express.Router();
@@ -97,6 +98,7 @@ router.get('/social-login', passport.authenticate('facebook'),
         else {
           if (req.user && req.user.profile && req.user.profile.emails && req.user.profile.emails[0]) {
             console.log('Contact email: ', req.user.profile.emails[0].value);
+            pf._innerSettings.sessionTicket = req.session.sessionTicket;
             playfab.AddOrUpdateContactEmail({
               EmailAddress: req.user.profile.emails[0].value
             });
