@@ -31,7 +31,7 @@ function getDailyWinners () {
       var dayName;
       switch(date.getDay()) {
         case 0:
-          dayName = 'nedelju';
+          dayName = 'nedelja';
           break;
         case 1:
           dayName = 'ponedeljak';
@@ -40,7 +40,7 @@ function getDailyWinners () {
           dayName = 'utorak';
           break;
         case 3:
-          dayName = 'sredu';
+          dayName = 'sreda';
           break;
         case 4:
           dayName = 'četvrtak';
@@ -49,7 +49,7 @@ function getDailyWinners () {
           dayName = 'petak';
           break;
         case 6:
-          dayName = 'subotu';
+          dayName = 'subota';
       }
       let period = 'Dnevni dobitnici';
       let formattedDate = date.getDate() + '.' + (parseInt(date.getMonth(), 10) + 1) + '.';
