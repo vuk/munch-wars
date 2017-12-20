@@ -8,12 +8,16 @@ playfab.settings.developerSecretKey = config.playfab.secret;
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  let statisticsName = 'Total Points';
+  let statisticsName = 'Weekly Points';
   if(req.query.period === 'daily') {
     statisticsName = 'Points';
   }
   if(req.query.period === 'weekly') {
     statisticsName = 'Weekly Points';
+  }
+
+  if(req.query.period === 'total') {
+    statisticsName = 'Total Points';
   }
   //console.log(statisticsName);
   playfab.GetLeaderboard({
