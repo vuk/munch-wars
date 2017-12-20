@@ -339,6 +339,20 @@ if ($('.fetch-rank-row').length > 0) {
         $(self).children().find('.daily-rank').html('00000');
         $(self).children().find('.daily-points').html('00000');
       }
+      if (data.total) {
+        data.total.Position = parseInt(data.total.Position, 10) + 1;
+        while (data.total.Position.toString().length < 5) {
+          data.total.Position = '0' + data.total.Position;
+        }
+        $(self).children().find('.total-rank').html(data.total.Position);
+        while (data.total.StatValue.toString().length < 5) {
+          data.total.StatValue = '0' + data.total.StatValue;
+        }
+        $(self).children().find('.total-points').html(data.total.StatValue);
+      } else {
+        $(self).children().find('.total-rank').html('00000');
+        $(self).children().find('.total-points').html('00000');
+      }
     });
   });
 }
