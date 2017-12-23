@@ -1,5 +1,5 @@
 'use strict';
-
+var sync = 0;
 var initializeSound = function () {
   if (localStorage.getItem('muted') === 'true') {
     game.sound.mute = true;
@@ -1084,6 +1084,12 @@ mainState.prototype = {
     if (isHome) {
       socket.emit('outofbounds', {
         id: getParameterByName('game')
+      });
+    }
+    if (computer) {
+      socket.emit('singleOut', {
+        userId: userId,
+        sync: window.sync
       });
     }
     if (isHome || computer) {

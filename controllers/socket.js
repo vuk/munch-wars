@@ -2,6 +2,7 @@
 const config = require('../config');
 const playfabServer = require('playfab-sdk/Scripts/PlayFab/PlayFabServer');
 playfabServer.settings.developerSecretKey = config.playfab.secret;
+let syncs = {};
 module.exports = {
   sockets: {},
   activeUsers: {},
@@ -11,11 +12,11 @@ module.exports = {
   io: null,
   submitScore: (data, lastSubmit) => {
     if (data.points > 78) {
-      console.log("[" + new Date().toLocaleString() + "] user " + data.id + " tried to submit more than max points allowed and should be banned " + data.points);
+      console.log('[' + new Date().toLocaleString() + '] user ' + data.id + ' tried to submit more than max points allowed and should be banned ' + data.points);
       return;
     }
     if (data.points < 18) {
-      console.log("[" + new Date().toLocaleString() + "] user " + data.id + " tried to submit less than min points allowed and should be banned " + data.points);
+      console.log('[' + new Date().toLocaleString() + '] user ' + data.id + ' tried to submit less than min points allowed and should be banned ' + data.points);
       return;
     }
     if (!lastSubmit[data.id]) {
@@ -26,6 +27,12 @@ module.exports = {
     if (localTime - lastSubmit[data.id] < 30000) {
       console.log('[' + new Date().toLocaleString() + '] User ' + data.id + ' completed a game in ' + (localTime - lastSubmit[data.id]) / 1000 + ' seconds and should be banned');
       return;
+    }
+    if (syncs[data.id].syncCount <= 0) {
+      console.log('User ' + data.id + ' hasn\'t played but submitted score manually and should be banned');
+      return;
+    } else {
+      console.log('User ' + data.id + ' had ' + syncs[data.id].syncCount + ' syncs with server. No cheating involved');
     }
     lastSubmit[data.id] = Date.now();
 
@@ -118,7 +125,9 @@ module.exports = {
     this.io.on('connection', (socket) => {
       var updateInterval;
       /** I receive an event saying that I'm connected properly */
-      socket.emit('connected', { status: true });
+      socket.emit('connected', {
+        status: true
+      });
       /** From the client I identify myself by sending my playfab ID */
       socket.on('identify', (data) => {
         this.state[data.id] = {
@@ -127,6 +136,14 @@ module.exports = {
             time: 0
           }
         };
+        let sync = Date.now();
+        syncs[data.id] = {
+          sync: sync,
+          syncCount: 0
+        };
+        socket.emit('syncSingle', {
+          sync: sync
+        });
         // If I exist in list of active users I join my own room and my timestamp is updated to current one so that
         // I appear in the list of active users
         if (data.id && this.activeUsers[data.id]) {
@@ -135,6 +152,22 @@ module.exports = {
           this.activeUsers[data.id].time = Date.now();
           this.activeUsers[data.id].available = true;
           this.sockets[data.id] = socket;
+        }
+      });
+      socket.on('singleOut', (data) => {
+        let sync = Date.now();
+        console.log(syncs);
+        console.log(data);
+        if (syncs[data.userId].sync === data.sync) {
+          syncs[data.userId].sync = sync;
+          syncs[data.userId].syncCount++;
+          socket.emit('syncSingle', {
+            sync: sync
+          });
+        } else {
+          console.log(data.sync);
+          console.log(syncs[data.userId]);
+          console.log('[' + new Date().toLocaleString() + '] User ' + data.userId + ' sync wrong. Off by: ' + (parseInt(data.sync, 10) - parseInt(syncs[data.userId].sync, 10)) + ' milliseconds');
         }
       });
       /**
@@ -153,12 +186,12 @@ module.exports = {
         if (this.activeUsers[data.host]) {
           this.activeUsers[data.host].available = false;
         }
-        if (this.sockets[data.host]){
+        if (this.sockets[data.host]) {
           console.log('invite', data);
           setTimeout(() => {
             console.log('accept_invite');
             socket.join(data.host);
-            if (this.activeUsers[data.host] && this.activeUsers[data.guest]){
+            if (this.activeUsers[data.host] && this.activeUsers[data.guest]) {
               this.sockets[data.host].join(data.host);
               // So I as a guest will be a player 1
               // And opponent as a host will be a player 2
@@ -221,7 +254,7 @@ module.exports = {
         this.io.to(data.id).emit('score', data);
       });
       socket.on('winner', (data) => {
-        if(Math.abs(data.verify - this.tokens[data.id]) < 1200000) {
+        if (Math.abs(data.verify - this.tokens[data.id]) < 1200000) {
           this.submitScore(data, this.lastSubmit);
           //this.activeUsers[data.id].verificationToken = false;
           this.tokens[data.id] = false;

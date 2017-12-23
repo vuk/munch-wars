@@ -35,8 +35,14 @@ var socket;
 socket = io.connect();
 socket.on('connected', function (data) {
   if (data.status) {
+    window.sync = data.sync;
     socket.emit('identify', { id: userId });
   }
+});
+
+socket.on('syncSingle', function (data) {
+  console.log(data);
+  window.sync = data.sync;
 });
 
 socket.on('respond_to_invite', function (data) {
