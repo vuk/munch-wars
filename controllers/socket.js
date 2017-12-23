@@ -29,10 +29,10 @@ module.exports = {
       return;
     }
     if (syncs[data.id].syncCount <= 0) {
-      console.log('User ' + data.id + ' hasn\'t played but submitted score manually and should be banned');
+      console.log('[' + new Date().toLocaleString() + '] User ' + data.id + ' hasn\'t played but submitted score manually and should be banned');
       //return;
     } else {
-      console.log('User ' + data.id + ' had ' + syncs[data.id].syncCount + ' syncs with server. No cheating involved');
+      console.log('[' + new Date().toLocaleString() + '] User ' + data.id + ' had ' + syncs[data.id].syncCount + ' syncs with server. No cheating involved');
     }
     lastSubmit[data.id] = Date.now();
 
@@ -156,8 +156,6 @@ module.exports = {
       });
       socket.on('singleOut', (data) => {
         let sync = Date.now();
-        console.log(syncs);
-        console.log(data);
         if (syncs[data.userId].sync === data.sync) {
           syncs[data.userId].sync = sync;
           syncs[data.userId].syncCount++;
@@ -165,8 +163,6 @@ module.exports = {
             sync: sync
           });
         } else {
-          console.log(data.sync);
-          console.log(syncs[data.userId]);
           console.log('[' + new Date().toLocaleString() + '] User ' + data.userId + ' sync wrong. Off by: ' + (parseInt(data.sync, 10) - parseInt(syncs[data.userId].sync, 10)) + ' milliseconds');
         }
       });
