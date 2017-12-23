@@ -158,7 +158,7 @@ module.exports = {
         let sync = Date.now();
         console.log(syncs);
         console.log(data);
-        if (syncs[data.userId].sync === data.sync) {
+        if (syncs[data.userId] && syncs[data.userId].sync === data.sync) {
           syncs[data.userId].sync = sync;
           syncs[data.userId].syncCount++;
           socket.emit('syncSingle', {
