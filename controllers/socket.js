@@ -30,7 +30,7 @@ module.exports = {
     }
     if (syncs[data.id].syncCount <= 0) {
       console.log('User ' + data.id + ' hasn\'t played but submitted score manually and should be banned');
-      return;
+      //return;
     } else {
       console.log('User ' + data.id + ' had ' + syncs[data.id].syncCount + ' syncs with server. No cheating involved');
     }
