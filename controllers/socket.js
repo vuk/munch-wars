@@ -27,7 +27,7 @@ module.exports = {
       console.log('[' + new Date().toLocaleString() + '] User ' + data.id + ' completed a game in ' + (localTime - lastSubmit[data.id]) / 1000 + ' seconds and should be banned');
       return;
     }
-    if (syncs[data.id].syncCount <= 1 && syncs[data.id].syncCount > 15) {
+    if (syncs[data.id].syncCount <= 3 && syncs[data.id].syncCount > 15) {
       console.log('[' + new Date().toLocaleString() + '] User ' + data.id + ' hasn\'t played but submitted score manually and should be banned');
       return;
     } else {
