@@ -22,7 +22,6 @@ module.exports = {
     if (!lastSubmit[data.id]) {
       lastSubmit[data.id] = 0;
     }
-    console.log(lastSubmit);
     let localTime = Date.now();
     if (localTime - lastSubmit[data.id] < 30000) {
       console.log('[' + new Date().toLocaleString() + '] User ' + data.id + ' completed a game in ' + (localTime - lastSubmit[data.id]) / 1000 + ' seconds and should be banned');
@@ -33,6 +32,7 @@ module.exports = {
       return;
     } else {
       console.log('[' + new Date().toLocaleString() + '] User ' + data.id + ' had ' + syncs[data.id].syncCount + ' syncs with server. No cheating involved');
+      syncs[data.id].syncCount = 0;
     }
     lastSubmit[data.id] = Date.now();
 
