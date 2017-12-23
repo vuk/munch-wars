@@ -41,7 +41,6 @@ socket.on('connected', function (data) {
 });
 
 socket.on('syncSingle', function (data) {
-  console.log(data);
   window.sync = data.sync;
 });
 
