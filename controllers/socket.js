@@ -163,7 +163,7 @@ module.exports = {
             sync: sync
           });
         } else {
-          console.log('[' + new Date().toLocaleString() + '] User ' + data.userId + ' sync wrong. Off by: ' + (parseInt(data.sync, 10) - parseInt(syncs[data.userId].sync, 10)) + ' milliseconds');
+          console.log('[' + new Date().toLocaleString() + '] User ' + data.userId + ' sync wrong.');
         }
       });
       /**
