@@ -28,7 +28,7 @@ module.exports = {
       return;
     }
     lastSubmit[data.id] = Date.now();
-    if ((syncs[data.id].syncCount <= 3 || syncs[data.id].syncCount > 15) && data.loserId === 'computer') {
+    if (syncs[data.id].syncCount <= 3 || syncs[data.id].syncCount > 15) {
       syncs[data.id].syncCount = 0;
       console.log('[' + new Date().toLocaleString() + '] User ' + data.id + ' hasn\'t played but submitted score manually and should be banned');
       return;

@@ -1086,12 +1086,10 @@ mainState.prototype = {
         id: getParameterByName('game')
       });
     }
-    if (computer) {
-      socket.emit('singleOut', {
-        userId: userId,
-        sync: window.sync
-      });
-    }
+    socket.emit('singleOut', {
+      userId: userId,
+      sync: window.sync
+    });
     if (isHome || computer) {
       if (this.ballSprite.x < 0) {
         this.missedSide = 'left';
