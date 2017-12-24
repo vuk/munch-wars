@@ -1125,6 +1125,7 @@ mainState.prototype = {
           var winner = {
             id: this.side === 'black' ? userId : opponent ? opponent : localStorage.getItem('opponentId'),
             points: this.leftStrikeCount + 3 * this.scoreLeft,
+            goalCount: this.scoreLeft,
             pointsLoser: this.scoreRight,
             loserId: this.side === 'black' ? (opponent ? opponent : localStorage.getItem('opponentId')) : userId,
             side: 'black',

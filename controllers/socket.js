@@ -27,6 +27,9 @@ module.exports = {
       console.log('[' + new Date().toLocaleString() + '] User ' + data.id + ' completed a game in ' + (localTime - lastSubmit[data.id]) / 1000 + ' seconds and should be banned');
       return;
     }
+    if (parseInt(syncs[data.id].syncCount, 10) !== (parseInt(data.goalCount, 10) + parseInt(data.pointsLoser, 10))) {
+      console.log('[' + new Date().toLocaleString() + '] Warning - User ' + data.id + ' submitted ' + data.goalCount + ' goals, and ' + data.pointsLoser + 'loser points, but had ' + syncs[data.id].syncCount + ' syncs with server');
+    }
     lastSubmit[data.id] = Date.now();
     if (syncs[data.id].syncCount <= 3 || syncs[data.id].syncCount > 15) {
       syncs[data.id].syncCount = 0;
@@ -251,7 +254,8 @@ module.exports = {
         this.io.to(data.id).emit('score', data);
       });
       socket.on('winner', (data) => {
-        if (Math.abs(data.verify - this.tokens[data.id]) < 1200000) {
+        if (this.tokens[data.id]
+          && Math.abs(data.verify - this.tokens[data.id]) < 1200000) {
           this.submitScore(data, this.lastSubmit);
           //this.activeUsers[data.id].verificationToken = false;
           this.tokens[data.id] = false;
