@@ -125,6 +125,7 @@ var labels = {
 };
 
 var isHome = false;
+var buttonPressed = 0;
 
 var mainState = function (game) {
   this.backgroundGraphics;
@@ -736,9 +737,11 @@ mainState.prototype = {
     if (!this.blockLeftPaddle) {
       if (this.side === 'black') {
         if (this.paddleRight_up.isDown || this.y > game.input.y) {
+          buttonPressed ++;
           this.paddleLeftSprite.body.velocity.y = -gameProperties.paddleVelocity;
         }
         else if (this.paddleRight_down.isDown || this.y < game.input.y) {
+          buttonPressed ++;
           this.paddleLeftSprite.body.velocity.y = gameProperties.paddleVelocity;
         } else {
           this.paddleLeftSprite.body.velocity.y = 0;
@@ -782,9 +785,11 @@ mainState.prototype = {
     if (!this.blockRightPaddle) {
       if (this.side === 'white') {
         if (this.paddleRight_up.isDown || this.y > game.input.y) {
+          buttonPressed ++;
           this.paddleRightSprite.body.velocity.y = -gameProperties.paddleVelocity;
         }
         else if (this.paddleRight_down.isDown || this.y < game.input.y) {
+          buttonPressed ++;
           this.paddleRightSprite.body.velocity.y = gameProperties.paddleVelocity;
         } else {
           this.paddleRightSprite.body.velocity.y = 0;
@@ -1130,9 +1135,11 @@ mainState.prototype = {
             loserId: this.side === 'black' ? (opponent ? opponent : localStorage.getItem('opponentId')) : userId,
             side: 'black',
             timeFinished: new Date().toLocaleString(),
+            pressCount: buttonPressed,
             verify: verify
           };
           socket.emit('winner', winner);
+          buttonPressed = 0;
         }
       } else if (computer && this.side === 'black') {
         if (!this.submitted) {
@@ -1145,9 +1152,11 @@ mainState.prototype = {
             loserId: 'computer',
             side: 'black',
             timeFinished: new Date().toLocaleString(),
+            pressCount: buttonPressed,
             verify: verify
           };
           socket.emit('winner', winnerWhite);
+          buttonPressed = 0;
         }
       }
       this.gameOver();
@@ -1162,8 +1171,10 @@ mainState.prototype = {
           loserId: this.side === 'black' ? userId : (opponent ? opponent : localStorage.getItem('opponentId')),
           side: 'white',
           timeFinished: new Date().toLocaleString(),
+          pressCount: buttonPressed,
           verify: verify
         });
+        buttonPressed = 0;
       } else if (computer && this.side === 'white') {
         socket.emit('winner', {
           id: userId,
@@ -1173,8 +1184,10 @@ mainState.prototype = {
           loserId: 'computer',
           side: 'white',
           timeFinished: new Date().toLocaleString(),
+          pressCount: buttonPressed,
           verify: verify
         });
+        buttonPressed = 0;
       }
       this.gameOver();
     } else {

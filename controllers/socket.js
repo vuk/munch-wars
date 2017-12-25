@@ -23,12 +23,13 @@ module.exports = {
       lastSubmit[data.id] = 0;
     }
     let localTime = Date.now();
+    console.log('[' + new Date().toLocaleString() + '] INFO: User ' + data.id + ' completed a game in ' + (localTime - lastSubmit[data.id]) / 1000 + ' pressing a button ' + data.pressCount + ' times. Score was ' + data.goalCount + ' goals, and ' + data.pointsLoser + ' loser points');
     if (localTime - lastSubmit[data.id] < 30000) {
       console.log('[' + new Date().toLocaleString() + '] User ' + data.id + ' completed a game in ' + (localTime - lastSubmit[data.id]) / 1000 + ' seconds and should be banned');
       return;
     }
     if (parseInt(syncs[data.id].syncCount, 10) !== (parseInt(data.goalCount, 10) + parseInt(data.pointsLoser, 10))) {
-      console.log('[' + new Date().toLocaleString() + '] Warning - User ' + data.id + ' submitted ' + data.goalCount + ' goals, and ' + data.pointsLoser + 'loser points, but had ' + syncs[data.id].syncCount + ' syncs with server');
+      console.log('[' + new Date().toLocaleString() + '] Warning - User ' + data.id + ' submitted ' + data.goalCount + ' goals, and ' + data.pointsLoser + ' loser points, but had ' + syncs[data.id].syncCount + ' syncs with server');
     }
     lastSubmit[data.id] = Date.now();
     if (syncs[data.id].syncCount <= 3 || syncs[data.id].syncCount > 15) {
