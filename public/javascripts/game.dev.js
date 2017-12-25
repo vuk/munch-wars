@@ -1140,6 +1140,7 @@ mainState.prototype = {
           var winnerWhite = {
             id: userId,
             points: this.leftStrikeCount + 3 * this.scoreLeft,
+            goalCount: this.scoreLeft,
             pointsLoser: this.scoreRight,
             loserId: 'computer',
             side: 'black',
