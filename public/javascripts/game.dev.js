@@ -1093,7 +1093,8 @@ mainState.prototype = {
     }
     socket.emit('singleOut', {
       userId: userId,
-      sync: window.sync
+      sync: window.sync,
+      buttonPress: buttonPressed
     });
     if (isHome || computer) {
       if (this.ballSprite.x < 0) {

@@ -164,6 +164,7 @@ module.exports = {
         if (syncs[data.userId] && syncs[data.userId].sync === data.sync) {
           syncs[data.userId].sync = sync;
           syncs[data.userId].syncCount++;
+          console.log('[Button count] ' + data.buttonPress + ' User: ' + data.userId);
           socket.emit('syncSingle', {
             sync: sync
           });
