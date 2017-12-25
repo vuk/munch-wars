@@ -1157,6 +1157,7 @@ mainState.prototype = {
         socket.emit('winner', {
           id: this.side === 'black' ? (opponent ? opponent : localStorage.getItem('opponentId')) : userId,
           points: this.rightStrikeCount + 3 * this.scoreRight,
+          goalCount: this.scoreRight,
           pointsLoser: this.scoreLeft,
           loserId: this.side === 'black' ? userId : (opponent ? opponent : localStorage.getItem('opponentId')),
           side: 'white',
@@ -1167,6 +1168,7 @@ mainState.prototype = {
         socket.emit('winner', {
           id: userId,
           points: this.rightStrikeCount + 3 * this.scoreRight,
+          goalCount: this.scoreRight,
           pointsLoser: this.scoreLeft,
           loserId: 'computer',
           side: 'white',
