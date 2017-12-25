@@ -27,7 +27,7 @@ module.exports = {
       console.log('[' + new Date().toLocaleString() + '] User ' + data.id + ' completed a game in ' + (localTime - lastSubmit[data.id]) / 1000 + ' seconds and should be banned');
       return;
     }
-    if (parseInt(syncs[data.id].syncCount, 10) - 1 !== (parseInt(data.goalCount, 10) + parseInt(data.pointsLoser, 10))) {
+    if (parseInt(syncs[data.id].syncCount, 10) !== (parseInt(data.goalCount, 10) + parseInt(data.pointsLoser, 10))) {
       console.log('[' + new Date().toLocaleString() + '] Warning - User ' + data.id + ' submitted ' + data.goalCount + ' goals, and ' + data.pointsLoser + 'loser points, but had ' + syncs[data.id].syncCount + ' syncs with server');
     }
     lastSubmit[data.id] = Date.now();
