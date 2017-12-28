@@ -35,7 +35,7 @@ module.exports = {
     if (syncs[data.id].syncCount <= 3 || syncs[data.id].syncCount > 15) {
       syncs[data.id].syncCount = 0;
       console.log('[' + new Date().toLocaleString() + '] User ' + data.id + ' hasn\'t played but submitted score manually and should be banned');
-      return;
+      //return;
     } else {
       console.log('[' + new Date().toLocaleString() + '] User ' + data.id + ' had ' + syncs[data.id].syncCount + ' syncs with server. No cheating involved');
       syncs[data.id].syncCount = 0;
