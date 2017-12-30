@@ -33,8 +33,8 @@ module.exports = {
     }
     lastSubmit[data.id] = Date.now();
     if (syncs[data.id].syncCount <= 3 || syncs[data.id].syncCount > 15) {
+      console.log('[' + new Date().toLocaleString() + '] User ' + data.id + ' hasn\'t played but submitted score manually and should be banned. Sync with server: ' + syncs[data.id].syncCount);
       syncs[data.id].syncCount = 0;
-      console.log('[' + new Date().toLocaleString() + '] User ' + data.id + ' hasn\'t played but submitted score manually and should be banned');
       //return;
     } else {
       console.log('[' + new Date().toLocaleString() + '] User ' + data.id + ' had ' + syncs[data.id].syncCount + ' syncs with server. No cheating involved');
