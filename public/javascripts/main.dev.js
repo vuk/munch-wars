@@ -45,56 +45,58 @@ socket.on('syncSingle', function (data) {
 });
 
 socket.on('respond_to_invite', function (data) {
-  console.log('accept invite', data);
-  localStorage.setItem('opponentSide', data.guestSide);
-  if (data.player1.profile.PlayerId !== userId) {
-    localStorage.setItem('opponentId', data.player1.profile.PlayerId);
-    $('#accept_modal').modal();
-    $('#opponent-rank').html('<img src="' + getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: 'Total Points' }) ? _.find(data.player1.stats.data.Statistics, { StatisticName: 'Total Points' }).Value : 0) + '"/>');
-    $('#opponent-name').html(data.profile.DisplayName);
-    var daily = parseInt(data.ranks.daily.Position, 10) + 1;
-    while (daily.toString().length < 5) {
-      daily = '0' + daily;
-    }
-    var weekly = parseInt(data.ranks.daily.Position, 10) + 1;
-    while (weekly.toString().length < 5) {
-      weekly = '0' + weekly;
-    }
-    var total = parseInt(data.ranks.daily.Position, 10) + 1;
-    while (total.toString().length < 5) {
-      total = '0' + total;
-    }
-    $('#daily-rang').html(daily);
-    $('#weekly-rang').html(weekly);
-    $('#total-rang').html(total);
-    $('.' + data.guestSide).show();
-  } else {
-    $('#invited_modal').modal();
-    $('#challenger-rank').html('<img src="' + getRankIcon(_.find(data.player2.stats.data.Statistics, { StatisticName: 'Total Points' }) ? _.find(data.player2.stats.data.Statistics, { StatisticName: 'Total Points' }).Value : 0) + '"/>');
-    $('#challenger-name').html(data.player2.profile.DisplayName);
-    var daily = parseInt(data.ranks.daily.Position, 10) + 1;
-    while (daily.toString().length < 5) {
-      daily = '0' + daily;
-    }
-    var weekly = parseInt(data.ranks.daily.Position, 10) + 1;
-    while (weekly.toString().length < 5) {
-      weekly = '0' + weekly;
-    }
-    var total = parseInt(data.ranks.daily.Position, 10) + 1;
-    while (total.toString().length < 5) {
-      total = '0' + total;
-    }
-    $('#challenger-daily-rang').html(daily);
-    $('#challenger-weekly-rang').html(weekly);
-    $('#challenger-total-rang').html(total);
-    if (data.guestSide === 'white') {
-      $('.black').show();
+  if($('#turn').length === 0) {
+    console.log('accept invite', data);
+    localStorage.setItem('opponentSide', data.guestSide);
+    if (data.player1.profile.PlayerId !== userId) {
+      localStorage.setItem('opponentId', data.player1.profile.PlayerId);
+      $('#accept_modal').modal();
+      $('#opponent-rank').html('<img src="' + getRankIcon(_.find(data.player1.stats.data.Statistics, { StatisticName: 'Total Points' }) ? _.find(data.player1.stats.data.Statistics, { StatisticName: 'Total Points' }).Value : 0) + '"/>');
+      $('#opponent-name').html(data.profile.DisplayName);
+      var daily = parseInt(data.ranks.daily.Position, 10) + 1;
+      while (daily.toString().length < 5) {
+        daily = '0' + daily;
+      }
+      var weekly = parseInt(data.ranks.daily.Position, 10) + 1;
+      while (weekly.toString().length < 5) {
+        weekly = '0' + weekly;
+      }
+      var total = parseInt(data.ranks.daily.Position, 10) + 1;
+      while (total.toString().length < 5) {
+        total = '0' + total;
+      }
+      $('#daily-rang').html(daily);
+      $('#weekly-rang').html(weekly);
+      $('#total-rang').html(total);
+      $('.' + data.guestSide).show();
     } else {
-      $('.white').show();
+      $('#invited_modal').modal();
+      $('#challenger-rank').html('<img src="' + getRankIcon(_.find(data.player2.stats.data.Statistics, { StatisticName: 'Total Points' }) ? _.find(data.player2.stats.data.Statistics, { StatisticName: 'Total Points' }).Value : 0) + '"/>');
+      $('#challenger-name').html(data.player2.profile.DisplayName);
+      var daily = parseInt(data.ranks.daily.Position, 10) + 1;
+      while (daily.toString().length < 5) {
+        daily = '0' + daily;
+      }
+      var weekly = parseInt(data.ranks.daily.Position, 10) + 1;
+      while (weekly.toString().length < 5) {
+        weekly = '0' + weekly;
+      }
+      var total = parseInt(data.ranks.daily.Position, 10) + 1;
+      while (total.toString().length < 5) {
+        total = '0' + total;
+      }
+      $('#challenger-daily-rang').html(daily);
+      $('#challenger-weekly-rang').html(weekly);
+      $('#challenger-total-rang').html(total);
+      if (data.guestSide === 'white') {
+        $('.black').show();
+      } else {
+        $('.white').show();
+      }
     }
-  }
-  if (data.player2.profile.PlayerId !== userId) {
-    localStorage.setItem('opponentId', data.player2.profile.PlayerId);
+    if (data.player2.profile.PlayerId !== userId) {
+      localStorage.setItem('opponentId', data.player2.profile.PlayerId);
+    }
   }
 });
 
