@@ -79,7 +79,7 @@ module.exports = {
       ]
     }, (err, res) => {
       if (data.side === 'white') {
-        playfabServer.GetTitleData({
+        /*playfabServer.GetTitleData({
           Keys: ['White']
         }, (err, result) => {
           if (!err) {
@@ -95,9 +95,9 @@ module.exports = {
               Value: white + 1
             });
           }
-        });
+        });*/
       } else {
-        playfabServer.GetTitleData({
+        /*playfabServer.GetTitleData({
           Keys: ['Black']
         }, (err, result) => {
           if (!err) {
@@ -113,9 +113,8 @@ module.exports = {
               Value: right + 1
             });
           }
-        });
+        });*/
       }
-      console.log('Submit score', err, res);
     });
   },
   run: function (app, server) {
