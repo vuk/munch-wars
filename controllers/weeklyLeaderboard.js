@@ -133,7 +133,7 @@ playFabServer.GetLeaderboard({
     '<p>munchwars.com</p>'
   }, transport);*/
 
-  fs.writeFileSync(__dirname + '/../winners/winners-weekly-' + today + '.json', JSON.stringify(newWinners), 'utf8');
+  /*fs.writeFileSync(__dirname + '/../winners/winners-weekly-' + today + '.json', JSON.stringify(newWinners), 'utf8');
   // send of list winners to administrators
   let date = new Date();
   sendWinner({
@@ -150,7 +150,7 @@ playFabServer.GetLeaderboard({
     ],
     text: 'U prilogu se nalaze podaci 5 najboljih ucesnika za prethodnu nedelju ' + date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear(),
     html: '<p>U prilogu se nalaze podaci 5 najboljih ucesnika za prethodnu nedelju ' + date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear() + '</p>'
-  }, transport);
+  }, transport);*/
 });
 
 playFabAdmin.IncrementPlayerStatisticVersion({
