@@ -93,12 +93,12 @@ app.use('/bootstrap', express.static('node_modules/bootstrap/dist/'));
 // Routes
 app.use('/', index);
 app.use('/play', play);
-app.use('/awards', awards);
-app.use('/contact', contact);
+//app.use('/awards', awards);
+//app.use('/contact', contact);
 app.use('/profile', users);
 app.use('/ranking', ranking);
-app.use('/rules', rules);
-app.use('/winners', winners);
+//app.use('/rules', rules);
+//app.use('/winners', winners);
 app.use('/auth', auth);
 
 // catch 404 and forward to error handler
